@@ -26,7 +26,7 @@
 	<groupId>com.att.cadi</groupId>
 	<artifactId>parent</artifactId>
 	<name>CADI Parent POM (Code, Access, Data, Identity)</name>
-	<version>1.3.2</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<inceptionYear>2015-07-20</inceptionYear>	
 	<packaging>pom</packaging>
 	<url>https://github.com/att/AAF</url>
@@ -48,7 +48,7 @@
 	<properties>
 		<skipSigning>true</skipSigning>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.innoVersion>1.2.13</project.innoVersion>
+		<project.innoVersion>1.0.0-SNAPSHOT</project.innoVersion>
 		<project.authClientVersion>2.6</project.authClientVersion>
 		<project.dme2Version>3.1.200</project.dme2Version>
 				<!-- version>2.8.5.8</version -->

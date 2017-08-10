@@ -24,7 +24,7 @@
 	<parent>
 		<groupId>com.att.cadi</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.3.2</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
