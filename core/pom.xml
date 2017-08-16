@@ -34,7 +34,18 @@
 	<packaging>jar</packaging>
 	<url>https://github.com/att/AAF</url>
 	<description>CADI</description>
-	
+	<properties>
+        <docker.push.registry>localhost:5000</docker.push.registry>
+		<skip.docker.build>true</skip.docker.build>
+		<skip.docker.push>true</skip.docker.push>
+		<skip.staging.artifacts>false</skip.staging.artifacts>
+		
+		<nexusproxy>https://nexus.onap.org</nexusproxy>
+		<snapshotNexusPath>/content/repositories/snapshots/</snapshotNexusPath>
+		<releaseNexusPath>/content/repositories/releases/</releaseNexusPath>
+		<stagingNexusPath>/content/repositories/staging/</stagingNexusPath>
+		<sitePath>/content/sites/site/org/onap/aaf/cadi/${project.version}</sitePath>
+	</properties>
 	<dependencies>
 
 		<dependency>
@@ -114,17 +125,97 @@
 		    </plugin>
 	
 		<plugin>
-			<groupId>org.sonatype.plugins</groupId>
-			<artifactId>nexus-staging-maven-plugin</artifactId>
-			<version>1.6.7</version>
-			<extensions>true</extensions>
-			<configuration>
-			<serverId>ossrhdme</serverId>
-			<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-			<autoReleaseAfterClose>true</autoReleaseAfterClose>
-			</configuration>
-		</plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<nexusUrl>${nexusproxy}</nexusUrl>
+					<serverId>ecomp-staging</serverId>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
+ <distributionManagement>
+		<repository>
+			<id>ecomp-releases</id>
+			<name>AAF Release Repository</name>
+			<url>${nexusproxy}/${releaseNexusPath}</url>
+		</repository>
+		<snapshotRepository>
+			<id>ecomp-snapshots</id>
+			<name>AAF Snapshot Repository</name>
+			<url>${nexusproxy}/${snapshotNexusPath}</url>
+		</snapshotRepository>
+		<site>
+			<id>ecomp-site</id>
+			<url>dav:${nexusproxy}${sitePath}</url>
+		</site>
+	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven 2 repository 2</name>
+			<url>http://repo2.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>ecomp-releases</id>
+			<name>ONAP Release Repository</name>
+			<url>${nexusproxy}/${releaseNexusPath}</url>
+		</repository>
+		<repository>
+			<id>ecomp-staging</id>
+			<name>ONAP Staging Repository</name>
+			<url>${nexusproxy}/${stagingNexusPath}</url>
+		</repository>
+		<repository>
+			<id>ecomp-snapshots</id>
+			<name>ONAP Snapshot Repository</name>
+			<url>${nexusproxy}/${snapshotNexusPath}</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>spring-repo</id>
+			<name>Spring repo</name>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>repository.jboss.org-public</id>
+			<name>JBoss.org Maven repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+	
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<properties>
+				<skip.staging.artifacts>true</skip.staging.artifacts>
+				<skip.docker.build>false</skip.docker.build>
+			</properties>
+		</profile>
+	</profiles>	
 </project>
