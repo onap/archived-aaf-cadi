@@ -22,7 +22,7 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<groupId>com.att.cadi</groupId>
+		<groupId>org.onap.aaf.cadi</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
@@ -34,10 +34,18 @@
 	<url>https://github.com/att/AAF</url>
 	<description>CADI</description>
 	<artifactId>cadi-cass</artifactId>
-
+<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.cadiVersion>1.0.0-SNAPSHOT</project.cadiVersion>
+        <nexusproxy>https://nexus.onap.org</nexusproxy>
+		<snapshotNexusPath>/content/repositories/snapshots/</snapshotNexusPath>
+		<releaseNexusPath>/content/repositories/releases/</releaseNexusPath>
+		<stagingNexusPath>/content/repositories/staging/</stagingNexusPath>
+		<sitePath>/content/sites/site/${project.groupId}/${project.artifactId}/${project.version}</sitePath>
+	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.att.cadi</groupId>
+			<groupId>org.onap.aaf.cadi</groupId>
 			<artifactId>cadi-aaf</artifactId>
 		</dependency>
 		
@@ -96,19 +104,61 @@
 			</execution>
 		      </executions>
 		    </plugin>
-
-			
-		<plugin>
-			<groupId>org.sonatype.plugins</groupId>
-			<artifactId>nexus-staging-maven-plugin</artifactId>
-			<version>1.6.7</version>
-			<extensions>true</extensions>
-			<configuration>
-			<serverId>ossrhdme</serverId>
-			<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-			<autoReleaseAfterClose>true</autoReleaseAfterClose>
-			</configuration>
-		</plugin>
+  <plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<nexusUrl>${nexusproxy}</nexusUrl>
+					<stagingProfileId>176c31dfe190a</stagingProfileId>
+					<serverId>ecomp-staging</serverId>
+				</configuration>
+			</plugin> 
 		</plugins>
-	</build>	
+	</build>
+		<distributionManagement>
+		<repository>
+			<id>ecomp-releases</id>
+			<name>AAF Release Repository</name>
+			<url>${nexusproxy}${releaseNexusPath}</url>
+		</repository>
+		<snapshotRepository>
+			<id>ecomp-snapshots</id>
+			<name>AAF Snapshot Repository</name>
+			<url>${nexusproxy}${snapshotNexusPath}</url>
+		</snapshotRepository>
+		<site>
+			<id>ecomp-site</id>
+			<url>dav:${nexusproxy}${sitePath}</url>
+		</site>
+	</distributionManagement>
+<pluginRepositories>
+        <pluginRepository>
+            <id>onap-plugin-snapshots</id>
+            <url>https://nexus.onap.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+	
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven 2 repository 2</name>
+			<url>http://repo2.maven.org/maven2/</url>
+		</repository>
+		<repository>
+            <id>onap-jar-snapshots</id>
+            <url>https://nexus.onap.org/content/repositories/snapshots</url>
+        </repository>
+		<repository>
+			<id>spring-repo</id>
+			<name>Spring repo</name>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>repository.jboss.org-public</id>
+			<name>JBoss.org Maven repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+	</repositories>	
 </project>

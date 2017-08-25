@@ -1,9 +1,8 @@
 <!--
   ============LICENSE_START====================================================
-  * org.onap.aai
+  * org.onap.aaf
   * ===========================================================================
   * Copyright © 2017 AT&T Intellectual Property. All rights reserved.
-  * Copyright © 2017 Amdocs
   * ===========================================================================
   * Licensed under the Apache License, Version 2.0 (the "License");
   * you may not use this file except in compliance with the License.
@@ -23,7 +22,7 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.att.cadi</groupId>
+	<groupId>org.onap.aaf.cadi</groupId>
 	<artifactId>parent</artifactId>
 	<name>CADI Parent POM (Code, Access, Data, Identity)</name>
 	<version>1.0.0-SNAPSHOT</version>
@@ -49,7 +48,7 @@
 		<skipSigning>true</skipSigning>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.innoVersion>1.0.0-SNAPSHOT</project.innoVersion>
-		<project.authClientVersion>2.6</project.authClientVersion>
+		<project.authClientVersion>1.0.0-SNAPSHOT</project.authClientVersion>
 		<project.dme2Version>3.1.200</project.dme2Version>
 				<!-- version>2.8.5.8</version -->
 				<!-- version>2.6.20</version -->
@@ -59,8 +58,13 @@
 		<!-- jetty-version>8.1.7.v20120910</jetty-version -->
 		<!-- jetty-version>7.2.0.v20101020</jetty-version -->
 		<!-- project.jettyVersion>9.0.3.v20130506</project.jettyVersion -->
+		<project.cadiVersion>1.0.0-SNAPSHOT</project.cadiVersion>
+		<nexusproxy>https://nexus.onap.org</nexusproxy>
+		<snapshotNexusPath>/content/repositories/snapshots/</snapshotNexusPath>
+		<releaseNexusPath>/content/repositories/releases/</releaseNexusPath>
+		<stagingNexusPath>/content/repositories/staging/</stagingNexusPath>
+		<sitePath>/content/sites/site/org/onap/aaf/cadi/${project.artifactId}/${project.version}</sitePath>
 	</properties>
-
 	<!-- ============================================================== -->
 	<!-- Define the major contributors and developers of CADI -->
 	<!-- ============================================================== -->
@@ -101,69 +105,69 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.att.authz</groupId>
+				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>authz-client</artifactId>
 				<version>${project.authClientVersion}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-core</artifactId>
 				<version>${project.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-cass</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-aaf</artifactId>
 				<version>${project.version}</version>
 			</dependency> 
 
 		    <dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-aaf</artifactId>
 				<version>${project.version}</version>
 				<classifier>full</classifier>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-tomcat</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.cadi</groupId>
+				<groupId>org.onap.aaf.cadi</groupId>
 				<artifactId>cadi-tguard</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.inno</groupId>
+				<groupId>org.onap.aaf.inno</groupId>
 				<artifactId>env</artifactId>
 				<version>${project.innoVersion}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.att.inno</groupId>
+				<groupId>org.onap.aaf.inno</groupId>
 				<artifactId>rosetta</artifactId>
 				<version>${project.innoVersion}</version>
 			</dependency>
@@ -389,17 +393,6 @@
 		    </plugin>
 	
  
-		<plugin>
-			<groupId>org.sonatype.plugins</groupId>
-			<artifactId>nexus-staging-maven-plugin</artifactId>
-			<version>1.6.7</version>
-			<extensions>true</extensions>
-			<configuration>
-			<serverId>ossrhdme</serverId>
-			<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-			<autoReleaseAfterClose>true</autoReleaseAfterClose>
-			</configuration>
-		</plugin>
 			
 		<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -412,15 +405,7 @@
 				  </formats>
 				</configuration>
 		 </plugin>
-	
-				<!-- Maven surefire plugin for testing -->
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.17</version>
-				</plugin>
-				
-				
-				
+
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
@@ -453,28 +438,61 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-				
+				  <plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<nexusUrl>${nexusproxy}</nexusUrl>
+					<stagingProfileId>176c31dfe190a</stagingProfileId>
+					<serverId>ecomp-staging</serverId>
+				</configuration>
+			</plugin> 
 			</plugins>			
 	</build>
-
-
-	<!-- ============================================================== -->
-	<!-- Maven Central Repository Information -->
-	<!-- ============================================================== -->
-	
-	<scm>
-		<connection>https://github.com/att/AAF.git</connection>
-		<developerConnection>${project.scm.connection}</developerConnection>
-		<url>http://github.com/att/AAF/tree/master</url>
-	</scm>
-<distributionManagement>
-    		<snapshotRepository>
-      			<id>ossrhdme</id>
-      			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    		</snapshotRepository>
-    		<repository>
-      			<id>ossrhdme</id>
-      			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    		</repository>
+	<distributionManagement>
+		<repository>
+			<id>ecomp-releases</id>
+			<name>AAF Release Repository</name>
+			<url>${nexusproxy}${releaseNexusPath}</url>
+		</repository>
+		<snapshotRepository>
+			<id>ecomp-snapshots</id>
+			<name>AAF Snapshot Repository</name>
+			<url>${nexusproxy}${snapshotNexusPath}</url>
+		</snapshotRepository>
+		<site>
+			<id>ecomp-site</id>
+			<url>dav:${nexusproxy}${sitePath}</url>
+		</site>
 	</distributionManagement>
+<pluginRepositories>
+        <pluginRepository>
+            <id>onap-plugin-snapshots</id>
+            <url>https://nexus.onap.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+	
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven 2 repository 2</name>
+			<url>http://repo2.maven.org/maven2/</url>
+		</repository>
+		<repository>
+            <id>onap-jar-snapshots</id>
+            <url>https://nexus.onap.org/content/repositories/snapshots</url>
+        </repository>
+		<repository>
+			<id>spring-repo</id>
+			<name>Spring repo</name>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>repository.jboss.org-public</id>
+			<name>JBoss.org Maven repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
 </project>
