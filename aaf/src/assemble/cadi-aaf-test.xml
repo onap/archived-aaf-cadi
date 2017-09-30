@@ -34,14 +34,14 @@
       <unpack>false</unpack>
       <scope>test</scope>
       <includes>
-      	<include>com.att.cadi:cadi-core</include>
+      	<include>org.onap.aaf.cadi:cadi-core</include>
       </includes>
     </dependencySet>
     <dependencySet>
       <unpack>false</unpack>
       <scope>test</scope>
       <includes>
-      	<include>com.att.cadi:cadi-aaf</include>
+      	<include>org.onap.aaf.cadi:cadi-aaf</include>
       </includes>
     </dependencySet>
     <dependencySet>
@@ -86,7 +86,7 @@
       <unpack>false</unpack>
       <scope>compile</scope>
       <includes>
-      	<include>com.att.cssa:rosetta</include>
+      	<include>org.onap.aaf.cssa:rosetta</include>
       </includes>
     </dependencySet>
   </dependencySets>

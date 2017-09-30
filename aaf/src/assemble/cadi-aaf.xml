@@ -34,12 +34,12 @@
       <unpack>true</unpack>
       <scope>compile</scope>
       <includes>
-      	<include>com.att.authz:authz-client</include>
-      	<include>com.att.cadi:cadi-aaf</include>
-      	<include>com.att.cadi:cadi-core</include>
-      	<include>com.att.cadi:cadi-client</include>
-      	<include>com.att.inno:env</include>
-      	<include>com.att.inno:rosetta</include>
+      	<include>org.onap.aaf.authz:authz-client</include>
+      	<include>org.onap.aaf.cadi:cadi-aaf</include>
+      	<include>org.onap.aaf.cadi:cadi-core</include>
+      	<include>org.onap.aaf.cadi:cadi-client</include>
+      	<include>org.onap.aaf.inno:env</include>
+      	<include>org.onap.aaf.inno:rosetta</include>
       </includes>
     </dependencySet>
     
