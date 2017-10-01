@@ -20,7 +20,7 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cass;
+package org.onap.aaf.cadi.aaf.cass.test;
 
 import java.util.HashMap;
 import java.util.Map;

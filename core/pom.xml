@@ -146,9 +146,6 @@
 				<version>0.7.7.201606060606</version>
 				<configuration>
 					<dumpOnExit>true</dumpOnExit>
-					<includes>
-						<include>org.onap.aaf.*</include>
-					</includes>
 				</configuration>
 				<executions>
 					<execution>
