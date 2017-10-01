@@ -22,6 +22,10 @@
  ******************************************************************************/
 package org.onap.aaf.cadi;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -57,5 +61,65 @@ public class CadiExceptionTest {
 		assertThat(exception.getMessage(), is("New Exception"));
 
 	}
+	
+	@Test
+	public void testCadiException1() {
+		CadiException exception = new CadiException();
+		
+		assertNotNull(exception);
+	}
+
+	@Test
+	public void testCadiExceptionString1() {
+		CadiException exception = new CadiException("New Exception");
+		assertNotNull(exception);
+		assertThat(exception.getMessage(), is("New Exception"));
+	}
+
+	@Test
+	public void testCadiExceptionThrowable1() {
+		CadiException exception = new CadiException(new Throwable("New Exception"));
+		assertNotNull(exception);
+		assertThat(exception.getMessage(), is("java.lang.Throwable: New Exception"));
+	}
+
+	@Test
+	public void testCadiExceptionStringThrowable1() {
+		CadiException exception = new CadiException("New Exception",new Throwable("New Exception"));
+		assertNotNull(exception);
+		assertThat(exception.getMessage(), is("New Exception"));
+
+	}
+	
+	@Test
+	public void testCadiException2() {
+		CadiException exception = new CadiException();
+		
+		assertNotNull(exception);
+	}
+
+	@Test
+	public void testCadiExceptionString2() {
+		CadiException exception = new CadiException("New Exception");
+		assertNotNull(exception);
+		assertThat(exception.getMessage(), is("New Exception"));
+	}
+
+	@Test
+	public void testCadiExceptionThrowable2() {
+		CadiException exception = new CadiException(new Throwable("New Exception"));
+		assertNotNull(exception);
+		assertThat(exception.getMessage(), is("java.lang.Throwable: New Exception"));
+	}
+
+	@Test
+	public void testCadiExceptionStringThrowable2() {
+		CadiException exception = new CadiException("New Exception",new Throwable("New Exception"));
+		assertNotNull(exception);
+		assertThat(exception.getMessage(), is("New Exception"));
+
+	}
+
+
 
 }

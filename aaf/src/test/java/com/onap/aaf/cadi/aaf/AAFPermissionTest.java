@@ -21,6 +21,11 @@
  * *
  ******************************************************************************/
 package com.onap.aaf.cadi.aaf;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -76,5 +81,131 @@ public class AAFPermissionTest {
 		assertThat(permission.toString(), is(STRINGVALUE));
 		
 	}
+	
+	@Test
+	public void test4() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
+	
+	@Test
+	public void test1() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
+	
+	@Test
+	public void test2() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
 
+	
+	@Test
+	public void test3() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
+	
+	@Test
+	public void test5() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
+	
+	@Test
+	public void test6() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
+	
+	@Test
+	public void test7() {
+		AAFPermission permission = new AAFPermission(TYPE, INSTANCE, ACTION);
+		
+		assertTrue("This should Match",permission.match(permission));
+		
+		assertTrue("This should Match", permission.match(localPermission));
+		
+		assertFalse("This should Not Match", permission.match(localPermission2));
+		
+		assertThat(permission.getKey(), is(KEY));
+		
+		assertThat(permission.permType(), is("AAF"));
+		
+		assertThat(permission.toString(), is(STRINGVALUE));
+		
+	}
 }

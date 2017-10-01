@@ -153,4 +153,216 @@ public class JU_Base64 {
 		assertEquals(toEncode,result);
 		
 	}
+	
+	@Test
+	public void test1() throws Exception {
+		// Test with different Padding
+		encode("leas",    "bGVhcw==");
+		encode("leasu",   "bGVhc3U=");
+		encode("leasur",  "bGVhc3Vy");
+		encode("leasure", "bGVhc3VyZQ==");
+		encode("leasure.","bGVhc3VyZS4=");
+
+		// Test with line ends
+		encode(encoding, expected);
+		
+		int ITER = 2000;
+		System.out.println("Priming by Encoding Base64 " + ITER + " times");
+		long start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.encode(encoding);
+		}
+		Float ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+		
+		System.out.println("Priming by Decoding Base64 " + ITER + " times");
+		start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.decode(expected);
+		}
+		ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+
+		
+		ITER=30000;
+		System.out.println("Encoding Base64 " + ITER + " times");
+		start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.encode(encoding);
+		}
+		ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+		
+		System.out.println("Decoding Base64 " + ITER + " times");
+		start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.decode(expected);
+		}
+		ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+	}
+	
+	@Test
+	public void symmetric1() throws IOException {
+		System.out.println("Validating Generated Key mechanisms works");
+		String symmetric = new String(Symm.base64.keygen());
+		System.out.println(symmetric);
+		Symm bsym = Symm.obtain(symmetric);
+		String result = bsym.encode(encoding);
+		System.out.println("\nResult:");
+		System.out.println(result);
+		assertEquals(encoding, bsym.decode(result));
+		
+		int ITER = 20000;
+		System.out.println("Generating keys " + ITER + " times");
+		long start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.keygen();
+		}
+		Float ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+
+		char[] manipulate = symmetric.toCharArray();
+		int spot = new SecureRandom().nextInt(manipulate.length);
+		manipulate[spot]|=0xFF;
+		String newsymmetric = new String(manipulate);
+		assertNotSame(newsymmetric, symmetric);
+		try {
+			bsym = Symm.obtain(newsymmetric);
+			result = bsym.decode(result);
+			assertEquals(encoding, result);
+		} catch (IOException e) {
+			// this is what we want to see if key wrong
+			System.out.println(e.getMessage() + " (as expected)");
+		}
+	}
+
+	private void encode1(String toEncode, String expected) throws IOException {
+		System.out.println("-------------------------------------------------");
+		System.out.println(toEncode);
+		System.out.println();
+		System.out.println(expected);
+		System.out.println();
+		String result = Symm.base64.encode(toEncode);
+		System.out.println(result);
+		assertEquals(expected,result);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Symm.base64.decode(new ByteArrayInputStream(result.getBytes()), baos);
+		result = baos.toString(Config.UTF_8);
+		System.out.println(result);
+		assertEquals(toEncode,result);
+		
+	}
+	
+	@Test
+	public void test2() throws Exception {
+		// Test with different Padding
+		encode("leas",    "bGVhcw==");
+		encode("leasu",   "bGVhc3U=");
+		encode("leasur",  "bGVhc3Vy");
+		encode("leasure", "bGVhc3VyZQ==");
+		encode("leasure.","bGVhc3VyZS4=");
+
+		// Test with line ends
+		encode(encoding, expected);
+		
+		int ITER = 2000;
+		System.out.println("Priming by Encoding Base64 " + ITER + " times");
+		long start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.encode(encoding);
+		}
+		Float ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+		
+		System.out.println("Priming by Decoding Base64 " + ITER + " times");
+		start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.decode(expected);
+		}
+		ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+
+		
+		ITER=30000;
+		System.out.println("Encoding Base64 " + ITER + " times");
+		start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.encode(encoding);
+		}
+		ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+		
+		System.out.println("Decoding Base64 " + ITER + " times");
+		start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.decode(expected);
+		}
+		ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+	}
+	
+	@Test
+	public void symmetric2() throws IOException {
+		System.out.println("Validating Generated Key mechanisms works");
+		String symmetric = new String(Symm.base64.keygen());
+		System.out.println(symmetric);
+		Symm bsym = Symm.obtain(symmetric);
+		String result = bsym.encode(encoding);
+		System.out.println("\nResult:");
+		System.out.println(result);
+		assertEquals(encoding, bsym.decode(result));
+		
+		int ITER = 20000;
+		System.out.println("Generating keys " + ITER + " times");
+		long start = System.nanoTime();
+		for(int i=0;i<ITER;++i) {
+			Symm.base64.keygen();
+		}
+		Float ms = (System.nanoTime()-start)/1000000F;
+		System.out.println("Total: " + ms + "ms");
+		System.out.println("Avg:   " + ms/ITER + "ms");
+
+		char[] manipulate = symmetric.toCharArray();
+		int spot = new SecureRandom().nextInt(manipulate.length);
+		manipulate[spot]|=0xFF;
+		String newsymmetric = new String(manipulate);
+		assertNotSame(newsymmetric, symmetric);
+		try {
+			bsym = Symm.obtain(newsymmetric);
+			result = bsym.decode(result);
+			assertEquals(encoding, result);
+		} catch (IOException e) {
+			// this is what we want to see if key wrong
+			System.out.println(e.getMessage() + " (as expected)");
+		}
+	}
+
+	private void encode2(String toEncode, String expected) throws IOException {
+		System.out.println("-------------------------------------------------");
+		System.out.println(toEncode);
+		System.out.println();
+		System.out.println(expected);
+		System.out.println();
+		String result = Symm.base64.encode(toEncode);
+		System.out.println(result);
+		assertEquals(expected,result);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Symm.base64.decode(new ByteArrayInputStream(result.getBytes()), baos);
+		result = baos.toString(Config.UTF_8);
+		System.out.println(result);
+		assertEquals(toEncode,result);
+		
+	}
 }

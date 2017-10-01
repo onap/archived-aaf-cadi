@@ -57,4 +57,59 @@ public class JU_Hash {
 		}
 	}
 
+	@Test
+	public void test1() throws CadiException {
+		String init = "m8234337@csp.att.com:kumquat8rie@#Tomatos3";
+		String hashed = Hash.toHex(init.getBytes());
+		System.out.println(hashed);
+		byte[] ba = Hash.fromHex(hashed);
+		String recon = new String(ba);
+		System.out.println(recon);
+		Assert.assertEquals(init, recon);
+		
+		init =hashed.substring(1);
+		try {
+			hashed = Hash.fromHex(init).toString();
+			Assert.fail("Should have thrown Exception");
+		} catch (CadiException e) {
+			
+		}
+		
+		init = hashed.replace('1', '~');
+		try {
+			hashed = Hash.fromHex(init).toString();
+			Assert.fail("Should have thrown Exception");
+		} catch (CadiException e) {
+			
+		}
+	}
+
+	
+	@Test
+	public void test2() throws CadiException {
+		String init = "m823475@csp.att.com:kumquat8rie@#Tomatos3";
+		String hashed = Hash.toHex(init.getBytes());
+		System.out.println(hashed);
+		byte[] ba = Hash.fromHex(hashed);
+		String recon = new String(ba);
+		System.out.println(recon);
+		Assert.assertEquals(init, recon);
+		
+		init =hashed.substring(1);
+		try {
+			hashed = Hash.fromHex(init).toString();
+			Assert.fail("Should have thrown Exception");
+		} catch (CadiException e) {
+			
+		}
+		
+		init = hashed.replace('1', '~');
+		try {
+			hashed = Hash.fromHex(init).toString();
+			Assert.fail("Should have thrown Exception");
+		} catch (CadiException e) {
+			
+		}
+	}
+
 }

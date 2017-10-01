@@ -32,5 +32,6 @@ public class JU_TheConsole {
 		assertEquals(TheConsole.implemented(),false);
 	}
 	
+
 	}
 	

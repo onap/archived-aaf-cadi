@@ -37,6 +37,7 @@ public class JU_UserChainManip {
 		assertEquals(UserChainManip.build(new StringBuilder(""), "app", "id", baseAuth, true).toString(), "app:id:BasicAuth:AS");
 	}
 	
+
 	@Test
 	public void idToNS(){
 		assertEquals(UserChainManip.idToNS(null), "");

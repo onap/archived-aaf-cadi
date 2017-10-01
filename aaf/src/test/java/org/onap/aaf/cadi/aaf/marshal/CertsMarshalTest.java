@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * ============LICENSE_START====================================================
  * * org.onap.aaf
  * * ===========================================================================
  * * Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -19,46 +20,35 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.util;
-
-import static org.junit.Assert.assertEquals;
+package org.onap.aaf.cadi.aaf.marshal;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class JU_Split {
+
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.onap.aaf.rosetta.ParseException;
+
+public class CertsMarshalTest {
 
 	@Test
-	public void split() {
-		assertEquals(Split.split('c', "testctc").length,3);
-	}
-	
-	@Test
-	public void splitTrim() {
-		assertEquals(Split.splitTrim('c', "testctc").length,3);
-	}
-	
-	@Test
-	public void splitTrimWithSize() {
-		assertEquals(Split.splitTrim('c', "testcctc",2).length,2);
+	public void test() throws ParseException {
+		CertsMarshal marshal = new CertsMarshal();
+		assertNotNull(marshal);
 	}
 
 	@Test
-	public void splitTrim1() {
-		assertEquals(Split.splitTrim('c', "testctc").length,3);
+	public void test2() throws ParseException {
+		CertsMarshal marshal = new CertsMarshal();
+		assertNotNull(marshal);
 	}
-	
+
 	@Test
-	public void splitTrimWithSize1() {
-		assertEquals(Split.splitTrim('c', "testcctc",2).length,2);
-	}
-	
-	@Test
-	public void splitTrim2() {
-		assertEquals(Split.splitTrim('c', "testctc").length,3);
-	}
-	
-	@Test
-	public void splitTrimWithSize2() {
-		assertEquals(Split.splitTrim('c', "testcctc",2).length,2);
+	public void test3() throws ParseException {
+		CertsMarshal marshal = new CertsMarshal();
+		assertNotNull(marshal);
 	}
 }
