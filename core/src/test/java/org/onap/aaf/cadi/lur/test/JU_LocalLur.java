@@ -97,56 +97,7 @@ public class JU_LocalLur {
 		}
 	}
 
-	@Test
-	public void test1() throws IOException {
-		Symm symmetric = Symm.baseCrypt().obtain();
-		LocalLur up;
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		baos.write(Symm.ENC.getBytes());
-		symmetric.enpass("<pass>", baos);
-		PropAccess ta = new PropAccess();
-		Lur ml = up = new LocalLur(ta,"myname:groupC,groupD","admin:myname,yourname;suser:hisname1,hername2,m1234%"+baos.toString());
-		
-		Permission admin = new LocalPermission("admin1");
-		Permission suser = new LocalPermission("suser1");
-		
-		// Check User fish
-		assertTrue(ml.fish(new JUPrincipal("myname1"),admin));
-		assertTrue(ml.fish(new JUPrincipal("hisname1"),admin));
-		assertFalse(ml.fish(new JUPrincipal("noname1"),admin));
-		assertTrue(ml.fish(new JUPrincipal("itsname1"),suser));
-		assertTrue(ml.fish(new JUPrincipal("hername1"),suser));
-		assertFalse(ml.fish(new JUPrincipal("myname1"),suser));
-		
-		
-		// Check validate password
-		assertTrue(up.validate("m1234",Type.PASSWORD, "<pass>".getBytes()));
-		assertFalse(up.validate("m1234",Type.PASSWORD, "badPass".getBytes()));
-		
-		// Check fishAll
-		Set<String> set = new TreeSet<String>();
-		List<Permission> perms = new ArrayList<Permission>();
-		ml.fishAll(new JUPrincipal("myname"), perms);
-		for(Permission p : perms) {
-			set.add(p.getKey());
-		}
-		assertEquals("[admin, groupA, groupB]",set.toString());
-		UsersDump.write(System.out, up);
-		System.out.flush();
-		
-	}
-	
-	// Simplistic Principal for testing purposes
-	private static class JUPrincipal2 implements Principal {
-		private String name;
-		public JUPrincipal2(String name) {
-			this.name = name;
-		}
-//		@Override
-		public String getName() {
-			return name;
-		}
-	}
+
 
 	
 	

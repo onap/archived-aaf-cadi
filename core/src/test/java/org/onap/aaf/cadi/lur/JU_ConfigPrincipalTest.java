@@ -56,7 +56,7 @@ public class JU_ConfigPrincipalTest {
 	}
 	
 	@Test
-	public void testConfigPrincipalStringString1() {
+	public void testConfigPrincipalStringString2() {
 		ConfigPrincipal p =  new ConfigPrincipal("Demo", "password");
 		
 		assertEquals(p.getName(), "Demo");
@@ -65,7 +65,7 @@ public class JU_ConfigPrincipalTest {
 	}
 
 	@Test
-	public void testConfigPrincipalStringByteArray1() throws IOException {
+	public void testConfigPrincipalStringByteArray2() throws IOException {
 		byte[] bytes = "password".getBytes();
 		ConfigPrincipal p =  new ConfigPrincipal("Demo", bytes);
 		
@@ -75,4 +75,64 @@ public class JU_ConfigPrincipalTest {
 		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
 	}
 
+	
+	@Test
+	public void testConfigPrincipalStringString1() {
+		ConfigPrincipal p =  new ConfigPrincipal("User", "pass");
+		
+		assertEquals(p.getName(), "User");
+		assertEquals(p.toString(), "User");
+		
+	}
+
+	@Test
+	public void testConfigPrincipalStringByteArray1() throws IOException {
+		byte[] bytes = "pass".getBytes();
+		ConfigPrincipal p =  new ConfigPrincipal("User", bytes);
+		
+		assertEquals(p.getName(), "User");
+		assertEquals(p.getCred(), bytes);
+		assertEquals(p.toString(), "User");
+		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
+	}
+	
+	@Test
+	public void testConfigPrincipalStringString3() {
+		ConfigPrincipal p =  new ConfigPrincipal("Demo", "password");
+		
+		assertEquals(p.getName(), "Demo");
+		assertEquals(p.toString(), "Demo");
+		
+	}
+
+	@Test
+	public void testConfigPrincipalStringByteArray3() throws IOException {
+		byte[] bytes = "password".getBytes();
+		ConfigPrincipal p =  new ConfigPrincipal("Demo", bytes);
+		
+		assertEquals(p.getName(), "Demo");
+		assertEquals(p.getCred(), bytes);
+		assertEquals(p.toString(), "Demo");
+		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
+	}
+	
+	@Test
+	public void testConfigPrincipalStringString4() {
+		ConfigPrincipal p =  new ConfigPrincipal("Demo", "password");
+		
+		assertEquals(p.getName(), "Demo");
+		assertEquals(p.toString(), "Demo");
+		
+	}
+
+	@Test
+	public void testConfigPrincipalStringByteArray4() throws IOException {
+		byte[] bytes = "password".getBytes();
+		ConfigPrincipal p =  new ConfigPrincipal("Demo", bytes);
+		
+		assertEquals(p.getName(), "Demo");
+		assertEquals(p.getCred(), bytes);
+		assertEquals(p.toString(), "Demo");
+		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
+	}
 }

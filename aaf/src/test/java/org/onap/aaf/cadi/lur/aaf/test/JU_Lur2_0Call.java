@@ -171,7 +171,7 @@ public class JU_Lur2_0Call {
 //				50000, // 5 seconds after Expiration
 //				200); // High Count of items.. These do not take much memory
 //
-//		Principal pri = new ConfigPrincipal("xy1234","whatever);
+//		Principal pri = new ConfigPrincipal("xy1234","whatever");
 //		for (int i = 0; i < 10; ++i) {
 ////			print(aafLur, pri, new LocalPermission("*|*|*|com.att.authz"));
 //			print(aafLur, pri, new LocalPermission("service|myInstance|write"),false);

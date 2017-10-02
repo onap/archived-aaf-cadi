@@ -46,7 +46,7 @@ public class JU_HBasicAuthSSTest {
 	}
 	
 	@Test
-	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnection1() throws IOException {
+	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnection_one() throws IOException {
 		HBasicAuthSS basicAuth = new HBasicAuthSS("demo", "demopass", null); 
 		
 		assertEquals(basicAuth.getID(), "demo");
@@ -55,4 +55,23 @@ public class JU_HBasicAuthSSTest {
 		assertEquals(basicAuth.setLastResponse(401), 1);
 	}
 
+	@Test
+	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnectionTwo() throws IOException {
+		HBasicAuthSS basicAuth = new HBasicAuthSS("user 1", "user 2", null); 
+		
+		assertEquals(basicAuth.getID(), "user 1");
+		assertFalse(basicAuth.isDenied());
+		assertEquals(basicAuth.count(), 0);
+		assertEquals(basicAuth.setLastResponse(401), 1);
+	}
+	
+	@Test
+	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnectionThree() throws IOException {
+		HBasicAuthSS basicAuth = new HBasicAuthSS("onap", "onap", null); 
+		
+		assertEquals(basicAuth.getID(), "onap");
+		assertFalse(basicAuth.isDenied());
+		assertEquals(basicAuth.count(), 0);
+		assertEquals(basicAuth.setLastResponse(401), 1);
+	}
 }

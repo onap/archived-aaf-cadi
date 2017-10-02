@@ -24,221 +24,64 @@ package org.onap.aaf.cass;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-import org.onap.aaf.cadi.aaf.cass.AAFAuthenticatedUser;
-import org.junit.After;
+import org.apache.cassandra.auth.AuthenticatedUser;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.onap.aaf.cadi.aaf.cass.AAFAuthenticatedUser;
 
-public class JU_AAFAuthenticatedUserTest
-{
-	
+public class JU_AAFAuthenticatedUserTest {
 
 	@Before
-	public void setUp()
-	{
-		
+	public void setUp() throws Exception {
 	}
 
-	@After
-	public void tearDown()
-	{
-		
-	}
-
-	/*
-	 * Testing Conditon(s): if: (endIndex >= 0)
-	 */
 	@Test
-	public void test_method_AAFAuthenticatedUser_0_branch_0()
-	{
-		System.out.println("Now Testing Method:AAFAuthenticatedUser Branch:0");
+	public void test() {
+		AAFAuthenticatedUser user = new AAFAuthenticatedUser(null, "User1@aaf");
+		assertEquals(user.getFullName(),"User1@aaf");
+		assertEquals(user.getName(),"User1@aaf");
+		assertFalse(user.isAnonymous());
+		assertFalse(user.isSuper());
+		assertFalse(user.isLocal());
 		
-		//Constructor
-
 		
 		
 	}
-
-	/*
-	 * Testing Conditon(s): else: Not (endIndex >= 0)
-	 */
-	@Test
-	public void test_method_AAFAuthenticatedUser_0_branch_1()
-	{
-		System.out.println("Now Testing Method:AAFAuthenticatedUser Branch:1");
-		
-		//Constructor
-		
-
 	
+	@Test
+	public void testone() {
+		AAFAuthenticatedUser user = new AAFAuthenticatedUser(null, "User2@aaf");
+		assertEquals(user.getFullName(),"User2@aaf");
+		assertEquals(user.getName(),"User2@aaf");
+		assertFalse(user.isAnonymous());
+		assertFalse(user.isSuper());
+		assertFalse(user.isLocal());
+		
+		
 		
 	}
 
-	/*
-	 * Testing Conditon(s): Default
-	 */
 	@Test
-	public void test_method_getFullName_1_branch_0()
-	{
-		System.out.println("Now Testing Method:getFullName Branch:0");
+	public void testtwo() {
+		AAFAuthenticatedUser user = new AAFAuthenticatedUser(null, "onap@aaf");
+		assertEquals(user.getFullName(),"onap@aaf");
+		assertEquals(user.getName(),"onap@aaf");
+		assertFalse(user.isAnonymous());
+		assertFalse(user.isSuper());
+		assertFalse(user.isLocal());
 		
-
+		
+		
 	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_getName_2_branch_0()
-	{
-		System.out.println("Now Testing Method:getName Branch:0");
-		
 	
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
 	@Test
-	public void test_method_isAnonymous_3_branch_0()
-	{
-		System.out.println("Now Testing Method:isAnonymous Branch:0");
-	
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_setAnonymous_4_branch_0()
-	{
-		System.out.println("Now Testing Method:setAnonymous Branch:0");
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_getAnonymous_5_branch_0()
-	{
-		System.out.println("Now Testing Method:getAnonymous Branch:0");
-		
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_isSuper_6_branch_0()
-	{
-		System.out.println("Now Testing Method:isSuper Branch:0");
-		
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_setSuper_7_branch_0()
-	{
-		System.out.println("Now Testing Method:setSuper Branch:0");
-		
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_getSuper_8_branch_0()
-	{
-		System.out.println("Now Testing Method:getSuper Branch:0");
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_isLocal_9_branch_0()
-	{
-		System.out.println("Now Testing Method:isLocal Branch:0");
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_setLocal_10_branch_0()
-	{
-		System.out.println("Now Testing Method:setLocal Branch:0");
-		
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): if: (this == o)
-	 */
-	@Test
-	public void test_method_equals_11_branch_0()
-	{
-		System.out.println("Now Testing Method:equals Branch:0");
-		
-		
-	}
-
-	/*
-	 * Testing Conditon(s): else: Not (this == o)
-	 */
-	@Test
-	public void test_method_equals_11_branch_1()
-	{
-		System.out.println("Now Testing Method:equals Branch:1");
-		
-	}
-
-	/*
-	 * Testing Conditon(s): if: (!(o instanceof AAFAuthenticatedUser))
-	 */
-	@Test
-	public void test_method_equals_11_branch_2()
-	{
-		System.out.println("Now Testing Method:equals Branch:2");
-	
-	}
-
-	/*
-	 * Testing Conditon(s): else: Not (!(o instanceof AAFAuthenticatedUser))
-	 */
-	@Test
-	public void test_method_equals_11_branch_3()
-	{
-		System.out.println("Now Testing Method:equals Branch:3");
-		
-	
-	}
-
-	/*
-	 * Testing Conditon(s): Default
-	 */
-	@Test
-	public void test_method_hashCode_12_branch_0()
-	{
-		System.out.println("Now Testing Method:hashCode Branch:0");
+	public void testthree() {
+		AAFAuthenticatedUser user = new AAFAuthenticatedUser(null, "openecomp@aaf");
+		assertEquals(user.getFullName(),"openecomp@aaf");
+		assertEquals(user.getName(),"openecomp@aaf");
+		assertFalse(user.isAnonymous());
+		assertFalse(user.isSuper());
+		assertFalse(user.isLocal());
 		
 		
 		

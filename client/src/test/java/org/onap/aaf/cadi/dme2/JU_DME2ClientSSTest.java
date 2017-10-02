@@ -52,4 +52,63 @@ public class JU_DME2ClientSSTest {
 		assertEquals(client.setLastResponse(0), 0);
 	}
 
+	@Test
+	public void test1() throws IOException, DME2Exception {
+		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
+		
+		assertNotNull(client);
+
+		assertEquals(client.getID(), "user");
+		assertEquals(client.setLastResponse(0), 0);
+	}
+	
+	@Test
+	public void test2() throws IOException, DME2Exception {
+		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
+		
+		assertNotNull(client);
+
+		assertEquals(client.getID(), "user");
+		assertEquals(client.setLastResponse(0), 0);
+	}
+	
+	@Test
+	public void test3() throws IOException, DME2Exception {
+		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
+		
+		assertNotNull(client);
+
+		assertEquals(client.getID(), "user");
+		assertEquals(client.setLastResponse(0), 0);
+	}
+	
+	@Test
+	public void test4() throws IOException, DME2Exception {
+		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
+		
+		assertNotNull(client);
+
+		assertEquals(client.getID(), "user");
+		assertEquals(client.setLastResponse(0), 0);
+	}
+	
+	@Test
+	public void test5() throws IOException, DME2Exception {
+		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
+		
+		assertNotNull(client);
+
+		assertEquals(client.getID(), "user");
+		assertEquals(client.setLastResponse(0), 0);
+	}
+	
+	@Test
+	public void test6() throws IOException, DME2Exception {
+		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
+		
+		assertNotNull(client);
+
+		assertEquals(client.getID(), "user");
+		assertEquals(client.setLastResponse(0), 0);
+	}
 }
