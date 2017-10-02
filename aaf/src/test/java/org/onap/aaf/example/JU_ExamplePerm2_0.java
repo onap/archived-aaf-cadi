@@ -30,19 +30,19 @@ import org.onap.aaf.cadi.Permission;
 import org.onap.aaf.cadi.PropAccess;
 import org.onap.aaf.cadi.aaf.AAFPermission;
 import org.onap.aaf.cadi.aaf.v2_0.AAFAuthn;
-import org.onap.aaf.cadi.aaf.v2_0.AAFConHttp;
+import org.onap.aaf.cadi.aaf.v2_0.AAFCon;
+import org.onap.aaf.cadi.aaf.v2_0.AAFConDME2;
 import org.onap.aaf.cadi.aaf.v2_0.AAFLurPerm;
-import org.onap.aaf.cadi.locator.DNSLocator;
 
-public class ExamplePerm2_0_DME2 {
+public class JU_ExamplePerm2_0 {
 	public static void main(String args[]) {
+
 		// Link or reuse to your Logging mechanism
 		PropAccess myAccess = new PropAccess();  
 		
 		// 
 		try {
-			AAFConHttp acon = new AAFConHttp(myAccess, new DNSLocator(
-					myAccess,"https","localhost","8100"));
+			AAFCon<?> acon = new AAFConDME2(myAccess);
 			
 			// AAFLur has pool of DME clients as needed, and Caches Client lookups
 			AAFLurPerm aafLur = acon.newLur();

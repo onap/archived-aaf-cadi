@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class AAFAuthorizerTest
+public class JU_AAFAuthorizerTest
 {
 	
 

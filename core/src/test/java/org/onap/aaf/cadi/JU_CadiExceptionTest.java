@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class CadiExceptionTest {
+public class JU_CadiExceptionTest {
 
 	@Test
 	public void testCadiException() {

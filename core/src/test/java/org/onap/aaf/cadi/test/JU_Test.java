@@ -33,7 +33,7 @@ import java.net.UnknownHostException;
  * 
  *
  */
-public class Test {
+public class JU_Test {
 
 	/**
 	 * @param args

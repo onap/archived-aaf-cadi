@@ -20,61 +20,35 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.client.test;
+package org.onap.aaf.cadi.aaf.marshal;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.onap.aaf.cadi.client.Holder;
+import org.onap.aaf.rosetta.ParseException;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
-
-public class HolderTest {
+public class JU_CertsMarshalTest {
 
 	@Test
-	public void testSet() {
-		Holder<String> holder = new Holder<String>("StringHolder");
-		assertEquals(holder.get(), "StringHolder");
-		
-		holder.set("New String");
-		assertEquals(holder.get(), "New String");
+	public void test() throws ParseException {
+		CertsMarshal marshal = new CertsMarshal();
+		assertNotNull(marshal);
 	}
 
 	@Test
-	public void testSet4() {
-		Holder<String> holder = new Holder<String>("StringHolder");
-		assertEquals(holder.get(), "StringHolder");
-		
-		holder.set("New String1");
-		assertEquals(holder.get(), "New String1");
+	public void test2() throws ParseException {
+		CertsMarshal marshal = new CertsMarshal();
+		assertNotNull(marshal);
 	}
+
 	@Test
-	public void testSet1() {
-		Holder<String> holder = new Holder<String>("StringHolder");
-		assertEquals(holder.get(), "StringHolder");
-		
-		holder.set("New String2");
-		assertEquals(holder.get(), "New String2");
-	}
-	
-	@Test
-	public void testSet2() {
-		Holder<String> holder = new Holder<String>("StringHolder");
-		assertEquals(holder.get(), "StringHolder");
-		
-		holder.set("New String3");
-		assertEquals(holder.get(), "New String3");
-	}
-	
-	@Test
-	public void testSet3() {
-		Holder<String> holder = new Holder<String>("StringHolder");
-		assertEquals(holder.get(), "StringHolder");
-		
-		holder.set("New String4");
-		assertEquals(holder.get(), "New String4");
+	public void test3() throws ParseException {
+		CertsMarshal marshal = new CertsMarshal();
+		assertNotNull(marshal);
 	}
 }

@@ -20,7 +20,7 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.http;
+package org.onap.aaf.cadi.lur;
 
 import static org.junit.Assert.*;
 
@@ -29,30 +29,50 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HBasicAuthSSTest {
+public class JU_ConfigPrincipalTest {
 
 	@Before
 	public void setUp() throws Exception {
 	}
 
 	@Test
-	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnection() throws IOException {
-		HBasicAuthSS basicAuth = new HBasicAuthSS("user", "pass", null); 
+	public void testConfigPrincipalStringString() {
+		ConfigPrincipal p =  new ConfigPrincipal("User", "pass");
 		
-		assertEquals(basicAuth.getID(), "user");
-		assertFalse(basicAuth.isDenied());
-		assertEquals(basicAuth.count(), 0);
-		assertEquals(basicAuth.setLastResponse(401), 1);
+		assertEquals(p.getName(), "User");
+		assertEquals(p.toString(), "User");
+		
+	}
+
+	@Test
+	public void testConfigPrincipalStringByteArray() throws IOException {
+		byte[] bytes = "pass".getBytes();
+		ConfigPrincipal p =  new ConfigPrincipal("User", bytes);
+		
+		assertEquals(p.getName(), "User");
+		assertEquals(p.getCred(), bytes);
+		assertEquals(p.toString(), "User");
+		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
 	}
 	
 	@Test
-	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnection1() throws IOException {
-		HBasicAuthSS basicAuth = new HBasicAuthSS("demo", "demopass", null); 
+	public void testConfigPrincipalStringString1() {
+		ConfigPrincipal p =  new ConfigPrincipal("Demo", "password");
 		
-		assertEquals(basicAuth.getID(), "demo");
-		assertFalse(basicAuth.isDenied());
-		assertEquals(basicAuth.count(), 0);
-		assertEquals(basicAuth.setLastResponse(401), 1);
+		assertEquals(p.getName(), "Demo");
+		assertEquals(p.toString(), "Demo");
+		
+	}
+
+	@Test
+	public void testConfigPrincipalStringByteArray1() throws IOException {
+		byte[] bytes = "password".getBytes();
+		ConfigPrincipal p =  new ConfigPrincipal("Demo", bytes);
+		
+		assertEquals(p.getName(), "Demo");
+		assertEquals(p.getCred(), bytes);
+		assertEquals(p.toString(), "Demo");
+		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
 	}
 
 }

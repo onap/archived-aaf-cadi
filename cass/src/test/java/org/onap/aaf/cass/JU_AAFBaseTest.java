@@ -29,7 +29,7 @@ import org.onap.aaf.cadi.aaf.cass.AAFBase;
 
 import static org.junit.Assert.*;
 
-public class AAFBaseTest
+public class JU_AAFBaseTest
 {
 	
 

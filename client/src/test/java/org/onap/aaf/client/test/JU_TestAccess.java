@@ -20,7 +20,7 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.lur.test;
+package org.onap.aaf.client.test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,17 +28,13 @@ import java.io.InputStream;
 import org.onap.aaf.cadi.Access;
 import org.onap.aaf.cadi.Symm;
 
-public class TestAccess implements Access {
+public class JU_TestAccess implements Access {
 	private Symm symm;
 
-	public TestAccess() {
+	public JU_TestAccess() {
 		symm = Symm.obtain(this);
 	}
 	
-	public TestAccess(Symm symmetric) {
-		symm = symmetric;
-	}
-
 	public void log(Level level, Object... elements) {
 		boolean first = true;
 		for(int i=0;i<elements.length;++i) {
@@ -77,13 +73,16 @@ public class TestAccess implements Access {
 			: encrypted;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.att.cadi.Access#willLog(com.att.cadi.Access.Level)
+	 */
 	@Override
 	public boolean willLog(Level level) {
 		return true;
 	}
 
 	@Override
-	public void printf(Level level, String fmt, Object[] elements) {
+	public void printf(Level level, String fmt, Object... elements) {
 		// TODO Auto-generated method stub
 		
 	}

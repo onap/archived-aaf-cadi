@@ -45,7 +45,7 @@ import org.onap.aaf.inno.env.APIException;
 
 import com.att.aft.dme2.internal.jersey.api.client.Client;
 
-public class AAFAuthnTest {
+public class JU_AAFAuthnTest {
 	
 	@Mock(answer = Answers.RETURNS_DEEP_STUBS)
 	private AAFCon<Client> con;

@@ -31,7 +31,7 @@ import org.onap.aaf.cadi.Symm;
 import com.att.aft.dme2.api.DME2Client;
 import com.att.aft.dme2.api.DME2Manager;
 
-public class TestDME2Client {
+public class JU_TestDME2Client {
 	public static void main(String[] args) {
 		try {
 			Properties props = System.getProperties();

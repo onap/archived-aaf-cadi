@@ -20,59 +20,61 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.lur;
+package org.onap.aaf.client.test;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
+import org.junit.Test;
+import org.onap.aaf.cadi.client.Holder;
+
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class ConfigPrincipalTest {
+public class JU_HolderTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testSet() {
+		Holder<String> holder = new Holder<String>("StringHolder");
+		assertEquals(holder.get(), "StringHolder");
+		
+		holder.set("New String");
+		assertEquals(holder.get(), "New String");
 	}
 
 	@Test
-	public void testConfigPrincipalStringString() {
-		ConfigPrincipal p =  new ConfigPrincipal("User", "pass");
+	public void testSet4() {
+		Holder<String> holder = new Holder<String>("StringHolder");
+		assertEquals(holder.get(), "StringHolder");
 		
-		assertEquals(p.getName(), "User");
-		assertEquals(p.toString(), "User");
-		
+		holder.set("New String1");
+		assertEquals(holder.get(), "New String1");
 	}
-
 	@Test
-	public void testConfigPrincipalStringByteArray() throws IOException {
-		byte[] bytes = "pass".getBytes();
-		ConfigPrincipal p =  new ConfigPrincipal("User", bytes);
+	public void testSet1() {
+		Holder<String> holder = new Holder<String>("StringHolder");
+		assertEquals(holder.get(), "StringHolder");
 		
-		assertEquals(p.getName(), "User");
-		assertEquals(p.getCred(), bytes);
-		assertEquals(p.toString(), "User");
-		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
+		holder.set("New String2");
+		assertEquals(holder.get(), "New String2");
 	}
 	
 	@Test
-	public void testConfigPrincipalStringString1() {
-		ConfigPrincipal p =  new ConfigPrincipal("Demo", "password");
+	public void testSet2() {
+		Holder<String> holder = new Holder<String>("StringHolder");
+		assertEquals(holder.get(), "StringHolder");
 		
-		assertEquals(p.getName(), "Demo");
-		assertEquals(p.toString(), "Demo");
-		
+		holder.set("New String3");
+		assertEquals(holder.get(), "New String3");
 	}
-
+	
 	@Test
-	public void testConfigPrincipalStringByteArray1() throws IOException {
-		byte[] bytes = "password".getBytes();
-		ConfigPrincipal p =  new ConfigPrincipal("Demo", bytes);
+	public void testSet3() {
+		Holder<String> holder = new Holder<String>("StringHolder");
+		assertEquals(holder.get(), "StringHolder");
 		
-		assertEquals(p.getName(), "Demo");
-		assertEquals(p.getCred(), bytes);
-		assertEquals(p.toString(), "Demo");
-		assertTrue(p.getAsBasicAuthHeader().startsWith("Basic"));
+		holder.set("New String4");
+		assertEquals(holder.get(), "New String4");
 	}
-
 }

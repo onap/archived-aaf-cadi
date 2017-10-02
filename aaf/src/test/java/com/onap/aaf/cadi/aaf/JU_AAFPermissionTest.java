@@ -38,7 +38,7 @@ import org.mockito.MockitoAnnotations;
 import org.onap.aaf.cadi.aaf.AAFPermission;
 import org.onap.aaf.cadi.lur.LocalPermission;
 
-public class AAFPermissionTest {
+public class JU_AAFPermissionTest {
 
 	private static final String INSTANCE = "*";
 	private static final String ACTION = "*";

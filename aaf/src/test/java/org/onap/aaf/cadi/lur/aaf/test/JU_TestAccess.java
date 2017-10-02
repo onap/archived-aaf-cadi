@@ -20,38 +20,78 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.client.test;
+package org.onap.aaf.cadi.lur.aaf.test;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 import org.onap.aaf.cadi.Access;
 import org.onap.aaf.cadi.Symm;
+import org.onap.aaf.cadi.config.Config;
 
-public class TestAccess implements Access {
+public class JU_TestAccess implements Access {
 	private Symm symm;
+	private PrintStream out;
 
-	public TestAccess() {
-		symm = Symm.obtain(this);
+	public JU_TestAccess(PrintStream out) {
+		this.out = out;
+		InputStream is = ClassLoader.getSystemResourceAsStream("cadi.properties");
+		try {
+			System.getProperties().load(is);
+		} catch (IOException e) {
+			e.printStackTrace(out);
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace(out);
+			}
+		}
+		
+		String keyfile = System.getProperty(Config.CADI_KEYFILE);
+		if(keyfile==null) {
+			System.err.println("No " + Config.CADI_KEYFILE + " in Classpath");
+		} else {
+			try {
+				is = new FileInputStream(keyfile);
+				try {
+					symm = Symm.obtain(is);
+				} finally {
+					is.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace(out);
+			}
+		}
+		
+
+
 	}
 	
 	public void log(Level level, Object... elements) {
 		boolean first = true;
 		for(int i=0;i<elements.length;++i) {
 			if(first)first = false;
-			else System.out.print(' ');
-			System.out.print(elements[i].toString());
+			else out.print(' ');
+			out.print(elements[i].toString());
 		}
-		System.out.println();
+		out.println();
 	}
 
 	public void log(Exception e, Object... elements) {
-		e.printStackTrace();
+		e.printStackTrace(out);
 		log(Level.ERROR,elements);
 	}
 
 	public void setLogLevel(Level level) {
 		
+	}
+
+	@Override
+	public boolean willLog(Level level) {
+		return true;
 	}
 
 	public ClassLoader classLoader() {
@@ -71,14 +111,6 @@ public class TestAccess implements Access {
 		return (encrypted!=null && (anytext==true || encrypted.startsWith(Symm.ENC)))
 			? symm.depass(encrypted)
 			: encrypted;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.att.cadi.Access#willLog(com.att.cadi.Access.Level)
-	 */
-	@Override
-	public boolean willLog(Level level) {
-		return true;
 	}
 
 	@Override

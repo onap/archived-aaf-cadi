@@ -25,52 +25,34 @@ package org.onap.aaf.client.test;
 import java.net.URI;
 import java.util.Properties;
 
-import org.onap.aaf.cadi.Access;
-import org.onap.aaf.cadi.client.Future;
-import org.onap.aaf.cadi.dme2.DME2ClientSS;
-import org.onap.aaf.cadi.dme2.DRcli;
-
+import com.att.aft.dme2.api.DME2Client;
 import com.att.aft.dme2.api.DME2Manager;
 
-public class TestDME2RcliClient {
+public class JU_BasicDME2Client {
 	public static void main(String[] args) {
 		try {
 			Properties props = System.getProperties();
-			props.put("AFT_LATITUDE","32.780140");
-			props.put("AFT_LONGITUDE","-96.800451");
-			props.put("AFT_ENVIRONMENT","AFTUAT");
-//			props.put("DME2_EP_REGISTRY_CLASS","DME2FS");
-//			props.put("AFT_DME2_EP_REGISTRY_FS_DIR","/Volumes/Data/src/authz/dme2reg");
+			
+			DME2Manager dm = new DME2Manager("DME2Manager TestBasicDME2Client",props);
+			URI uri = new URI(System.getProperty("aaf_url"));
+			DME2Client client = new DME2Client(dm,uri,3000);
 
-			props.put("cadi_keystore","/Volumes/Data/src/authz/common/aaf.att.jks");
-			props.put("cadi_keystore_password","enc:???");
-			props.put("cadi_truststore","/Volumes/Data/src/authz/common/truststore.jks");
-			props.put("cadi_truststore_password","enc:???");
-			props.put("cadi_keyfile", "/Volumes/Data/src/authz/common/keyfile");
+			System.out.println(props.getProperty("aaf_id"));
+			client.setCredentials(props.getProperty("aaf_id"),props.getProperty("aaf_password"));
 			
-			// Local Testing on dynamic IP PC ***ONLY***
-//			props.put("cadi_trust_all_x509", "true");		
+			String path = String.format("/authz/perms/user/%s@csp.att.com",args.length>0?args[0]:"xx9999");
+			System.out.printf("Path: %s\n",path);
+			client.addHeader("Accept", "application/Perms+json;q=1.0;charset=utf-8;version=2.0,application/json;q=1.0;version=2.0,*");
+			client.setMethod("GET");
+			client.setContext(path);
+			client.setPayload("");// Note: Even on "GET", you need a String in DME2
 			
-			
-			
-			URI uri = new URI("https://DME2RESOLVE/service=com.att.authz.AuthorizationService/version=2.0/envContext=DEV/routeOffer=BAU_SE");
-				 
-			Access access = new TestAccess();
-			DME2Manager dm = new DME2Manager("DME2Manager TestHClient",props);
-			DRcli client = new DRcli(
-					uri, 
-					new DME2ClientSS(access,"XX@NS","enc:???"));
-			
-			client.setManager(dm)
-				  .apiVersion("2.0")
-				  .readTimeout(3000);
-			
-			Future<String> ft = client.read("/authz/nss/com.att.aaf","text/json");  
-			if(ft.get(10000)) {
-				System.out.println("Hurray,\n"+ft.body());
-			} else {
-				System.out.println("not quite: " + ft.code());
+			String o = client.sendAndWait(5000); // There are other Asynchronous call options, see DME2 Docs
+			if(o==null) {
+				System.out.println('[' + o + ']' + " (blank is good)");
 			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
