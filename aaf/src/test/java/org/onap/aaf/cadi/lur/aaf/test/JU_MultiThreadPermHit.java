@@ -36,7 +36,7 @@ import org.onap.aaf.cadi.aaf.v2_0.AAFLurPerm;
 import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.locator.PropertyLocator;
 
-public class MultiThreadPermHit {
+public class JU_MultiThreadPermHit {
 	public static void main(String args[]) {
 		// Link or reuse to your Logging mechanism
 		PropAccess myAccess = new PropAccess(); // 

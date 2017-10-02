@@ -40,7 +40,7 @@ import org.onap.aaf.cadi.aaf.AAFTransmutate;
 import org.onap.aaf.cadi.lur.ConfigPrincipal;
 import org.onap.aaf.cadi.principal.BasicPrincipal;
 
-public class AAFTransmutateTest {
+public class JU_AAFTransmutateTest {
 	
 	@Mock
 	Principal principal ;

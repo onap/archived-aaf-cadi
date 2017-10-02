@@ -20,35 +20,39 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.aaf.marshal;
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-
+package org.onap.aaf.cadi.http;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Test;
-import org.onap.aaf.rosetta.ParseException;
 
-public class CertsMarshalTest {
+public class JU_HBasicAuthSSTest {
 
-	@Test
-	public void test() throws ParseException {
-		CertsMarshal marshal = new CertsMarshal();
-		assertNotNull(marshal);
+	@Before
+	public void setUp() throws Exception {
 	}
 
 	@Test
-	public void test2() throws ParseException {
-		CertsMarshal marshal = new CertsMarshal();
-		assertNotNull(marshal);
+	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnection() throws IOException {
+		HBasicAuthSS basicAuth = new HBasicAuthSS("user", "pass", null); 
+		
+		assertEquals(basicAuth.getID(), "user");
+		assertFalse(basicAuth.isDenied());
+		assertEquals(basicAuth.count(), 0);
+		assertEquals(basicAuth.setLastResponse(401), 1);
+	}
+	
+	@Test
+	public void testHBasicAuthSSStringStringSecurityInfoCOfHttpURLConnection1() throws IOException {
+		HBasicAuthSS basicAuth = new HBasicAuthSS("demo", "demopass", null); 
+		
+		assertEquals(basicAuth.getID(), "demo");
+		assertFalse(basicAuth.isDenied());
+		assertEquals(basicAuth.count(), 0);
+		assertEquals(basicAuth.setLastResponse(401), 1);
 	}
 
-	@Test
-	public void test3() throws ParseException {
-		CertsMarshal marshal = new CertsMarshal();
-		assertNotNull(marshal);
-	}
 }

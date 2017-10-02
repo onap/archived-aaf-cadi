@@ -20,36 +20,39 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.dme2;
+package org.onap.aaf.example;
 
-import static org.junit.Assert.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
 
-import java.io.File;
-import java.io.IOException;
+import org.onap.aaf.cadi.Access;
+import org.onap.aaf.cadi.PropAccess;
+import org.onap.aaf.cadi.client.Future;
+import org.onap.aaf.cadi.config.SecurityInfoC;
+import org.onap.aaf.cadi.http.HClient;
+import org.onap.aaf.cadi.http.HX509SS;
 
-import javax.servlet.annotation.HttpMethodConstraint;
+public class JU_CadiTest {
+	public static void main(String args[]) {
+		Access access = new PropAccess();
+		try {
+			SecurityInfoC<HttpURLConnection> si = new SecurityInfoC<HttpURLConnection>(access);
+			HClient hclient = new HClient(
+				new HX509SS(si),
+				new URI("https://mithrilcsp.sbc.com:8085"),3000);
+			hclient.setMethod("OPTIONS");
+			hclient.setPathInfo("/gui/cadi/log/toggle/INFO");
+			hclient.send();
+			Future<String> future = hclient.futureReadString();
+			if(future.get(5000)) {
+				System.out.println(future.value);
+			} else {
+				System.out.printf("Error: %d-%s", future.code(),future.body());
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.att.aft.dme2.api.DME2Client;
-import com.att.aft.dme2.api.DME2Exception;
-
-public class DME2ClientSSTest {
-	
-
-	@Before
-	public void setUp() throws Exception {
 	}
-
-	@Test
-	public void test() throws IOException, DME2Exception {
-		DME2ClientSS client = new DME2ClientSS(null, "user", "pass");
-		
-		assertNotNull(client);
-
-		assertEquals(client.getID(), "user");
-		assertEquals(client.setLastResponse(0), 0);
-	}
-
 }

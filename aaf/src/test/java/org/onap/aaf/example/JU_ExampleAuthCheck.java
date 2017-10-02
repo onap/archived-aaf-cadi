@@ -20,42 +20,38 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.client.test;
+package org.onap.aaf.example;
 
-import java.net.URI;
-import java.util.Properties;
+import org.onap.aaf.cadi.PropAccess;
+import org.onap.aaf.cadi.aaf.v2_0.AAFAuthn;
+import org.onap.aaf.cadi.aaf.v2_0.AAFConHttp;
+import org.onap.aaf.cadi.locator.DNSLocator;
 
-import com.att.aft.dme2.api.DME2Client;
-import com.att.aft.dme2.api.DME2Manager;
-
-public class BasicDME2Client {
-	public static void main(String[] args) {
+public class JU_ExampleAuthCheck {
+	public static void main(String args[]) {
+		// Link or reuse to your Logging mechanism
+		PropAccess myAccess = new PropAccess(); // 
+		
 		try {
-			Properties props = System.getProperties();
-			
-			DME2Manager dm = new DME2Manager("DME2Manager TestBasicDME2Client",props);
-			URI uri = new URI(System.getProperty("aaf_url"));
-			DME2Client client = new DME2Client(dm,uri,3000);
+			AAFConHttp acon = new AAFConHttp(myAccess, new DNSLocator(
+					myAccess,"https","localhost","8100"));
+			AAFAuthn<?> authn = acon.newAuthn();
+			long start; 
+			for (int i=0;i<10;++i) {
+				start = System.nanoTime();
+				String err = authn.validate("", "gritty");
+				if(err!=null) System.err.println(err);
+				else System.out.println("I'm ok");
+				
+				err = authn.validate("bogus", "gritty");
+				if(err!=null) System.err.println(err + " (correct error)");
+				else System.out.println("I'm ok");
 
-			System.out.println(props.getProperty("aaf_id"));
-			client.setCredentials(props.getProperty("aaf_id"),props.getProperty("aaf_password"));
-			
-			String path = String.format("/authz/perms/user/%s@csp.att.com",args.length>0?args[0]:"xx9999");
-			System.out.printf("Path: %s\n",path);
-			client.addHeader("Accept", "application/Perms+json;q=1.0;charset=utf-8;version=2.0,application/json;q=1.0;version=2.0,*");
-			client.setMethod("GET");
-			client.setContext(path);
-			client.setPayload("");// Note: Even on "GET", you need a String in DME2
-			
-			String o = client.sendAndWait(5000); // There are other Asynchronous call options, see DME2 Docs
-			if(o==null) {
-				System.out.println('[' + o + ']' + " (blank is good)");
+				System.out.println((System.nanoTime()-start)/1000000f + " ms");
 			}
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
-	
 }

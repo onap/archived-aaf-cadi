@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.onap.aaf.cadi.client.Result;
 
-public class ResultTest {
+public class JU_ResultTest {
 
 	@Before
 	public void setUp() throws Exception {

@@ -43,7 +43,7 @@ import org.onap.aaf.cadi.locator.DME2Locator;
 import com.att.aft.dme2.api.DME2Manager;
 import org.onap.aaf.inno.env.APIException;
 
-public class TestHClient {
+public class JU_TestHClient {
 	public static void main(String[] args) {
 		try {
 			PropAccess access = new PropAccess();

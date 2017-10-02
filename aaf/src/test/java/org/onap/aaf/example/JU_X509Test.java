@@ -31,7 +31,7 @@ import org.onap.aaf.cadi.client.Future;
 import org.onap.aaf.cadi.locator.DNSLocator;
 import org.onap.aaf.cadi.lur.LocalPermission;
 
-public class X509Test {
+public class JU_X509Test {
 	public static void main(String args[]) {
 		// Link or reuse to your Logging mechanism
 		

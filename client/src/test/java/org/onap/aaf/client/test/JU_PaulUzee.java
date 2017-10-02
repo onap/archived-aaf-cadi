@@ -36,7 +36,7 @@ import org.onap.aaf.cadi.dme2.DME2Locator;
 
 import com.att.aft.dme2.api.DME2Manager;
 
-public class PaulUzee {
+public class JU_PaulUzee {
 	public static void main(String[] args) {
 		try {
 			// You'll want to put this on Command line "-D" probably

@@ -36,7 +36,7 @@ import org.junit.Test;
 import org.onap.aaf.cadi.Access.Level;
 import org.onap.aaf.cadi.config.Config;
 
-public class PropAccessTest {
+public class JU_PropAccessTest {
 
 	@Before
 	public void setUp() throws Exception {

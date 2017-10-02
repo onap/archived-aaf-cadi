@@ -43,7 +43,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.onap.aaf.cadi.lur.LocalPermission;
 
-public class UserTest {
+public class JU_UserTest {
 
 	@Mock
 	private Principal principal;

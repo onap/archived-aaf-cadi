@@ -20,78 +20,42 @@
  * * ECOMP is a trademark and service mark of AT&T Intellectual Property.
  * *
  ******************************************************************************/
-package org.onap.aaf.cadi.lur.aaf.test;
+package org.onap.aaf.cadi.lur.test;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 
 import org.onap.aaf.cadi.Access;
 import org.onap.aaf.cadi.Symm;
-import org.onap.aaf.cadi.config.Config;
 
-public class TestAccess implements Access {
+public class JU_TestAccess implements Access {
 	private Symm symm;
-	private PrintStream out;
 
-	public TestAccess(PrintStream out) {
-		this.out = out;
-		InputStream is = ClassLoader.getSystemResourceAsStream("cadi.properties");
-		try {
-			System.getProperties().load(is);
-		} catch (IOException e) {
-			e.printStackTrace(out);
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				e.printStackTrace(out);
-			}
-		}
-		
-		String keyfile = System.getProperty(Config.CADI_KEYFILE);
-		if(keyfile==null) {
-			System.err.println("No " + Config.CADI_KEYFILE + " in Classpath");
-		} else {
-			try {
-				is = new FileInputStream(keyfile);
-				try {
-					symm = Symm.obtain(is);
-				} finally {
-					is.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace(out);
-			}
-		}
-		
-
-
+	public JU_TestAccess() {
+		symm = Symm.obtain(this);
 	}
 	
+	public JU_TestAccess(Symm symmetric) {
+		symm = symmetric;
+	}
+
 	public void log(Level level, Object... elements) {
 		boolean first = true;
 		for(int i=0;i<elements.length;++i) {
 			if(first)first = false;
-			else out.print(' ');
-			out.print(elements[i].toString());
+			else System.out.print(' ');
+			System.out.print(elements[i].toString());
 		}
-		out.println();
+		System.out.println();
 	}
 
 	public void log(Exception e, Object... elements) {
-		e.printStackTrace(out);
+		e.printStackTrace();
 		log(Level.ERROR,elements);
 	}
 
 	public void setLogLevel(Level level) {
 		
-	}
-
-	@Override
-	public boolean willLog(Level level) {
-		return true;
 	}
 
 	public ClassLoader classLoader() {
@@ -114,7 +78,12 @@ public class TestAccess implements Access {
 	}
 
 	@Override
-	public void printf(Level level, String fmt, Object... elements) {
+	public boolean willLog(Level level) {
+		return true;
+	}
+
+	@Override
+	public void printf(Level level, String fmt, Object[] elements) {
 		// TODO Auto-generated method stub
 		
 	}
