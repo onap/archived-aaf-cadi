@@ -83,6 +83,27 @@ public class JU_PropAccessTest {
 		String[] args = {"key=value1","wow=wow1"};
 		p = new PropAccess(args);
 	}
+	
+	@Test
+	public void testPropAccesstwo() throws IOException {
+		PropAccess p = new PropAccess(new Object());
+		
+		assertNotNull(p);
+		assertNotNull(p.getProperties());
+		assertNull(p.getProperty("everythingone"));
+		
+		p.setProperty("prop12", "value12");
+		assertEquals(p.getProperty("prop12"), "value12");
+		
+		p.setProperty(Config.CADI_KEYFILE, "value12");
+		assertEquals(p.getProperty("prop12"), "value12");
+		
+		p.setLogLevel(Level.INFO);
+		assertTrue(p.willLog(Level.INFO));
+		p.log(Level.DEBUG, new Object());
+		String[] args = {"key=value12","wow=wow12"};
+		p = new PropAccess(args);
+	}
 
 }
 
