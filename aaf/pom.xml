@@ -38,6 +38,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.cadiVersion>1.0.0-SNAPSHOT</project.cadiVersion>
 		<!--  SONAR  -->
+		<sonar.skip>true</sonar.skip>
 		 <jacoco.version>0.7.7.201606060606</jacoco.version>
 	    <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
 	    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
