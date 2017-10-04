@@ -295,9 +295,9 @@
 					</includes>
 					<excludes>
 						<exclude>**/JU_LocalLur.java</exclude>
-						<exclude>**/JU_BufferedServletInputStream.java</exclude>
-						<exclude>**/JU_Passcode.java</exclude>
-						<exclude>**/JU_XReader.java</exclude>
+						<!-- <exclude>**/JU_BufferedServletInputStream.java</exclude> -->
+						<!--<exclude>**/JU_Passcode.java</exclude> -->
+						<!--<exclude>**/JU_XReader.java</exclude>  -->
 						<exclude>**/JU_CASS.java</exclude>
 						<exclude>**/JU_PropertyLocator.java</exclude>
 						<exclude>**/JU_PermEval.java</exclude>

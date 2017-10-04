@@ -32,6 +32,17 @@ import org.onap.aaf.cadi.Symm;
 
 import junit.framework.Assert;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+
+import org.junit.AfterClass;
+import org.junit.Test;
+import org.onap.aaf.cadi.CmdLine;
+import org.onap.aaf.cadi.Symm;
+
+import junit.framework.Assert;
+
 public class JU_Passcode {
 	@Test
 	public void test() throws Exception {
@@ -50,6 +61,7 @@ public class JU_Passcode {
 				symm = Symm.obtain(fis);
 			} finally {
 				fis.close();
+				fi.delete();
 			}
 			String samples[] = {"activevos","ThisIsATestPassword","I have spaces","I have 's, /s and &s and _s"};
 			ByteArrayOutputStream baos;
@@ -84,6 +96,11 @@ public class JU_Passcode {
 		System.out.println("Avg Gen + " + en_de + " Encrypt/Decrypt cycles:  " + ms/gens + "ms");
 
 
+	}
+	
+	@AfterClass
+	public static void tearDown() {
+		
 	}
 
 }
