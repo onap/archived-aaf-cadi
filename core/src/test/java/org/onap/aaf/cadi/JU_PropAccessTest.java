@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,72 +39,37 @@ import org.onap.aaf.cadi.config.Config;
 
 public class JU_PropAccessTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@Test
-	public void testPropAccess() throws IOException {
-		PropAccess p = new PropAccess(new Object());
+	public void test() {
+		PropAccess prop = new PropAccess(new Object());
 		
-		assertNotNull(p);
-		assertNotNull(p.getProperties());
-		assertNull(p.getProperty("anything"));
+		prop = new PropAccess("cadi_name=user","cadi_loglevel=DEBUG","cadi_prop_files=test/cadi.properties");
 		
-		p.setProperty("prop", "value");
-		assertEquals(p.getProperty("prop"), "value");
+		assertTrue(prop.getProperties().keySet().contains("cadi_name"));
+		assertTrue(prop.getProperty("cadi_name").equals("user"));
 		
-		p.setProperty(Config.CADI_KEYFILE, "value");
-		assertEquals(p.getProperty("prop"), "value");
-		
-		p.setLogLevel(Level.INFO);
-		assertTrue(p.willLog(Level.INFO));
-		p.log(Level.DEBUG, new Object());
-		String[] args = {"key=value","wow=wow"};
-		p = new PropAccess(args);
+		prop.setProperty("cadi_keyfile", "file");
+		prop.setLogLevel(Level.DEBUG);
+		assertEquals(prop.getProperty("cadi_keyfile"),"file");
+		assertEquals(prop.getDME2Properties().size(),3);
+		prop.log(Level.DEBUG);
 	}
 	
 	@Test
-	public void testPropAccessone() throws IOException {
-		PropAccess p = new PropAccess(new Object());
+	public void testWithProperties() {
+		Properties p = new Properties();
+		p.put("cadi_name", "user");
+		p.put("cadi_loglevel", "DEBUG");
 		
-		assertNotNull(p);
-		assertNotNull(p.getProperties());
-		assertNull(p.getProperty("everything"));
+		PropAccess prop = new PropAccess(p);
 		
-		p.setProperty("prop1", "value1");
-		assertEquals(p.getProperty("prop1"), "value1");
+		assertTrue(prop.getProperties().keySet().contains("cadi_name"));
+		assertTrue(prop.getProperty("cadi_name").equals("user"));
 		
-		p.setProperty(Config.CADI_KEYFILE, "value1");
-		assertEquals(p.getProperty("prop1"), "value1");
-		
-		p.setLogLevel(Level.INFO);
-		assertTrue(p.willLog(Level.INFO));
-		p.log(Level.DEBUG, new Object());
-		String[] args = {"key=value1","wow=wow1"};
-		p = new PropAccess(args);
+		prop.setProperty("cadi_keyfile", "file");
+		prop.setLogLevel(Level.DEBUG);
+		assertEquals(prop.getProperty("cadi_keyfile"),"file");
+		assertEquals(prop.getDME2Properties().size(),3);
+		prop.log(Level.DEBUG);
 	}
-	
-	@Test
-	public void testPropAccesstwo() throws IOException {
-		PropAccess p = new PropAccess(new Object());
-		
-		assertNotNull(p);
-		assertNotNull(p.getProperties());
-		assertNull(p.getProperty("everythingone"));
-		
-		p.setProperty("prop12", "value12");
-		assertEquals(p.getProperty("prop12"), "value12");
-		
-		p.setProperty(Config.CADI_KEYFILE, "value12");
-		assertEquals(p.getProperty("prop12"), "value12");
-		
-		p.setLogLevel(Level.INFO);
-		assertTrue(p.willLog(Level.INFO));
-		p.log(Level.DEBUG, new Object());
-		String[] args = {"key=value12","wow=wow12"};
-		p = new PropAccess(args);
-	}
-
 }
-
