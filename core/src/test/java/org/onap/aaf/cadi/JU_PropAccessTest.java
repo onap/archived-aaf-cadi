@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -106,4 +107,3 @@ public class JU_PropAccessTest {
 	}
 
 }
-
