@@ -294,7 +294,7 @@
 					  <include>**/JU*.java</include>
 					</includes>
 					<excludes>
-						<exclude>**/JU_LocalLur.java</exclude>
+						<!-- <exclude>**/JU_LocalLur.java</exclude> -->
 						<!-- <exclude>**/JU_BufferedServletInputStream.java</exclude> -->
 						<!--<exclude>**/JU_Passcode.java</exclude> -->
 						<!--<exclude>**/JU_XReader.java</exclude>  -->
