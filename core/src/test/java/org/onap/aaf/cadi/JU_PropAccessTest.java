@@ -37,11 +37,6 @@ import org.junit.Test;
 import org.onap.aaf.cadi.Access.Level;
 import org.onap.aaf.cadi.config.Config;
 
-import java.util.Properties;
-
-import org.junit.Test;
-import org.onap.aaf.cadi.Access.Level;
-
 public class JU_PropAccessTest {
 
 	@Test
@@ -56,8 +51,8 @@ public class JU_PropAccessTest {
 		prop.setProperty("cadi_keyfile", "file");
 		prop.setLogLevel(Level.DEBUG);
 		assertEquals(prop.getProperty("cadi_keyfile"),"file");
-//		assertEquals(prop.getDME2Properties().size(),3);
 		prop.log(Level.DEBUG);
+		assertTrue(prop.getDME2Properties().keySet().contains("AFT_DME2_SSL_INCLUDE_PROTOCOLS"));
 	}
 	
 	@Test
@@ -74,7 +69,7 @@ public class JU_PropAccessTest {
 		prop.setProperty("cadi_keyfile", "file");
 		prop.setLogLevel(Level.DEBUG);
 		assertEquals(prop.getProperty("cadi_keyfile"),"file");
-//		assertEquals(prop.getDME2Properties().size(),3);
 		prop.log(Level.DEBUG);
+		assertTrue(prop.getDME2Properties().keySet().contains("AFT_DME2_SSL_INCLUDE_PROTOCOLS"));
 	}
 }
