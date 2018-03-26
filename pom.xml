@@ -106,14 +106,6 @@
 	<!-- Define sub-projects (modules) -->
 	<!-- ============================================================== -->
 	<modules>
-		<module>core</module>
-		<module>client</module>
-		<module>aaf</module> 
-		<module>cass</module>
-		<!-- module>jetty</module -->
-		<!-- module>weblogic</module -->
-		<!-- always build last -->
-		<!--module>swm</module -->
 	</modules>
 
 	<!-- ============================================================== -->
