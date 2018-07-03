@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * ============LICENSE_START====================================================
+ * org.onap.aaf
+ * ===========================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===========================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END====================================================
+ *
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>org.onap.aaf.cadi</groupId>
+		<artifactId>cadimiscparent</artifactId>
+		<version>2.1.2-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>AAF Shiro CADI Plugin</name>
+	<artifactId>aaf-shiro-aafrealm-osgi-bundle</artifactId>
+	<packaging>bundle</packaging>
+
+	<properties>
+	    <sonar.skip>true</sonar.skip>
+		<cadi.shiro.version>2.1.0</cadi.shiro.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.5.4</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>
+							org.onap.aaf.cadi.shiro*;version=${cadi.shiro.version}
+						</Export-Package>
+						<Import-Package>
+							javax.servlet,
+							javax.servlet.http,
+							org.osgi.service.blueprint;version="[1.0.0,2.0.0)",
+							javax.net.ssl,
+							javax.crypto,
+							javax.crypto.spec,
+							javax.xml.bind.annotation,
+							javax.xml.bind,
+							javax.xml.transform,
+							javax.xml.datatype,
+							javax.management,
+							javax.security.auth,
+							javax.security.auth.login,
+							javax.security.auth.callback,
+							javax.xml.soap,
+							javax.xml.parsers,
+							javax.xml.namespace,
+							org.w3c.dom,
+							org.xml.sax,
+							javax.xml.transform.stream
+						</Import-Package>
+						<Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+						<!-- <Embed-Dependency>*;scope=compile|runtime;artifactId=!shiro-core;inline=false</Embed-Dependency> -->
+						<Embed-Transitive>true</Embed-Transitive>
+						<Fragment-Host>org.apache.shiro.core</Fragment-Host>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+
+
+	</build>
+
+	<dependencies>
+		<dependency>
+           <groupId>org.onap.aaf.authz</groupId>
+           <artifactId>aaf-cadi-shiro</artifactId>
+           <version>2.1.0</version>
+        </dependency>
+	</dependencies>
+</project>
