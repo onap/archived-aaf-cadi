@@ -59,9 +59,9 @@ public class JU_AAFRealm {
 	// 	}
 	// }
 
-	private void testAPerm(boolean expect,AuthorizationInfo azi, String type, String instance, String action) {
+	private void testAPerm(boolean expect, AuthorizationInfo azi, String name, String type, String instance, String action) {
 		
-		AAFShiroPermission testPerm = new AAFShiroPermission(new AAFPermission(type,instance,action,new ArrayList<String>()));
+		AAFShiroPermission testPerm = new AAFShiroPermission(new AAFPermission(type,name,instance,action,new ArrayList<String>()));
 
 		boolean any = false;
 		for(Permission p : azi.getObjectPermissions()) {
