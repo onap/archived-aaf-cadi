@@ -89,7 +89,7 @@ public class AAFRealm extends AuthorizingRealm {
 		String err;
 		try {
 			err = authn.validate(upt.getUsername(),password);
-		} catch (IOException|CadiException e) {
+		} catch (IOException e) {
 			err = "Credential cannot be validated";
 			access.log(e, err);
 		}
