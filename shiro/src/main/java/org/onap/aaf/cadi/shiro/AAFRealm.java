@@ -89,7 +89,7 @@ public class AAFRealm extends AuthorizingRealm {
 		String err;
 		try {
 			err = authn.validate(upt.getUsername(),password);
-		} catch (IOException|CadiException e) {
+		} catch (IOException e) {
 			err = "Credential cannot be validated";
 			access.log(e, err);
 		}
@@ -122,7 +122,7 @@ public class AAFRealm extends AuthorizingRealm {
 	protected AAFAuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		access.log(Level.DEBUG, "AAFRealm.doGetAuthenthorizationInfo");
 		Principal bait = (Principal)principals.getPrimaryPrincipal();
-		List<Permission> pond = new ArrayList<Permission>();
+		List<Permission> pond = new ArrayList<>();
 		authz.fishAll(bait,pond);
 		
 		return new AAFAuthorizationInfo(access,bait,pond);
