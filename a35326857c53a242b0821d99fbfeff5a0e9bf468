@@ -1,0 +1,8 @@
+Code-Review+1: Jessica Wagantall <jwagantall@linuxfoundation.org>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Jonathan Gathman <jonathan.gathman@att.com>
+Submitted-by: Jonathan Gathman <jonathan.gathman@att.com>
+Submitted-at: Thu, 06 Sep 2018 12:10:28 +0000
+Reviewed-on: https://gerrit.onap.org/r/64889
+Project: aaf/cadi
+Branch: refs/heads/master
