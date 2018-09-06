@@ -24,7 +24,7 @@
 	<groupId>org.onap.aaf.cadi</groupId>
 	<artifactId>cadimiscparent</artifactId>
 	<version>2.1.2-SNAPSHOT</version>
-	<name>CADI Misc Modules</name>
+	<name>aaf-cadi</name>
 	<packaging>pom</packaging>
 
 	<parent>
