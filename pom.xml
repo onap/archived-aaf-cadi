@@ -34,6 +34,8 @@
 	</parent>
 
 	<properties>
+	    <!-- This version needs to be RELEASED version.  Fails on SNAPSHOT -->
+	    <cadi.version>${project.version}</cadi.version>
 		<!-- <sonar.skip>true</sonar.skip> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.jettyVersion>9.3.9.v20160517</project.jettyVersion>
@@ -139,19 +141,19 @@
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-auth-client</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-core</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-oauth</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 
@@ -159,57 +161,57 @@
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-core</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-jetty</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-cass</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-aaf</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-aaf</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 				<classifier>full</classifier>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-client</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-misc-env</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-misc-rosetta</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-misc-log4j</artifactId>
-				<version>${project.version}</version>
+				<version>${cadi.version}</version>
 			</dependency>
 
 			<dependency>
