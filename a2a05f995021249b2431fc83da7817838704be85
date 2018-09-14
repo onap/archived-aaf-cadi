@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_e61bfe7e",
+        "filename": "fproxy/logs/AAF-FPS/application.log",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-09-14T15:14:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this should be committed...",
+      "revId": "a2a05f995021249b2431fc83da7817838704be85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
