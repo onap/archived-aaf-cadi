@@ -131,6 +131,7 @@
 	<modules>
 		<module>shiro</module>
 		<module>shiro-osgi-bundle</module>
+		<module>fproxy</module>
 	</modules>
 
 	<!-- ============================================================== -->

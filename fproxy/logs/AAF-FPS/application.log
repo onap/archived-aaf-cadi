@@ -1,0 +1,99 @@
+2018-09-13 21:35:54,027 INFO org.springframework.boot.StartupInfoLogger [main] Starting FProxyServiceTest on GRAVIK03 with PID 19264 (started by GRaviK in C:\onap\gerrit\cadi\fproxy)
+2018-09-13 21:35:54,036 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.0.3.RELEASE, Spring v5.0.7.RELEASE
+2018-09-13 21:35:54,037 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: secure
+2018-09-13 21:35:54,114 INFO org.springframework.context.support.AbstractApplicationContext [main] Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1117cc7c: startup date [Thu Sep 13 21:35:54 BST 2018]; root of context hierarchy
+2018-09-13 21:35:58,920 INFO org.springframework.web.servlet.handler.AbstractUrlHandlerMapping [main] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-13 21:35:59,215 INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter [main] Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@1117cc7c: startup date [Thu Sep 13 21:35:54 BST 2018]; root of context hierarchy
+2018-09-13 21:35:59,540 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/**]}" onto public org.springframework.http.ResponseEntity<java.lang.String> org.onap.aaf.fproxy.service.ForwardingProxyService.forwardRest(java.lang.String,org.springframework.http.HttpMethod,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-13 21:35:59,542 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/credential-cache/{transactionId}],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> org.onap.aaf.fproxy.service.ForwardingProxyService.addCredentialToCache(java.lang.String,org.onap.aaf.fproxy.data.CredentialCacheData)
+2018-09-13 21:35:59,546 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-09-13 21:35:59,548 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-13 21:35:59,676 INFO org.springframework.web.servlet.handler.AbstractUrlHandlerMapping [main] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-13 21:35:59,677 INFO org.springframework.web.servlet.handler.AbstractUrlHandlerMapping [main] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-13 21:36:00,836 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring FrameworkServlet ''
+2018-09-13 21:36:00,837 INFO org.springframework.web.servlet.FrameworkServlet [main] FrameworkServlet '': initialization started
+2018-09-13 21:36:00,898 INFO org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 2 endpoint(s) beneath base path '/fproxy'
+2018-09-13 21:36:00,952 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/fproxy/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2018-09-13 21:36:00,961 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/fproxy/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2018-09-13 21:36:00,969 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/fproxy],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-13 21:36:01,075 INFO org.springframework.web.servlet.FrameworkServlet [main] FrameworkServlet '': initialization completed in 236 ms
+2018-09-13 21:36:01,269 INFO org.springframework.boot.StartupInfoLogger [main] Started FProxyServiceTest in 8.914 seconds (JVM running for 12.818)
+2018-09-13 21:36:02,046 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Updating credential cache with transaction ID: tx1
+2018-09-13 21:36:02,048 DEBUG org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential data: CredentialCacheData [credentialName=headername, credentialType=HEADER]
+2018-09-13 21:36:02,051 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential cache successfully updated with transaction ID: tx1
+2018-09-13 21:36:02,141 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Request received: /testurl
+2018-09-13 21:36:02,144 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Populating header credentials from cache for transaction ID: tx1
+2018-09-13 21:36:02,144 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Header credentials successfully populated.
+2018-09-13 21:36:02,145 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Forwarding request...
+2018-09-13 21:36:02,192 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Updating credential cache with transaction ID: tx1
+2018-09-13 21:36:02,193 DEBUG org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential data: CredentialCacheData [credentialName=testcookie, credentialType=COOKIE]
+2018-09-13 21:36:02,196 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential cache successfully updated with transaction ID: tx1
+2018-09-13 21:36:02,207 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Request received: /testurl
+2018-09-13 21:36:02,213 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Populating cookie credentials from cache for transaction ID: tx1
+2018-09-13 21:36:02,214 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Cookie credentials successfully populated.
+2018-09-13 21:36:02,215 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Forwarding request...
+2018-09-13 21:36:02,229 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Updating credential cache with transaction ID: tx1
+2018-09-13 21:36:02,230 DEBUG org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential data: CredentialCacheData [credentialName=headername, credentialType=HEADER]
+2018-09-13 21:36:02,231 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential cache successfully updated with transaction ID: tx1
+2018-09-13 21:36:02,252 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Updating credential cache with transaction ID: tx1
+2018-09-13 21:36:02,253 DEBUG org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential data: CredentialCacheData [credentialName=headername, credentialType=HEADER]
+2018-09-13 21:36:02,255 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential cache successfully updated with transaction ID: tx1
+2018-09-13 21:36:02,276 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Request received: /testurl
+2018-09-13 21:36:02,278 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Populating header credentials from cache for transaction ID: tx1
+2018-09-13 21:36:02,279 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Request already contains header with name: headername, skipping credential population...
+2018-09-13 21:36:02,281 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Forwarding request...
+2018-09-13 21:36:02,295 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Updating credential cache with transaction ID: tx1
+2018-09-13 21:36:02,296 DEBUG org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential data: CredentialCacheData [credentialName=testcookie, credentialType=COOKIE]
+2018-09-13 21:36:02,297 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Credential cache successfully updated with transaction ID: tx1
+2018-09-13 21:36:02,308 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Request received: /testurl
+2018-09-13 21:36:02,309 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Populating cookie credentials from cache for transaction ID: tx1
+2018-09-13 21:36:02,310 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] Request already contains cookie with name: testcookie, skipping credential population...
+2018-09-13 21:36:02,311 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Forwarding request...
+2018-09-13 21:36:02,351 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Request received: /testurl
+2018-09-13 21:36:02,357 INFO org.onap.aaf.fproxy.cache.utils.CacheUtils [main] No transaction ID found in request, skipping credential population...
+2018-09-13 21:36:02,359 INFO org.onap.aaf.fproxy.service.ForwardingProxyService [main] Forwarding request...
+2018-09-13 21:36:02,428 INFO org.springframework.context.support.AbstractApplicationContext [Thread-7] Closing org.springframework.web.context.support.GenericWebApplicationContext@1117cc7c: startup date [Thu Sep 13 21:35:54 BST 2018]; root of context hierarchy
+2018-09-13 21:36:10,357 INFO org.springframework.boot.StartupInfoLogger [main] Starting FProxyIT on GRAVIK03 with PID 22992 (started by GRaviK in C:\onap\gerrit\cadi\fproxy)
+2018-09-13 21:36:10,363 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.0.3.RELEASE, Spring v5.0.7.RELEASE
+2018-09-13 21:36:10,364 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: secure
+2018-09-13 21:36:10,492 INFO org.springframework.context.support.AbstractApplicationContext [main] Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@340c7479: startup date [Thu Sep 13 21:36:10 BST 2018]; root of context hierarchy
+2018-09-13 21:36:14,354 INFO org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory [main] Server initialized with port: 0
+2018-09-13 21:36:14,372 INFO org.eclipse.jetty.server.Server [main] jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_181-b13
+2018-09-13 21:36:14,693 INFO org.eclipse.jetty.server.session.DefaultSessionIdManager [main] DefaultSessionIdManager workerName=node0
+2018-09-13 21:36:14,694 INFO org.eclipse.jetty.server.session.DefaultSessionIdManager [main] No SessionScavenger set, using defaults
+2018-09-13 21:36:14,699 INFO org.eclipse.jetty.server.session.HouseKeeper [main] node0 Scavenging every 600000ms
+2018-09-13 21:36:14,723 INFO org.eclipse.jetty.server.handler.ContextHandler$Context [main] Initializing Spring embedded WebApplicationContext
+2018-09-13 21:36:14,730 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 4238 ms
+2018-09-13 21:36:15,930 INFO org.springframework.boot.web.servlet.ServletRegistrationBean [main] Servlet dispatcherServlet mapped to [/]
+2018-09-13 21:36:15,935 INFO org.springframework.boot.web.servlet.AbstractFilterRegistrationBean [main] Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-09-13 21:36:15,936 INFO org.springframework.boot.web.servlet.AbstractFilterRegistrationBean [main] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-09-13 21:36:15,942 INFO org.springframework.boot.web.servlet.AbstractFilterRegistrationBean [main] Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-09-13 21:36:15,942 INFO org.springframework.boot.web.servlet.AbstractFilterRegistrationBean [main] Mapping filter: 'requestContextFilter' to: [/*]
+2018-09-13 21:36:15,944 INFO org.springframework.boot.web.servlet.AbstractFilterRegistrationBean [main] Mapping filter: 'httpTraceFilter' to: [/*]
+2018-09-13 21:36:15,946 INFO org.springframework.boot.web.servlet.AbstractFilterRegistrationBean [main] Mapping filter: 'webMvcMetricsFilter' to: [/*]
+2018-09-13 21:36:15,953 INFO org.eclipse.jetty.server.handler.ContextHandler [main] Started o.s.b.w.e.j.JettyEmbeddedWebAppContext@6915ba65{application,/,[file:///C:/Users/gravik/AppData/Local/Temp/jetty-docbase.7944781871231314348.0/],AVAILABLE}
+2018-09-13 21:36:15,954 INFO org.eclipse.jetty.server.Server [main] Started @10495ms
+2018-09-13 21:36:17,093 INFO org.springframework.web.servlet.handler.AbstractUrlHandlerMapping [main] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-13 21:36:17,293 INFO org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter [main] Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@340c7479: startup date [Thu Sep 13 21:36:10 BST 2018]; root of context hierarchy
+2018-09-13 21:36:17,480 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/credential-cache/{transactionId}],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> org.onap.aaf.fproxy.service.ForwardingProxyService.addCredentialToCache(java.lang.String,org.onap.aaf.fproxy.data.CredentialCacheData)
+2018-09-13 21:36:17,483 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/**]}" onto public org.springframework.http.ResponseEntity<java.lang.String> org.onap.aaf.fproxy.service.ForwardingProxyService.forwardRest(java.lang.String,org.springframework.http.HttpMethod,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-13 21:36:17,489 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-09-13 21:36:17,493 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-13 21:36:17,571 INFO org.springframework.web.servlet.handler.AbstractUrlHandlerMapping [main] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-13 21:36:17,576 INFO org.springframework.web.servlet.handler.AbstractUrlHandlerMapping [main] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-09-13 21:36:17,997 INFO org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 2 endpoint(s) beneath base path '/fproxy'
+2018-09-13 21:36:18,042 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/fproxy/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2018-09-13 21:36:18,052 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/fproxy/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+2018-09-13 21:36:18,061 INFO org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry [main] Mapped "{[/fproxy],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-09-13 21:36:18,318 INFO org.eclipse.jetty.server.handler.ContextHandler$Context [main] Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-09-13 21:36:18,320 INFO org.springframework.web.servlet.FrameworkServlet [main] FrameworkServlet 'dispatcherServlet': initialization started
+2018-09-13 21:36:18,367 INFO org.springframework.web.servlet.FrameworkServlet [main] FrameworkServlet 'dispatcherServlet': initialization completed in 46 ms
+2018-09-13 21:36:18,485 INFO org.eclipse.jetty.util.ssl.SslContextFactory [main] x509=X509@4ec2eb80(tomcat,h=[],w=[]) for SslContextFactory@5daf3b9d[provider=null,keyStore=file:///C:/onap/gerrit/cadi/fproxy/config/auth/tomcat_keystore,trustStore=null]
+2018-09-13 21:36:18,624 INFO org.eclipse.jetty.server.AbstractConnector [main] Started ServerConnector@47ac6558{SSL,[ssl, http/1.1]}{0.0.0.0:53306}
+2018-09-13 21:36:18,629 INFO org.springframework.boot.web.embedded.jetty.JettyWebServer [main] Jetty started on port(s) 53306 (ssl, http/1.1) with context path '/'
+2018-09-13 21:36:18,642 INFO org.springframework.boot.StartupInfoLogger [main] Started FProxyIT in 9.812 seconds (JVM running for 13.183)
+2018-09-13 21:36:19,192 INFO org.springframework.context.support.AbstractApplicationContext [Thread-13] Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@340c7479: startup date [Thu Sep 13 21:36:10 BST 2018]; root of context hierarchy
+2018-09-13 21:36:19,485 INFO org.eclipse.jetty.server.AbstractConnector [Thread-13] Stopped ServerConnector@47ac6558{SSL,[ssl, http/1.1]}{0.0.0.0:0}
+2018-09-13 21:36:19,486 INFO org.eclipse.jetty.server.session.HouseKeeper [Thread-13] node0 Stopped scavenging
+2018-09-13 21:36:19,489 INFO org.eclipse.jetty.server.handler.ContextHandler$Context [Thread-13] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2018-09-13 21:36:19,491 INFO org.eclipse.jetty.server.handler.ContextHandler [Thread-13] Stopped o.s.b.w.e.j.JettyEmbeddedWebAppContext@6915ba65{application,/,[file:///C:/Users/gravik/AppData/Local/Temp/jetty-docbase.7944781871231314348.0/],UNAVAILABLE}
