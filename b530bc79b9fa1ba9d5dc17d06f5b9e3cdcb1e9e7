@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d5853dcf",
+        "filename": "sidecar/fproxy/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-09-17T15:48:54Z",
+      "side": 1,
+      "message": "This property does not seem to be used",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 91
+      },
+      "revId": "b530bc79b9fa1ba9d5dc17d06f5b9e3cdcb1e9e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d55c5d7f",
+        "filename": "sidecar/fproxy/src/main/bin/start.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-09-17T15:48:54Z",
+      "side": 1,
+      "message": "Wrong project",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "b530bc79b9fa1ba9d5dc17d06f5b9e3cdcb1e9e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_f54dd99a",
+        "filename": "sidecar/fproxy/src/main/resources/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-09-17T15:48:54Z",
+      "side": 1,
+      "message": "Is this the official port of the fProxy microservice?",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 16
+      },
+      "revId": "b530bc79b9fa1ba9d5dc17d06f5b9e3cdcb1e9e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_35e4b1aa",
+        "filename": "sidecar/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-09-17T15:48:54Z",
+      "side": 1,
+      "message": "Wrong year",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "b530bc79b9fa1ba9d5dc17d06f5b9e3cdcb1e9e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
