@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_fe04d118",
+        "filename": "sidecar/fproxy/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-09-18T14:57:47Z",
+      "side": 1,
+      "message": "Maybe we should manage the fproxy version separately from the sidecar version?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "94fc7c3bfc0cf3d8fd1a7a2ae7d140425b214824",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
