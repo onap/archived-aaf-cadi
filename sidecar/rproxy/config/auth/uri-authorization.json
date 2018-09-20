@@ -1,0 +1,114 @@
+ [
+    {
+      "uri": "\/not\/allowed\/at\/all$",
+      "permissions": [
+        "test.auth.access\\|not\\|granted"
+       ]
+    },
+    {
+      "uri": "\/single\/permission\/required$",
+      "permissions": [
+        "test.single.access\\|single\\|permission"
+       ]
+    },
+    {
+      "uri": "\/multiple\/permissions\/required$",
+      "permissions": [
+        "test.multiple.access\\|first\\|permission",
+        "test.multiple.access\\|second\\|permission",
+        "test.multiple.access\\|third\\|permission"
+       ]
+    },
+    {
+      "uri": "\/multiple\/permissions\/required/one/missing$",
+      "permissions": [
+        "test.multiple.access\\|first\\|permission",
+        "test.multiple.access\\|second\\|permission",
+        "test.multiple.access\\|third\\|permission",
+        "test.multiple.access\\|fourth\\|permission"
+       ]
+    },
+	{
+      "uri": "\/wildcard\/permission\/granted$",
+      "permissions": [
+        "test.wildcard.access\\|first\\|permission",
+        "test.wildcard.access\\|second\\|permission",
+        "test.wildcard.access\\|third\\|consent"
+       ]
+    },
+    {
+      "uri": "\/instance\/wildcard\/permission\/granted$",
+      "permissions": [
+        "test.wildcard.access\\|first\\|permission",
+        "test.wildcard.access\\|second\\|permission",
+        "test.wildcard.access\\|third\\|permission"
+       ]
+    },
+	{
+      "uri": "\/action\/wildcard\/permission\/granted$",
+      "permissions": [
+        "test.wildcard.access\\|first\\|permission",
+        "test.wildcard.access\\|first\\|permission",
+        "test.wildcard.access\\|first\\|consent"
+       ]
+    },    
+    {
+      "uri": "\/services\/getAAFRequest$",
+      "permissions": [
+        "test.auth.access\\|services\\|GET,PUT"
+       ]
+    },
+    {
+      "uri": "\/admin\/getAAFRequest$",
+      "permissions": [
+        "test.auth.access\\|admin\\|GET,PUT,POST"
+       ]
+    },
+    {
+      "uri": "\/service\/aai\/webapp\/index.html$",
+      "permissions": [
+        "test.auth.access\\|services\\|GET,PUT"
+       ]
+    },    
+    {
+      "uri": "\/services\/aai\/webapp\/index.html$",
+      "permissions": [
+        "test.auth.access\\|services\\|GET,PUT"
+       ]
+    },    
+    {
+      "uri": "\/$",
+      "permissions": [
+      	"\\|services\\|GET",
+        "test\\.auth\\.access\\|services\\|GET,PUT"
+       ]
+    },    
+    {
+      "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions$",
+      "permissions": [
+        "test\\.auth\\.access\\|rest\\|write",
+        "test\\.auth\\.access\\|rpc\\|write"        
+       ]
+    },
+    {
+      "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions\/cloud-region\/[^\/]+[\/][^\/]+$*",
+      "permissions": [
+        "test.auth.access\\|clouds\\|read",
+        "test.auth.access\\|tenants\\|read"
+      ]     
+    },
+    {
+      "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions\/cloud-region\/[^\/]+[\/][^\/]+\/tenants/tenant/[^\/]+/vservers/vserver/[^\/]+$",
+      "permissions": [
+        "test.auth.access\\|clouds\\|read",
+        "test.auth.access\\|tenants\\|read",
+        "test.auth.access\\|vservers\\|read"
+      ]     
+    },
+    {
+      "uri": "\/rproxy\/.*",
+      "permissions": [
+      	"org\\.access\\|rproxy\\|get"
+       ]
+    }
+  ]
