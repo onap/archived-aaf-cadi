@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_4daf3d95",
+        "filename": "sidecar/tproxy-config/src/main/bin/start.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 377
+      },
+      "writtenOn": "2018-09-24T11:36:13Z",
+      "side": 1,
+      "message": "Looks like the license text here is different from other files",
+      "range": {
+        "startLine": 3,
+        "startChar": 1,
+        "endLine": 3,
+        "endChar": 2
+      },
+      "revId": "98b93b77f43c2bd09b89b6bcc9102bb6e8e1d7af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
