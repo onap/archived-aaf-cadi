@@ -19,7 +19,8 @@
  * ============LICENSE_END====================================================
  *
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.onap.aaf.cadi</groupId>
 	<artifactId>cadimiscparent</artifactId>
@@ -34,21 +35,22 @@
 	</parent>
 
 	<properties>
-	    <!-- This version needs to be RELEASED version.  Fails on SNAPSHOT -->
-	    <cadi.version>${project.version}</cadi.version>
+		<!-- This version needs to be RELEASED version. Fails on SNAPSHOT -->
+		<cadi.version>2.1.2-SNAPSHOT</cadi.version>
 		<!-- <sonar.skip>true</sonar.skip> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.jettyVersion>9.3.9.v20160517</project.jettyVersion>
 		<powermock.version>1.5.1</powermock.version>
-		<!--  SONAR  -->
-		 <jacoco.version>0.7.7.201606060606</jacoco.version>
-	    <sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
-	    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-	    <!-- Default Sonar configuration -->
-	    <sonar.jacoco.reportPaths>target/code-coverage/jacoco-ut.exec</sonar.jacoco.reportPaths>
-	    <sonar.jacoco.itReportPaths>target/code-coverage/jacoco-it.exec</sonar.jacoco.itReportPaths>
-	    <!-- Note: This list should match jacoco-maven-plugin's exclusion list below -->
-	    <sonar.exclusions>**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**</sonar.exclusions>
+		<!-- SONAR -->
+		<jacoco.version>0.7.7.201606060606</jacoco.version>
+		<sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<!-- Default Sonar configuration -->
+		<sonar.jacoco.reportPaths>target/code-coverage/jacoco-ut.exec</sonar.jacoco.reportPaths>
+		<sonar.jacoco.itReportPaths>target/code-coverage/jacoco-it.exec</sonar.jacoco.itReportPaths>
+		<!-- Note: This list should match jacoco-maven-plugin's exclusion list 
+			below -->
+		<sonar.exclusions>**/gen/**,**/generated-sources/**,**/yang-gen**,**/pax/**</sonar.exclusions>
 		<nexusproxy>https://nexus.onap.org</nexusproxy>
 		<snapshotNexusPath>/content/repositories/snapshots/</snapshotNexusPath>
 		<releaseNexusPath>/content/repositories/releases/</releaseNexusPath>
@@ -158,7 +160,7 @@
 			</dependency>
 
 
-			<!-- Prevent Cycles in Testing  -->
+			<!-- Prevent Cycles in Testing -->
 			<dependency>
 				<groupId>org.onap.aaf.authz</groupId>
 				<artifactId>aaf-cadi-core</artifactId>
@@ -252,8 +254,8 @@
 			</dependency>
 
 			<dependency>
-			    <groupId>javax.servlet</groupId>
-			    <artifactId>javax.servlet-api</artifactId>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
 				<version>3.0.1</version>
 			</dependency>
 
@@ -352,7 +354,7 @@
 					</configuration>
 				</plugin>
 
-				<!--This plugin's configuration is used to store Eclipse m2e settings
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -377,7 +379,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore/>
+										<ignore />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
