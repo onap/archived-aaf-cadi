@@ -104,11 +104,5 @@
         "test.auth.access\\|tenants\\|read",
         "test.auth.access\\|vservers\\|read"
       ]     
-    },
-    {
-      "uri": "\/rproxy\/.*",
-      "permissions": [
-      	"org\\.access\\|rproxy\\|get"
-       ]
     }
   ]

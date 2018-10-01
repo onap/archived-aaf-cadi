@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.endpoint.InvalidEndpointRequestException;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,6 +44,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -152,8 +152,8 @@ public class ReverseProxyService {
                 restTemplate.postForEntity(forwardProxyURI, credentialCacheData, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new InvalidEndpointRequestException("Error posting to credential cache.",
-                    "Status code: " + response.getStatusCodeValue() + " Message: " + response.getBody());
+            throw new HttpClientErrorException(response.getStatusCode(),
+                    "Error posting to credential cache. Message: " + response.getBody());
         }
     }
 

@@ -20,6 +20,7 @@
 package org.onap.aaf.rproxy;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +31,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.Filter;
@@ -58,7 +60,7 @@ public class ReverseProxyAuthorizationFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReverseProxyAuthorizationFilter.class);
 
-    private ReverseProxyAuthorization[] reverseProxyAuthorizations = new ReverseProxyAuthorization[] {};
+    private List<ReverseProxyAuthorization> reverseProxyAuthorizations = new ArrayList<>();
 
     @Resource
     private ReverseProxyURIAuthorizationProperties reverseProxyURIAuthorizationProperties;
@@ -72,7 +74,10 @@ public class ReverseProxyAuthorizationFilter implements Filter {
             try (InputStream inputStream =
                     new FileInputStream(new File(reverseProxyURIAuthorizationProperties.getConfigurationFile()));
                     JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream))) {
-                reverseProxyAuthorizations = new Gson().fromJson(jsonReader, ReverseProxyAuthorization[].class);
+                List<ReverseProxyAuthorization> untrimmedList = new Gson().fromJson(jsonReader,
+                        new TypeToken<ArrayList<ReverseProxyAuthorization>>() {}.getType());
+                untrimmedList.removeAll(Collections.singleton(null));
+                reverseProxyAuthorizations = untrimmedList;
             } catch (IOException e) {
                 throw new ServletException("Authorizations config file not found.", e);
             }
