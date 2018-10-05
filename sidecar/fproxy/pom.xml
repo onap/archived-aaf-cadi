@@ -41,7 +41,6 @@
 		<!-- Spring boot version -->
 		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
 		<docker.location>${basedir}/target</docker.location>
-		<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
 	</properties>
 
 	<dependencyManagement>
