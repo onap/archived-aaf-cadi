@@ -27,11 +27,11 @@
 	<parent>
 		<groupId>org.onap.aaf.cadi.sidecar</groupId>
 		<artifactId>sidecar</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>2.1.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>tproxy-config</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>2.1.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>aaf-tproxy-config</name>
@@ -42,7 +42,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.io.fabric8.fabric8-maven-plugin>3.5.32</version.io.fabric8.fabric8-maven-plugin>
 		<docker.location>${basedir}/target</docker.location>
-		<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+		<!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
 	</properties>
 
 	<build>
