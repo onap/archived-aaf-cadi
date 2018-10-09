@@ -76,11 +76,14 @@ public class FProxyServiceTest {
     public void testRequestFrowarding() throws Exception {
         String testUrl = "https://localhost:80/testurl";
         String testResponse = "Response from MockRestService";
+        String testTransactionId = "63f88b50-6345-4a61-bc59-3a48cabb60a4";
 
         mockServer.expect(requestTo(testUrl)).andExpect(method(HttpMethod.GET))
+                .andExpect(header(transactionIdHeaderName, testTransactionId))
                 .andRespond(withSuccess(testResponse, MediaType.APPLICATION_JSON));
 
-        mvc.perform(MockMvcRequestBuilders.get(testUrl).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mvc.perform(MockMvcRequestBuilders.get(testUrl).accept(MediaType.APPLICATION_JSON)
+                .header(transactionIdHeaderName, testTransactionId)).andExpect(status().isOk())
                 .andExpect(content().string(equalTo(testResponse)));
 
         mockServer.verify();
@@ -105,6 +108,7 @@ public class FProxyServiceTest {
 
         // Expect mock server to be called with request containing cached header
         mockServer.expect(requestTo(testUrl)).andExpect(method(HttpMethod.GET))
+                .andExpect(header(transactionIdHeaderName, testTransactionId))
                 .andExpect(header(headerName, headerValue))
                 .andRespond(withSuccess(testResponse, MediaType.APPLICATION_JSON));
 
