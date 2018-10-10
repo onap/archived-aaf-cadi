@@ -22,8 +22,5 @@
 set -x
 set -eo pipefail
 
-#iptables -t nat -A PREROUTING -p tcp -j REDIRECT --to-port 9080
-iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-port 9999 -m owner '!' --uid-owner 1001
-#iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-port 9999 -m owner '!' --uid-owner 100
-#iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-port 9999 -m owner --uid-owner 0
+iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-port 10680 -m owner '!' --uid-owner 1001
 iptables -t nat --list
