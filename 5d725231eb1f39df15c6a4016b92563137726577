@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Ed Dening <ed.dening@amdocs.com>
+Code-Review+1: Gabriel Sanchez <gabriel.sanchez@amdocs.com>
+Code-Review+1: Tian Lee <TianL@amdocs.com>
+Code-Review+2: Jonathan Gathman <jonathan.gathman@att.com>
+Submitted-by: Jonathan Gathman <jonathan.gathman@att.com>
+Submitted-at: Wed, 10 Oct 2018 16:40:48 +0000
+Reviewed-on: https://gerrit.onap.org/r/70172
+Project: aaf/cadi
+Branch: refs/heads/master
