@@ -49,9 +49,22 @@ forward-proxy.port port of the fproxy service
 forward-proxy.cacheurl URI to the store credential cache. /credential-cache
 
 ### auth/uri-authorization.json
-This file contains the list of required AAF permissions authorised for the request URI, permissions will be tested against the first matching URI.
-If the user doesn't have those permissions then the next matching URI will be tested until the list of URIs is exhausted.
-URIs will be matched in order as positioned in the configuration file. Wildcarding is supported as standard regular expression matches for both URIs and permissions.
+This file is used by the ReverseProxyAuthorization filter, the configurable authorization enforcement point, and contains the list
+of required AAF permissions needed for the request URI. The content of the file is in JSON format. Permissions will be tested against
+the first matching URI. If the user doesn't have those permissions then the next matching URI will be tested until the list of URIs
+is exhausted. URIs will be matched in order as positioned in the configuration file. All permissions listed in the configuration file
+for a request URI must have been granted to the user. 
+
+The current implement of side car security retrieves user permissions from AAF. AAF permissions are composed of a type, instance and
+action and are returned from AAF as those values separated by the pipe (|) character e.g. org.onap.osaaf.resources.access|rest|read.
+Both instance and/or action can be wildcarded with an asterisk (*) e.g. org.onap.osaaf.resources.access|*|read,
+org.onap.osaaf.resources.access|rest|* or org.onap.osaaf.resources.access|*|*.  If action or instance is wildcarded then a match
+between granted and needed permissions is found as long as the non wildcarded parts of the permission match too.
+
+Both URIs and permissions are matched using regular expressions which are defined in the uri-authorization.json file. Regular
+expression tests are applied to the whole permission unless AAF wildcarding has been used in which case the permissions are split
+into type, instance and action and the non wildcarded parts are tested individually.  Note that owing to regular expression and JSON
+format that backslashes need to be escaped twice.
 
 [
     {
@@ -73,24 +86,36 @@ URIs will be matched in order as positioned in the configuration file. Wildcardi
 e.g.
 [
     {
-      "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions$",
+      "uri": "\\/aai\\/v13\\/cloud-infrastructure\\/cloud-regions$",
       "permissions": [
-        "org.onap.osaaf.resources.access|rest|read"
+        "org\\.onap\\.osaaf\\.resources\\.access\\|rest\\|read"
        ]
     },
     {
-      "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions\/cloud-region\/[^\/]+[\/][^\/]+$*",
+      "uri": "\\/aai\\/v13\\/cloud-infrastructure\\/cloud-regions\\/cloud-region\\/[^\\/]+[\\/][^\\/]+$*",
       "permissions": [
-        "org.onap.osaaf.resources.access|clouds|read",
-        "org.onap.osaaf.auth.resources.access|tenants|read"
+        "org\\.onap\\.osaaf\\.resources\\.access|clouds|read",
+        "org\\.onap\\.osaaf\\.auth\\.resources\\.access|tenants|read"
       ]     
     },
     {
-      "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions\/cloud-region\/[^\/]+[\/][^\/]+\/tenants/tenant/[^\/]+/vservers/vserver/[^\/]+$",
+      "uri": "\\/aai\\/v13\\/cloud-infrastructure\\/cloud-regions\\/cloud-region\\/[^\\/]+[\\/][^\\/]+\\/tenants\\/tenant/[^\\/]+\\/vservers\\/vserver\\/[^\\/]+$",
       "permissions": [
-        "org.onap.osaaf.auth.resources.access|clouds|read",
-        "org.onap.osaaf.auth.resources.access|tenants|read",
-        "org.onap.osaaf.auth.resources.access|vservers|read"
+        "org\\.onap\\.osaaf\\.auth\\.resources\\.access\\|clouds\\|read",
+        "org\\.onap\\.osaaf\\.auth\\.resources\\.access\\|tenants\\|read",
+        "org\\.onap\\.osaaf\\.auth\\.resources\\.access\\|vservers\\|read"
       ]     
     }
 ]
+
+## Using an Alternative Authorization Service Provider
+The current implementation of side car security relies on AAF & use of the CADI filter. In order to use an alternative authorization
+service provider it will be necessary to modify the Reverse Proxy side car filter chain. The first change necessary is replacement of
+the CADI filter. The replacing filter will be responsible for extracting the credentials from the incoming request, contacting the
+alternative authorization service to return the authorizations/permissions and passing the authorizations through to the
+ReverseProxyAuthorization filter. The ReverseProxyAuthorization filter is next in the filter chain.  Currently authorizations are passed
+with the HttpServletRequestWrapper derived CADIWrap object. If it is desirable to not have a dependency on the CADI libraries then a
+new object derived from HTTPServletRequestWrapper can be used or alternatively authorizations could be passed as an attribute set on
+the HTTPServletRequest. If either of these two options are chosen then the ReverseProxyAuthorization filter with need altering to use
+the new object or to retrieve authorizations from the request attribute. Finally the auth/uri-authorization.json file will need revising to
+match the new format and list of permissions for the URI requests.
