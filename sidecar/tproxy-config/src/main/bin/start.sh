@@ -22,5 +22,9 @@
 set -x
 set -eo pipefail
 
+iptables -t nat -A OUTPUT -p tcp -j ACCEPT -s 127.0.0.1 --dport 61647
+iptables -t nat -A OUTPUT -p tcp -j ACCEPT --dport 9042
+iptables -t nat -A OUTPUT -p tcp -j ACCEPT --dport 9160
+iptables -t nat -A OUTPUT -p tcp -j ACCEPT --dport 61621
 iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-port 10680 -m owner '!' --uid-owner 1001
 iptables -t nat --list
