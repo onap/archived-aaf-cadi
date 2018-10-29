@@ -26,6 +26,7 @@ import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.eclipse.jetty.util.security.Password;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -41,8 +42,14 @@ public class RestTemplateConfig {
     @Value("${server.ssl.client-cert}")
     private String clientCertPath;
 
-    @Value("${server.ssl.key-store-password}")
+    @Value("${server.ssl.client-cert-password}")
     private String clientCertPassword;
+
+    @Value("${server.ssl.key-store}")
+    private String keystorePath;
+
+    @Value("${server.ssl.key-store-password}")
+    private String keystorePassword;
 
     @Profile("secure")
     @Bean
@@ -61,9 +68,9 @@ public class RestTemplateConfig {
     private HttpClientBuilder getClientBuilder() throws GeneralSecurityException, IOException {
 
         SSLContext sslContext = SSLContextBuilder.create()
-                .loadKeyMaterial(ResourceUtils.getFile(clientCertPath), clientCertPassword.toCharArray(),
-                        clientCertPassword.toCharArray())
-                .loadTrustMaterial(ResourceUtils.getFile(clientCertPath), clientCertPassword.toCharArray()).build();
+                .loadKeyMaterial(ResourceUtils.getFile(clientCertPath), Password.deobfuscate(clientCertPassword).toCharArray(),
+                        keystorePassword.toCharArray())
+                .loadTrustMaterial(ResourceUtils.getFile(keystorePath), keystorePassword.toCharArray()).build();
 
         return HttpClients.custom().setSSLContext(sslContext);
     }
