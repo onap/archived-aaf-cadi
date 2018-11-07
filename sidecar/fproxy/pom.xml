@@ -24,14 +24,13 @@
 	<parent>
 		<groupId>org.onap.aaf.cadi.sidecar</groupId>
 		<artifactId>sidecar</artifactId>
-		<version>2.1.2-SNAPSHOT</version>
+		<version>2.1.7-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>fproxy</artifactId>
-	<version>2.1.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>aaf-fproxy</name>
+	<name>Sidecar fproxy</name>
 	<description>ONAP AAF Forward Proxy Microservice For Pluggable Security</description>
 
 	<properties>

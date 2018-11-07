@@ -18,25 +18,51 @@
     * ============LICENSE_END==================================================== 
     * -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <parent>
+                <groupId>org.onap.aaf.cadi</groupId>
+                <artifactId>parent</artifactId>
+                <version>2.1.7-SNAPSHOT</version>
+                <relativePath>..</relativePath>
+        </parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.onap.aaf.cadi.sidecar</groupId>
 	<artifactId>sidecar</artifactId>
-	<version>2.1.2-SNAPSHOT</version>
-	<name>aaf-cadi-sidecar</name>
+	<name>Sidecar Parent</name>
 	<packaging>pom</packaging>
-
-	<parent>
-		<groupId>org.onap.oparent</groupId>
-		<artifactId>oparent</artifactId>
-		<version>1.2.1</version>
-		<relativePath />
-	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+		<docker.location>${basedir}/target</docker.location>
+		<!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
 	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+		    <dependency>
+			<groupId>org.onap.aaf.cadi.sidecar</groupId>
+			<artifactId>fproxy</artifactId>
+                        <version>${project.version}</version>
+		    </dependency>
+		    <dependency>
+			<groupId>org.onap.aaf.cadi.sidecar</groupId>
+			<artifactId>rproxy</artifactId>
+                        <version>${project.version}</version>
+		    </dependency>
+
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 		<!-- ============================================================== -->
 	<!-- Define sub-projects (modules) -->
@@ -48,6 +74,19 @@
 	</modules>
 
 	<build>
+           <plugins>
+              <!-- Sidecare only works on Java 1.8 and above -->
+	      <plugin>
+	         <inherited>true</inherited>
+		 <groupId>org.apache.maven.plugins</groupId>
+		 <artifactId>maven-compiler-plugin</artifactId>
+		<version>2.3.2</version>
+		<configuration>
+			<source>${java.version}</source>
+			<target>${java.version}</target>
+	       	</configuration>
+	     </plugin>
+            </plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>

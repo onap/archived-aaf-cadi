@@ -24,34 +24,14 @@
 	<parent>
 		<groupId>org.onap.aaf.cadi.sidecar</groupId>
 		<artifactId>sidecar</artifactId>
-		<version>2.1.2-SNAPSHOT</version>
+		<version>2.1.7-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>rproxy</artifactId>
-	<version>2.1.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>aaf-rproxy</name>
+	<name>Sidecar rproxy</name>
 	<description>ONAP AAF Reverse Proxy Microservice For Pluggable Security</description>
-
-	<properties>
-		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
-		<docker.location>${basedir}/target</docker.location>
-		<!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
-	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<!-- Import dependency management from Spring Boot -->
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring.boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 
@@ -98,7 +78,6 @@
 		<dependency>
 			<groupId>org.onap.aaf.cadi.sidecar</groupId>
 			<artifactId>fproxy</artifactId>
-			<version>2.1.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -116,7 +95,6 @@
 		<dependency>
 			<groupId>org.onap.aaf.authz</groupId>
 			<artifactId>aaf-cadi-aaf</artifactId>
-			<version>2.1.2</version>
 		</dependency>
 
 	</dependencies>
