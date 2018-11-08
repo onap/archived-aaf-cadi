@@ -20,22 +20,25 @@
 package org.onap.aaf.cadi.sidecar.fproxy.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.eclipse.jetty.util.security.Password;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.aaf.cadi.sidecar.fproxy.service.ForwardingProxyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@TestPropertySource(properties = {"TRUST_STORE_PASSWORD=OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10",
+        "KEY_STORE_PASSWORD=OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10"})
 public class FProxyIT {
 
     static {
         System.setProperty("server.ssl.key-store-password",
+                Password.deobfuscate("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10"));
+        System.setProperty("server.ssl.trust-store-password",
                 Password.deobfuscate("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10"));
     }
 

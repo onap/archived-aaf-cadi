@@ -45,11 +45,11 @@ public class RestTemplateConfig {
     @Value("${server.ssl.client-cert-password}")
     private String clientCertPassword;
 
-    @Value("${server.ssl.key-store}")
-    private String keystorePath;
+    @Value("${server.ssl.trust-store}")
+    private String trustStorePath;
 
-    @Value("${server.ssl.key-store-password}")
-    private String keystorePassword;
+    @Value("${server.ssl.trust-store-password}")
+    private String trustStorePassword;
 
     @Profile("secure")
     @Bean
@@ -66,11 +66,11 @@ public class RestTemplateConfig {
     }
 
     private HttpClientBuilder getClientBuilder() throws GeneralSecurityException, IOException {
+        char[] clientPassword = Password.deobfuscate(clientCertPassword).toCharArray();
 
         SSLContext sslContext = SSLContextBuilder.create()
-                .loadKeyMaterial(ResourceUtils.getFile(clientCertPath), Password.deobfuscate(clientCertPassword).toCharArray(),
-                        keystorePassword.toCharArray())
-                .loadTrustMaterial(ResourceUtils.getFile(keystorePath), keystorePassword.toCharArray()).build();
+                .loadKeyMaterial(ResourceUtils.getFile(clientCertPath), clientPassword, clientPassword)
+                .loadTrustMaterial(ResourceUtils.getFile(trustStorePath), trustStorePassword.toCharArray()).build();
 
         return HttpClients.custom().setSSLContext(sslContext);
     }

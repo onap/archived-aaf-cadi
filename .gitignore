@@ -1,5 +1,21 @@
-/.classpath
-/.settings/
-/target/
-/.project
-/logs/
+# Application
+logs/
+
+# Maven
+target/
+
+# Eclipse
+.classpath
+.factorypath
+.project
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode
+
+# Misc
+.checkstyle
