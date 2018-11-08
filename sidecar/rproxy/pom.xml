@@ -40,6 +40,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
@@ -49,17 +50,14 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-json</artifactId>
 				</exclusion>
+				
 			</exclusions>
+			 -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jetty</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
 		</dependency>
 
 		<dependency>
@@ -70,7 +68,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
 		</dependency>
 
 		<!-- Application Dependencies -->
@@ -85,11 +92,6 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-		</dependency>		
-		
 		<!-- CADI -->
 
 		<dependency>
