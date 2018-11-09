@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_2b03bdb9",
+        "filename": "sidecar/fproxy/src/main/java/org/onap/aaf/cadi/sidecar/fproxy/RestTemplateConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 703
+      },
+      "writtenOn": "2018-11-09T10:07:53Z",
+      "side": 1,
+      "message": "This is not being used at all, is this intentional?",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "e9c15ffe665458a9da0cabc18c7a0f7ae12cbbd4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
