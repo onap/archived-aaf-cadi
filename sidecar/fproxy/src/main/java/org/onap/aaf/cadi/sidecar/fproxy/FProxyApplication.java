@@ -20,6 +20,7 @@
 package org.onap.aaf.cadi.sidecar.fproxy;
 
 import java.util.HashMap;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import org.eclipse.jetty.util.security.Password;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,40 +36,40 @@ public class FProxyApplication extends SpringBootServletInitializer {
 
     @Autowired
     private Environment env;
-    
+
+    @FunctionalInterface
+    public interface AppProperty {
+        String getProperty(String p);
+    }
+
     /**
-     * Spring Boot Initialization.
-     * 
+     * Spring Boot initialization.
+     *
      * @param args main args
      */
     public static void main(String[] args) {
-        String keyStorePassword = System.getProperty("KEY_STORE_PASSWORD");
-        if (keyStorePassword == null || keyStorePassword.isEmpty()) {
-            throw new IllegalArgumentException("Env property KEY_STORE_PASSWORD not set");
-        }
+        AppProperty appProp = (String propertyName) -> Optional.ofNullable(System.getProperty(propertyName))
+                .orElseThrow(() -> new IllegalArgumentException("Env property " + propertyName + " not set"));
+
         HashMap<String, Object> props = new HashMap<>();
-        props.put("server.ssl.key-store-password", Password.deobfuscate(keyStorePassword));
+        props.put("server.ssl.key-store-password", Password.deobfuscate(appProp.getProperty("KEY_STORE_PASSWORD")));
+        props.put("server.ssl.trust-store-password", Password.deobfuscate(appProp.getProperty("TRUST_STORE_PASSWORD")));
         new FProxyApplication().configure(new SpringApplicationBuilder(FProxyApplication.class).properties(props))
                 .run(args);
     }
-    
+
     /**
-     * Set required trust store system properties using values from application.properties
+     * Set required trust and key store system properties using values from application.properties
      */
     @PostConstruct
     public void setSystemProperties() {
-        String keyStorePath = env.getProperty("server.ssl.key-store");
-        if (keyStorePath != null) {
-            String keyStorePassword = env.getProperty("server.ssl.key-store-password");
+        AppProperty appProp = (String propertyName) -> Optional.ofNullable(env.getProperty(propertyName))
+                .orElseThrow(() -> new IllegalArgumentException("Env property " + propertyName + " not set"));
 
-            if (keyStorePassword != null) {
-                System.setProperty("javax.net.ssl.keyStore", keyStorePath);
-                System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassword);
-                System.setProperty("javax.net.ssl.trustStore", keyStorePath);
-                System.setProperty("javax.net.ssl.trustStorePassword", keyStorePassword);
-            } else {
-                throw new IllegalArgumentException("Env property server.ssl.key-store-password not set");
-            }
-        }
+        System.setProperty("javax.net.ssl.keyStore", appProp.getProperty("server.ssl.key-store"));
+        System.setProperty("javax.net.ssl.keyStorePassword", appProp.getProperty("server.ssl.key-store-password"));
+        System.setProperty("javax.net.ssl.trustStore", appProp.getProperty("server.ssl.trust-store"));
+        System.setProperty("javax.net.ssl.trustStorePassword", appProp.getProperty("server.ssl.trust-store-password"));
     }
+
 }

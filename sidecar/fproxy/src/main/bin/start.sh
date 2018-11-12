@@ -26,7 +26,14 @@ if [ -z "${KEY_STORE_PASSWORD}" ]; then
 	exit 1
 fi
 
+if [ -z "${TRUST_STORE_PASSWORD}" ]; then
+	echo "TRUST_STORE_PASSWORD must be set in order to start up process"
+	exit 1
+fi
+
 PROPS="-DKEY_STORE_PASSWORD=${KEY_STORE_PASSWORD}"
+PROPS="$PROPS -DTRUST_STORE_PASSWORD=${TRUST_STORE_PASSWORD}"
+
 JVM_MAX_HEAP=${MAX_HEAP:-1024}
 
 exec java -Xmx${JVM_MAX_HEAP}m ${PROPS} -jar ${BASEDIR}/fproxy-exec.jar

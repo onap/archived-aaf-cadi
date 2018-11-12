@@ -26,7 +26,6 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import javax.servlet.http.Cookie;
 import org.eclipse.jetty.util.security.Password;
 import org.junit.Before;
@@ -53,6 +52,8 @@ public class FProxyServiceTest {
 
     static {
         System.setProperty("server.ssl.key-store-password",
+                Password.deobfuscate("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10"));
+        System.setProperty("server.ssl.trust-store-password",
                 Password.deobfuscate("OBF:1y0q1uvc1uum1uvg1pil1pjl1uuq1uvk1uuu1y10"));
     }
 
