@@ -60,6 +60,8 @@
 							javax.xml.bind,
 							javax.xml.transform,
 							javax.xml.datatype,
+							javax.ws.rs,
+							javax.xml.ws,
 							javax.management,
 							javax.security.auth,
 							javax.security.auth.login,
