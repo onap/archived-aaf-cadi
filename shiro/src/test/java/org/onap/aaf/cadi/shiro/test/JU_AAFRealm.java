@@ -27,7 +27,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.junit.Test;
 import org.onap.aaf.cadi.aaf.AAFPermission;
+import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.shiro.AAFRealm;
 import org.onap.aaf.cadi.shiro.AAFShiroPermission;
 
@@ -45,7 +47,8 @@ public class JU_AAFRealm {
  		TestAAFRealm ar = new TestAAFRealm();
 		
  		//UsernamePasswordToken upt = new UsernamePasswordToken("demo@people.osaaf.org", "demo123456!");
- 		UsernamePasswordToken upt = new UsernamePasswordToken("AAI", "AAI");
+ 		/// UsernamePasswordToken upt = new UsernamePasswordToken("AAI", "AAI");
+ 		UsernamePasswordToken upt = new UsernamePasswordToken("admin","Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U");
  		
  		AuthenticationInfo ani = ar.authn(upt);
 		
@@ -62,7 +65,6 @@ public class JU_AAFRealm {
  	}
  }
 */
-
 	private void testAPerm(boolean expect, AuthorizationInfo azi, String ns, String type, String instance, String action) {
 		
 		AAFShiroPermission testPerm = new AAFShiroPermission(new AAFPermission(ns,type,instance,action,new ArrayList<String>()));

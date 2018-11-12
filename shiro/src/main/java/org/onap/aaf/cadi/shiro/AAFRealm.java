@@ -80,6 +80,7 @@ public class AAFRealm extends AuthorizingRealm {
 				if(csv!=null) {
 					try {
 						mbc = new MapBathConverter(access, new CSV(csv));
+						access.printf(Level.INIT, "MapBathConversion enabled with file %s\n",csv);
 					} catch (IOException e) {
 						access.log(e);
 					}
