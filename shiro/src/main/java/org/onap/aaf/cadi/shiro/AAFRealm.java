@@ -37,10 +37,13 @@ import org.onap.aaf.cadi.CadiException;
 import org.onap.aaf.cadi.LocatorException;
 import org.onap.aaf.cadi.Permission;
 import org.onap.aaf.cadi.PropAccess;
+import org.onap.aaf.cadi.Symm;
 import org.onap.aaf.cadi.aaf.v2_0.AAFAuthn;
 import org.onap.aaf.cadi.aaf.v2_0.AAFCon;
 import org.onap.aaf.cadi.aaf.v2_0.AAFLurPerm;
 import org.onap.aaf.cadi.config.Config;
+import org.onap.aaf.cadi.filter.MapBathConverter;
+import org.onap.aaf.cadi.util.CSV;
 import org.onap.aaf.misc.env.APIException;
 
 public class AAFRealm extends AuthorizingRealm {
@@ -51,6 +54,7 @@ public class AAFRealm extends AuthorizingRealm {
 	private AAFAuthn<?> authn;
 	private HashSet<Class<? extends AuthenticationToken>> supports;
 	private AAFLurPerm authz;
+	private MapBathConverter mbc;
 	
 
 	/**
@@ -60,6 +64,7 @@ public class AAFRealm extends AuthorizingRealm {
 	 */
 	public AAFRealm () {
 		access = new PropAccess(); // pick up cadi_prop_files from VM_Args
+		mbc = null;
 		String cadi_prop_files = access.getProperty(Config.CADI_PROP_FILES);
 		if(cadi_prop_files==null) {
 			String msg = Config.CADI_PROP_FILES + " in VM Args is required to initialize AAFRealm.";
@@ -70,6 +75,15 @@ public class AAFRealm extends AuthorizingRealm {
 				acon = AAFCon.newInstance(access);
 				authn = acon.newAuthn();
 				authz = acon.newLur(authn);
+				
+				final String csv = access.getProperty(Config.CADI_BATH_CONVERT);
+				if(csv!=null) {
+					try {
+						mbc = new MapBathConverter(access, new CSV(csv));
+					} catch (IOException e) {
+						access.log(e);
+					}
+				}
 			} catch (APIException | CadiException | LocatorException e) {
 				String msg = "Cannot initiate AAFRealm";
 				access.log(Level.INIT,msg,e.getMessage());
@@ -85,10 +99,27 @@ public class AAFRealm extends AuthorizingRealm {
 		access.log(Level.DEBUG, "AAFRealm.doGetAuthenticationInfo",token);
 		
 		final UsernamePasswordToken upt = (UsernamePasswordToken)token;
+		String user = upt.getUsername();
 		String password=new String(upt.getPassword());
+		if(mbc!=null) {
+			try {
+				final String oldBath = "Basic " + Symm.base64noSplit.encode(user+':'+password);
+				String bath = mbc.convert(access, oldBath);
+				if(bath!=oldBath) {
+					bath = Symm.base64noSplit.decode(bath.substring(6));
+					int colon = bath.indexOf(':');
+					if(colon>=0) {
+						user = bath.substring(0, colon);
+						password = bath.substring(colon+1);
+					}
+				}
+			} catch (IOException e) {
+				access.log(e);
+			} 
+		}
 		String err;
 		try {
-			err = authn.validate(upt.getUsername(),password);
+			err = authn.validate(user,password);
 		} catch (IOException e) {
 			err = "Credential cannot be validated";
 			access.log(e, err);
@@ -101,7 +132,7 @@ public class AAFRealm extends AuthorizingRealm {
 
 	    return new AAFAuthenticationInfo(
 	    		access,
-	    		upt.getUsername(),
+	    		user,
 	    		password
 	    );
 	}
