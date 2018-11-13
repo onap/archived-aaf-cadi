@@ -37,7 +37,6 @@ import junit.framework.Assert;
 
 public class JU_AAFRealm {
 
-/*
  @Test
  public void test() {
  	// NOTE This is a live test.  This JUnit needs to be built with "Mock" before it can be 
@@ -64,7 +63,6 @@ public class JU_AAFRealm {
  		Assert.fail();
  	}
  }
-*/
 	private void testAPerm(boolean expect, AuthorizationInfo azi, String ns, String type, String instance, String action) {
 		
 		AAFShiroPermission testPerm = new AAFShiroPermission(new AAFPermission(ns,type,instance,action,new ArrayList<String>()));

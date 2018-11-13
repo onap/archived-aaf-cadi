@@ -25,6 +25,9 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -55,6 +58,7 @@ public class AAFRealm extends AuthorizingRealm {
 	private HashSet<Class<? extends AuthenticationToken>> supports;
 	private AAFLurPerm authz;
 	private MapBathConverter mbc;
+	private Map<String,String> idMap;
 	
 
 	/**
@@ -65,6 +69,7 @@ public class AAFRealm extends AuthorizingRealm {
 	public AAFRealm () {
 		access = new PropAccess(); // pick up cadi_prop_files from VM_Args
 		mbc = null;
+		idMap = null;
 		String cadi_prop_files = access.getProperty(Config.CADI_PROP_FILES);
 		if(cadi_prop_files==null) {
 			String msg = Config.CADI_PROP_FILES + " in VM Args is required to initialize AAFRealm.";
@@ -81,6 +86,27 @@ public class AAFRealm extends AuthorizingRealm {
 					try {
 						mbc = new MapBathConverter(access, new CSV(csv));
 						access.printf(Level.INIT, "MapBathConversion enabled with file %s\n",csv);
+						idMap = new TreeMap<String,String>();
+						// Load 
+						for(Entry<String, String> es : mbc.map().entrySet()) {
+							String oldID = es.getKey();
+							if(oldID.startsWith("Basic ")) {
+								oldID = Symm.base64noSplit.decode(oldID.substring(6));
+								int idx = oldID.indexOf(':');
+								if(idx>=0) {
+									oldID = oldID.substring(0, idx);
+								}
+							}
+							String newID = es.getValue();
+							if(newID.startsWith("Basic ")) {
+								newID = Symm.base64noSplit.decode(newID.substring(6));
+								int idx = newID.indexOf(':');
+								if(idx>=0) {
+									newID = newID.substring(0, idx);
+								}
+							}
+							idMap.put(oldID,newID);
+						}
 					} catch (IOException e) {
 						access.log(e);
 					}
@@ -100,8 +126,10 @@ public class AAFRealm extends AuthorizingRealm {
 		access.log(Level.DEBUG, "AAFRealm.doGetAuthenticationInfo",token);
 		
 		final UsernamePasswordToken upt = (UsernamePasswordToken)token;
-		String user = upt.getUsername();
-		String password=new String(upt.getPassword());
+		final String user = upt.getUsername();
+		String authUser = user; 
+		final String password=new String(upt.getPassword());
+		String authPassword = password;
 		if(mbc!=null) {
 			try {
 				final String oldBath = "Basic " + Symm.base64noSplit.encode(user+':'+password);
@@ -110,8 +138,8 @@ public class AAFRealm extends AuthorizingRealm {
 					bath = Symm.base64noSplit.decode(bath.substring(6));
 					int colon = bath.indexOf(':');
 					if(colon>=0) {
-						user = bath.substring(0, colon);
-						password = bath.substring(colon+1);
+						authUser = bath.substring(0, colon);
+						authPassword = bath.substring(colon+1);
 					}
 				}
 			} catch (IOException e) {
@@ -120,7 +148,7 @@ public class AAFRealm extends AuthorizingRealm {
 		}
 		String err;
 		try {
-			err = authn.validate(user,password);
+			err = authn.validate(authUser,authPassword);
 		} catch (IOException e) {
 			err = "Credential cannot be validated";
 			access.log(e, err);
@@ -154,8 +182,20 @@ public class AAFRealm extends AuthorizingRealm {
 	protected AAFAuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		access.log(Level.DEBUG, "AAFRealm.doGetAuthenthorizationInfo");
 		Principal bait = (Principal)principals.getPrimaryPrincipal();
+		Principal newBait = bait;
+		if(idMap!=null) {
+			final String newID = idMap.get(bait.getName());
+			if(newID!=null) {
+				newBait = new Principal() {
+					@Override
+					public String getName() {
+						return newID;
+					}
+				};
+			}
+		}
 		List<Permission> pond = new ArrayList<>();
-		authz.fishAll(bait,pond);
+		authz.fishAll(newBait,pond);
 		
 		return new AAFAuthorizationInfo(access,bait,pond);
        
