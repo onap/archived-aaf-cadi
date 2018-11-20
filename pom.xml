@@ -34,7 +34,7 @@
 
 	<properties>
 		<!-- This version needs to be RELEASED version. Fails on SNAPSHOT -->
-		<cadi.version>2.1.9-SNAPSHOT</cadi.version>
+		<cadi.version>2.1.8</cadi.version>
 		<!-- <sonar.skip>true</sonar.skip> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- project.jettyVersion>9.4.12.v20180830</project.jettyVersion -->
