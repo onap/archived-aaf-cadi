@@ -19,9 +19,6 @@
  */
 package org.onap.aaf.cadi.sidecar.rproxy.mocks;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -32,6 +29,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
+import org.onap.aaf.cadi.Access;
 import org.onap.aaf.cadi.CadiWrap;
 import org.onap.aaf.cadi.Lur;
 import org.onap.aaf.cadi.Permission;
@@ -41,13 +40,13 @@ import org.onap.aaf.cadi.taf.TafResp;
 
 public class ReverseProxyMockCadiFilter implements Filter {
 
-    private FakeLur fakeLur = new FakeLur();
+	private FakeLur fakeLur = new FakeLur();
 
-    static class FakeLur implements Lur {
+	static class FakeLur implements Lur {
 
 		@Override
 		public void fishAll(Principal bait, List<Permission> permissions) {
-			
+
 			final String WildcardPermissionType = "test.wildcard.access";
 			final String MultiplePermissionType = "test.multiple.access";
 			final String TestAuthAccessPermissionType = "test.auth.access";
@@ -57,16 +56,11 @@ public class ReverseProxyMockCadiFilter implements Filter {
 
 			if (principalName != null && principalName.equals("UserWithInstanceActionWildcardPermissionGranted")) {
 				permissions.add(new AAFPermission(null, WildcardPermissionType, "*", "*"));
-			} 
-			else 
-			if (principalName != null && principalName.equals("UserWithInstanceWildcardPermissionGranted")) {
+			} else if (principalName != null && principalName.equals("UserWithInstanceWildcardPermissionGranted")) {
 				permissions.add(new AAFPermission(null, WildcardPermissionType, "*", PermissionAction));
-			} 
-			else 
-			if (principalName != null && principalName.equals("UserWithActionWildcardPermissionGranted")) {
-					permissions.add(new AAFPermission(null, WildcardPermissionType, "first", "*"));
-				}
-			else {
+			} else if (principalName != null && principalName.equals("UserWithActionWildcardPermissionGranted")) {
+				permissions.add(new AAFPermission(null, WildcardPermissionType, "first", "*"));
+			} else {
 
 				// For single permission test
 				permissions.add(new AAFPermission(null, "test.single.access", "single", PermissionAction));
@@ -82,62 +76,118 @@ public class ReverseProxyMockCadiFilter implements Filter {
 			}
 		}
 
-        @Override
-        public Permission createPerm(String p) {
-            return null;
-        }
+		@Override
+		public Permission createPerm(String p) {
+			return null;
+		}
 
-        @Override
-        public boolean fish(Principal bait, Permission... pond) {
-            return false;
-        }
+		@Override
+		public boolean fish(Principal bait, Permission... pond) {
+			return false;
+		}
 
-        @Override
-        public void destroy() {
-            // Mock implementation
-        }
+		@Override
+		public void destroy() {
+			// Mock implementation
+		}
 
-        @Override
-        public boolean handlesExclusively(Permission... pond) {
-            return false;
-        }
+		@Override
+		public boolean handlesExclusively(Permission... pond) {
+			return false;
+		}
 
-        @Override
-        public boolean handles(Principal principal) {
-            return false;
-        }
+		@Override
+		public boolean handles(Principal principal) {
+			return false;
+		}
 
-        @Override
-        public void clear(Principal p, StringBuilder report) {
-            // Mock implementation
-        }
+		@Override
+		public void clear(Principal p, StringBuilder report) {
+			// Mock implementation
+		}
 
-    }
+	}
 
-    @Override
-    public void destroy() {
-        // Mock implementation
-    }
+	@Override
+	public void destroy() {
+		// Mock implementation
+	}
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-    	
-    	String userName = ((HttpServletRequest)servletRequest).getHeader("PermissionsUser");
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+			throws IOException, ServletException {
 
-        TaggedPrincipal mockTaggedPrincipal = mock(TaggedPrincipal.class);
-        when(mockTaggedPrincipal.getName()).thenReturn(userName);
+		TafResp tafResponseMock = new TafResp() {
 
-        TafResp tafResponseMock = mock(TafResp.class);
-        when(tafResponseMock.getPrincipal()).thenReturn(mockTaggedPrincipal);
+			@Override
+			public void timing(long arg0) {
+				// Mock implementation
+			}
 
-        CadiWrap cadiWrap = new CadiWrap((HttpServletRequest) servletRequest, tafResponseMock, fakeLur);
-        filterChain.doFilter(cadiWrap, servletResponse);
-    }
+			@Override
+			public float timing() {
+				return 0;
+			}
 
-    @Override
-    public void init(FilterConfig arg0) throws ServletException {
-        // Mock implementation
-    }
+			@Override
+			public String taf() {
+				return null;
+			}
+
+			@Override
+			public boolean isValid() {
+				return false;
+			}
+
+			@Override
+			public boolean isFailedAttempt() {
+				return false;
+			}
+
+			@Override
+			public RESP isAuthenticated() {
+				return null;
+			}
+
+			@Override
+			public TaggedPrincipal getPrincipal() {
+				return new TaggedPrincipal() {
+
+					@Override
+					public String getName() {
+						return ((HttpServletRequest) servletRequest).getHeader("PermissionsUser");
+					}
+
+					@Override
+					public String tag() {
+						return null;
+					}
+				};
+			}
+
+			@Override
+			public Access getAccess() {
+				return null;
+			}
+
+			@Override
+			public String desc() {
+				return null;
+			}
+
+			@Override
+			public RESP authenticate() throws IOException {
+				return null;
+			}
+		};
+
+		CadiWrap cadiWrap = new CadiWrap((HttpServletRequest) servletRequest, tafResponseMock, fakeLur);
+		filterChain.doFilter(cadiWrap, servletResponse);
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// Mock implementation
+	}
 
 }
