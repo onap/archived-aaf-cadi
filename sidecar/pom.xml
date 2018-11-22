@@ -33,7 +33,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<sonar.skip>true</sonar.skip>
+		<sonar.skip>false</sonar.skip>
 		<jacoco.version>0.7.7.201606060606</jacoco.version>
 		<sonar-jacoco-listeners.version>3.2</sonar-jacoco-listeners.version>
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
@@ -53,8 +53,9 @@
 		<!-- Spring boot version 
 		  Must match oParent
 		-->
-	  	<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+	  	<spring.boot.version>2.0.5.RELEASE</spring.boot.version>
 	  	<spring.web.version>3.0.4.RELEASE</spring.web.version>
+
 		<docker.location>${basedir}/target</docker.location>
 		<!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
 		
@@ -119,7 +120,7 @@
 				<artifactId>spring-boot-starter-test</artifactId>
 				<version>${spring.boot.version}</version>
 			</dependency>
-			
+	
 		</dependencies>
 	</dependencyManagement>
 
@@ -135,6 +136,15 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+			
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.17</version>
+					<configuration>
+						<includes combine.self="override"></includes>
+					</configuration>
+				</plugin>			
+			
 				<plugin>
 					<groupId>com.mycila</groupId>
 					<artifactId>license-maven-plugin</artifactId>
