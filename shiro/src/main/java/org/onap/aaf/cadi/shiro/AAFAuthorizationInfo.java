@@ -84,7 +84,7 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 			if(sPerms == null) {
 				sPerms = new ArrayList<String>(); 
 				for(org.onap.aaf.cadi.Permission p : pond) {
-					sPerms.add(p.getKey());
+					sPerms.add(p.getKey().replace("|",":"));
 				}
 			}
 		}
