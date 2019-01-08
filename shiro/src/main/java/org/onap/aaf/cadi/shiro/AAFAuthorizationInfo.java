@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.onap.aaf.cadi.Access;
-import org.onap.aaf.cadi.Access.Level;
 
 /**
  * We treat "roles" and "permissions" in a similar way for first pass.
@@ -37,6 +37,9 @@ import org.onap.aaf.cadi.Access.Level;
  *
  */
 public class AAFAuthorizationInfo implements AuthorizationInfo {
+	
+	final static Logger logger = Logger.getLogger(AuthorizationInfo.class);
+	
 	private static final long serialVersionUID = -4805388954462426018L;
 	private Access access;
 	private Principal bait;
@@ -58,7 +61,7 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 	
 	@Override
 	public Collection<Permission> getObjectPermissions() {
-		access.log(Level.DEBUG, "AAFAuthorizationInfo.getObjectPermissions");
+		logger.debug("AAFAuthorizationInfo.getObjectPermissions");
 		synchronized(bait) {
 			if(oPerms == null) {
 				oPerms = new ArrayList<Permission>(); 
@@ -72,14 +75,14 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 
 	@Override
 	public Collection<String> getRoles() {
-		access.log(Level.DEBUG, "AAFAuthorizationInfo.getRoles");
+		logger.debug("AAFAuthorizationInfo.getRoles");
 		// Until we decide to make Roles available, tie into String based permissions.
 		return getStringPermissions();
 	}
 
 	@Override
 	public Collection<String> getStringPermissions() {
-		access.log(Level.DEBUG, "AAFAuthorizationInfo.getStringPermissions");
+		logger.debug("AAFAuthorizationInfo.getStringPermissions");
 		synchronized(bait) {
 			if(sPerms == null) {
 				sPerms = new ArrayList<String>(); 

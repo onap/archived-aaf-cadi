@@ -21,6 +21,7 @@
 package org.onap.aaf.cadi.shiro;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,6 +30,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -48,8 +51,10 @@ import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.filter.MapBathConverter;
 import org.onap.aaf.cadi.util.CSV;
 import org.onap.aaf.misc.env.APIException;
-
 public class AAFRealm extends AuthorizingRealm {
+	
+	final static Logger logger = Logger.getLogger(AAFRealm.class);
+	
 	public static final String AAF_REALM = "AAFRealm";
 	
 	private PropAccess access;
@@ -77,6 +82,15 @@ public class AAFRealm extends AuthorizingRealm {
 			throw new RuntimeException(msg);
 		} else {
 			try {
+				String log4jConfigFile = "./etc/org.onap.cadi.logging.cfg";
+		        PropertyConfigurator.configure(log4jConfigFile);
+		        System.setOut(createLoggingProxy(System.out));
+		        System.setErr(createLoggingProxy(System.err));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			//System.out.println("Configuration done");
+			try {
 				acon = AAFCon.newInstance(access);
 				authn = acon.newAuthn();
 				authz = acon.newLur(authn);
@@ -85,7 +99,7 @@ public class AAFRealm extends AuthorizingRealm {
 				if(csv!=null) {
 					try {
 						mbc = new MapBathConverter(access, new CSV(csv));
-						access.printf(Level.INIT, "MapBathConversion enabled with file %s\n",csv);
+						logger.info("MapBathConversion enabled with file "+csv);
 						idMap = new TreeMap<String,String>();
 						// Load 
 						for(Entry<String, String> es : mbc.map().entrySet()) {
@@ -108,22 +122,30 @@ public class AAFRealm extends AuthorizingRealm {
 							idMap.put(oldID,newID);
 						}
 					} catch (IOException e) {
-						access.log(e);
+						logger.error(e.getMessage(), e);
 					}
 				}
 			} catch (APIException | CadiException | LocatorException e) {
 				String msg = "Cannot initiate AAFRealm";
-				access.log(Level.INIT,msg,e.getMessage());
+				logger.info(msg + " "+ e.getMessage(), e);
 				throw new RuntimeException(msg,e);
 			}
 		}
 		supports = new HashSet<Class<? extends AuthenticationToken>>();
 		supports.add(UsernamePasswordToken.class);
 	}
+	public static PrintStream createLoggingProxy(final PrintStream realPrintStream) {
+        return new PrintStream(realPrintStream) {
+            public void print(final String string) {
+                realPrintStream.print(string);
+                logger.info(string);
+            }
+        };
+    }
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		access.log(Level.DEBUG, "AAFRealm.doGetAuthenticationInfo",token);
+		logger.debug("AAFRealm.doGetAuthenticationInfo :"+token);
 		
 		final UsernamePasswordToken upt = (UsernamePasswordToken)token;
 		final String user = upt.getUsername();
@@ -143,7 +165,7 @@ public class AAFRealm extends AuthorizingRealm {
 					}
 				}
 			} catch (IOException e) {
-				access.log(e);
+				logger.error(e.getMessage(), e);
 			} 
 		}
 		String err;
@@ -151,11 +173,11 @@ public class AAFRealm extends AuthorizingRealm {
 			err = authn.validate(authUser,authPassword);
 		} catch (IOException e) {
 			err = "Credential cannot be validated";
-			access.log(e, err);
+			logger.error(err, e);
 		}
 		
 		if(err != null) {
-			access.log(Level.DEBUG, err);
+			logger.debug(err);
 			throw new AuthenticationException(err);
 		}
 
@@ -180,7 +202,7 @@ public class AAFRealm extends AuthorizingRealm {
 
 	@Override
 	protected AAFAuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		access.log(Level.DEBUG, "AAFRealm.doGetAuthenthorizationInfo");
+		logger.debug("AAFRealm.doGetAuthenthorizationInfo");
 		Principal bait = (Principal)principals.getPrimaryPrincipal();
 		Principal newBait = bait;
 		if(idMap!=null) {
