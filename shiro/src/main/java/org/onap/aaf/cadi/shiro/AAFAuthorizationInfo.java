@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.onap.aaf.cadi.Access;
+import org.onap.aaf.cadi.Access.Level;
 
 /**
  * We treat "roles" and "permissions" in a similar way for first pass.
@@ -37,9 +37,6 @@ import org.onap.aaf.cadi.Access;
  *
  */
 public class AAFAuthorizationInfo implements AuthorizationInfo {
-	
-	final static Logger logger = Logger.getLogger(AuthorizationInfo.class);
-	
 	private static final long serialVersionUID = -4805388954462426018L;
 	private Access access;
 	private Principal bait;
@@ -61,12 +58,13 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 	
 	@Override
 	public Collection<Permission> getObjectPermissions() {
-		logger.debug("AAFAuthorizationInfo.getObjectPermissions");
+//		access.log(Level.DEBUG, "AAFAuthorizationInfo.getObjectPermissions");
 		synchronized(bait) {
 			if(oPerms == null) {
 				oPerms = new ArrayList<Permission>(); 
 				for(final org.onap.aaf.cadi.Permission p : pond) {
 					oPerms.add(new AAFShiroPermission(p));
+					System.out.println("List user" + p); 
 				}
 			}
 		}
@@ -75,19 +73,20 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 
 	@Override
 	public Collection<String> getRoles() {
-		logger.debug("AAFAuthorizationInfo.getRoles");
+//		access.log(Level.DEBUG, "AAFAuthorizationInfo.getRoles");
 		// Until we decide to make Roles available, tie into String based permissions.
 		return getStringPermissions();
 	}
 
 	@Override
 	public Collection<String> getStringPermissions() {
-		logger.debug("AAFAuthorizationInfo.getStringPermissions");
+//		access.log(Level.DEBUG, "AAFAuthorizationInfo.getStringPermissions");
 		synchronized(bait) {
 			if(sPerms == null) {
 				sPerms = new ArrayList<String>(); 
 				for(org.onap.aaf.cadi.Permission p : pond) {
 					sPerms.add(p.getKey().replace("|",":"));
+					System.out.println("Replacing | to :" + p.getKey().replace("|",":")); 
 				}
 			}
 		}
