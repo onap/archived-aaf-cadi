@@ -82,7 +82,7 @@ public class AAFRealm extends AuthorizingRealm {
 			throw new RuntimeException(msg);
 		} else {
 			try {
-				String log4jConfigFile = "./etc/org.onap.cadi.logging.cfg";
+				String log4jConfigFile = "./etc/org.ops4j.pax.logging.cfg";
 		        PropertyConfigurator.configure(log4jConfigFile);
 		        System.setOut(createLoggingProxy(System.out));
 		        System.setErr(createLoggingProxy(System.err));
