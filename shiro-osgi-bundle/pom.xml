@@ -53,7 +53,6 @@
 							javax.servlet,
 							javax.servlet.http,
 							org.osgi.service.blueprint;version="[1.0.0,2.0.0)",
-							org.osgi.framework,
 							javax.net.ssl,
 							javax.crypto,
 							javax.crypto.spec,
@@ -73,10 +72,7 @@
 							org.w3c.dom,
 							org.xml.sax,
 							javax.xml.transform.stream,
-							org.apache.log4j,
-                            org.slf4j.impl,
-                            org.slf4j,
-                            org.slf4j.spi
+							org.apache.log4j
 						</Import-Package>
 						<Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
 						<!-- <Embed-Dependency>*;scope=compile|runtime;artifactId=!shiro-core;inline=false</Embed-Dependency> -->
