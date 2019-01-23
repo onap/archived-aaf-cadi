@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Jonathan Gathman <jonathan.gathman@att.com>
+Code-Review+2: Kiran Kamineni <kiran.k.kamineni@intel.com>
+Submitted-by: Kiran Kamineni <kiran.k.kamineni@intel.com>
+Submitted-at: Wed, 23 Jan 2019 23:37:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/76238
+Project: aaf/cadi
+Branch: refs/heads/master
