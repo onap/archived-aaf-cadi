@@ -29,7 +29,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.onap.aaf.cadi.Access;
 import org.onap.aaf.cadi.Access.Level;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * We treat "roles" and "permissions" in a similar way for first pass.
  * 
@@ -38,6 +39,9 @@ import org.onap.aaf.cadi.Access.Level;
  */
 public class AAFAuthorizationInfo implements AuthorizationInfo {
 	private static final long serialVersionUID = -4805388954462426018L;
+	
+	final static Logger logger =  LoggerFactory.getLogger(AAFAuthorizationInfo.class);
+	
 	private Access access;
 	private Principal bait;
 	private List<org.onap.aaf.cadi.Permission> pond;
@@ -50,6 +54,7 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 		this.pond = pond;
 		sPerms=null;
 		oPerms=null;
+
 	}
 	
 	public Principal principal() {
@@ -64,7 +69,6 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 				oPerms = new ArrayList<Permission>(); 
 				for(final org.onap.aaf.cadi.Permission p : pond) {
 					oPerms.add(new AAFShiroPermission(p));
-					System.out.println("List user" + p); 
 				}
 			}
 		}
@@ -73,20 +77,18 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 
 	@Override
 	public Collection<String> getRoles() {
-//		access.log(Level.DEBUG, "AAFAuthorizationInfo.getRoles");
 		// Until we decide to make Roles available, tie into String based permissions.
 		return getStringPermissions();
 	}
 
 	@Override
 	public Collection<String> getStringPermissions() {
-//		access.log(Level.DEBUG, "AAFAuthorizationInfo.getStringPermissions");
 		synchronized(bait) {
 			if(sPerms == null) {
 				sPerms = new ArrayList<String>(); 
 				for(org.onap.aaf.cadi.Permission p : pond) {
 					sPerms.add(p.getKey().replace("|",":"));
-					System.out.println("Replacing | to :" + p.getKey().replace("|",":")); 
+//					System.out.println("Replacing | to :" + p.getKey().replace("|",":")); 
 				}
 			}
 		}

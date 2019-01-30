@@ -24,7 +24,8 @@ import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -35,7 +36,7 @@ import org.onap.aaf.cadi.Hash;
 public class AAFAuthenticationInfo implements AuthenticationInfo {
 	private static final long serialVersionUID = -1502704556864321020L;
 	
-	final static Logger logger = Logger.getLogger(AAFAuthenticationInfo.class);
+	final static Logger logger =  LoggerFactory.getLogger(AAFAuthenticationInfo.class);
 	
 	// We assume that Shiro is doing Memory Only, and this salt is not needed cross process
 	private final static int salt = new SecureRandom().nextInt(); 
@@ -50,14 +51,12 @@ public class AAFAuthenticationInfo implements AuthenticationInfo {
 		hash = getSaltedCred(password);
 	}
 	@Override
-	public byte[] getCredentials() {
-		logger.debug("AAFAuthenticationInfo.getCredentials");
+	public byte[] getCredentials() {	
 		return hash;
 	}
 
 	@Override
 	public PrincipalCollection getPrincipals() {
-		logger.debug( "AAFAuthenticationInfo.getPrincipals");
 		return apc;
 	}
 
