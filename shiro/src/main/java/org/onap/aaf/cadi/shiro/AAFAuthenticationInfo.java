@@ -36,7 +36,7 @@ import org.onap.aaf.cadi.Hash;
 public class AAFAuthenticationInfo implements AuthenticationInfo {
 	private static final long serialVersionUID = -1502704556864321020L;
 	
-	final static Logger logger =  LoggerFactory.getLogger(AAFAuthenticationInfo.class);
+	final static  Logger logger =  LoggerFactory.getLogger(AAFAuthenticationInfo.class);
 	
 	// We assume that Shiro is doing Memory Only, and this salt is not needed cross process
 	private final static int salt = new SecureRandom().nextInt(); 
@@ -52,11 +52,13 @@ public class AAFAuthenticationInfo implements AuthenticationInfo {
 	}
 	@Override
 	public byte[] getCredentials() {	
+//		logger.info("AAFAuthenticationInfo.getCredentials");
 		return hash;
 	}
 
 	@Override
 	public PrincipalCollection getPrincipals() {
+//		logger.info( "AAFAuthenticationInfo.getPrincipals");
 		return apc;
 	}
 
@@ -65,6 +67,7 @@ public class AAFAuthenticationInfo implements AuthenticationInfo {
 			UsernamePasswordToken upt = (UsernamePasswordToken)atoken;
 			if(apc.getPrimaryPrincipal().getName().equals(upt.getPrincipal())) {
 				byte[] newhash = getSaltedCred(new String(upt.getPassword()));
+				logger.info("Successful authentication attempt by " +upt.getPrincipal());
 				if(newhash.length==hash.length) {
 					for(int i=0;i<hash.length;++i) {
 						if(hash[i]!=newhash[i]) {

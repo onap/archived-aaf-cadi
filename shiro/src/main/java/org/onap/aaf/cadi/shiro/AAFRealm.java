@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -55,7 +56,7 @@ import org.slf4j.LoggerFactory;
 
 public class AAFRealm extends AuthorizingRealm {
 	
-	final static Logger logger =  LoggerFactory.getLogger(AAFRealm.class);
+	final static  Logger logger =  LoggerFactory.getLogger(AAFRealm.class);
 	
 	public static final String AAF_REALM = "AAFRealm";
 	
@@ -80,23 +81,14 @@ public class AAFRealm extends AuthorizingRealm {
 		String cadi_prop_files = access.getProperty(Config.CADI_PROP_FILES);
 		if(cadi_prop_files==null) {
 			String msg = Config.CADI_PROP_FILES + " in VM Args is required to initialize AAFRealm.";
-			access.log(Level.DEBUG,msg);
+			logger.info(msg);
 			throw new RuntimeException(msg);
 		} else {
-			try {
-				String log4jConfigFile = "./etc/org.ops4j.pax.logging.cfg";
-				
-		        PropertyConfigurator.configure(log4jConfigFile);
-		        System.setOut(createLoggingProxy(System.out));
-		        System.setErr(createLoggingProxy(System.err));
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-			//System.out.println("Configuration done");
 			try {
 				acon = AAFCon.newInstance(access);
 				authn = acon.newAuthn();
 				authz = acon.newLur(authn);
+				
 				final String csv = access.getProperty(Config.CADI_BATH_CONVERT);
 				if(csv!=null) {
 					try {
@@ -122,39 +114,32 @@ public class AAFRealm extends AuthorizingRealm {
 								}
 							}
 							idMap.put(oldID,newID);
+							
 						}
 					} catch (IOException e) {
-//						access.log(e);
+						logger.info(e.getMessage(), e);
 					}
 				}
 			} catch (APIException | CadiException | LocatorException e) {
 				String msg = "Cannot initiate AAFRealm";
-				access.log(Level.INIT,msg,e.getMessage());
+				logger.info(msg + " "+ e.getMessage(), e);
 				throw new RuntimeException(msg,e);
 			}
 		}
 		supports = new HashSet<Class<? extends AuthenticationToken>>();
 		supports.add(UsernamePasswordToken.class);
 	}
-	public static PrintStream createLoggingProxy(final PrintStream realPrintStream) {
-        return new PrintStream(realPrintStream) {
-            public void print(final String string) {
-                realPrintStream.print(string);
-                logger.info(string);
-            }
-        };
-    }
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		logger.info("AAFRealm.doGetAuthenticationInfo :"+token);
 		final UsernamePasswordToken upt = (UsernamePasswordToken)token;
 		final String user = upt.getUsername();
 		String authUser = user; 
 		final String password=new String(upt.getPassword());
 		String authPassword = password;
-		if(mbc!=null) {	
+		if(mbc!=null) {
 			try {
-
 				final String oldBath = "Basic " + Symm.base64noSplit.encode(user+':'+password);
 				String bath = mbc.convert(access, oldBath);
 				if(bath!=oldBath) {
@@ -163,12 +148,12 @@ public class AAFRealm extends AuthorizingRealm {
 					if(colon>=0) {
 						authUser = bath.substring(0, colon);
 						authPassword = bath.substring(colon+1);	
-						access.log(Level.DEBUG, authUser,"user authenticated");
-						access.log(Level.DEBUG, authn.validate(authUser,authPassword));
 					}
 				}
 			} catch (IOException e) {
-				access.log(e);
+
+				logger.info(e.getMessage(), e);
+
 			} 
 		}
 		String err;
@@ -176,11 +161,11 @@ public class AAFRealm extends AuthorizingRealm {
 			err = authn.validate(authUser,authPassword);
 		} catch (IOException e) {
 			err = "Credential cannot be validated";
-			access.log(Level.DEBUG, e, err);
+			logger.info(e.getMessage(), e);
 		}
 		
 		if(err != null) {
-			access.log(Level.DEBUG, err, " - Credential cannot be validated");
+			logger.info(err);
 			throw new AuthenticationException(err);
 		}
 
@@ -188,21 +173,25 @@ public class AAFRealm extends AuthorizingRealm {
 	    		access,
 	    		user,
 	    		password
-	    		
 	    );
-	    
 	}
 
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken atoken, AuthenticationInfo ai)throws AuthenticationException {
+		
 		if(ai instanceof AAFAuthenticationInfo) {
 			if(!((AAFAuthenticationInfo)ai).matches(atoken)) {
 				throw new AuthenticationException("Credentials do not match");
+
 			}
+			
 		} else {
 			throw new AuthenticationException("AuthenticationInfo is not an AAFAuthenticationInfo");
+		
 		}
 	}
+
+
 
 
 	@Override
@@ -211,6 +200,7 @@ public class AAFRealm extends AuthorizingRealm {
 		Principal newBait = bait;
 		if(idMap!=null) {
 			final String newID = idMap.get(bait.getName());
+			logger.info("Successful authentication attempt by " +bait.getName()); 
 			if(newID!=null) {
 				newBait = new Principal() {
 					@Override
