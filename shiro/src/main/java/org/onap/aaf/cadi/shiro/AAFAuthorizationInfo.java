@@ -73,20 +73,20 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 
 	@Override
 	public Collection<String> getRoles() {
-		access.log(Level.INFO,"AAFAuthorizationInfo.getRoles");
+		access.log(Level.DEBUG,"AAFAuthorizationInfo.getRoles");
 		// Until we decide to make Roles available, tie into String based permissions.
 		return getStringPermissions();
 	}
 
 	@Override
 	public Collection<String> getStringPermissions() {
-		access.log(Level.INFO,"AAFAuthorizationInfo.getStringPermissions");
+		access.log(Level.DEBUG,"AAFAuthorizationInfo.getStringPermissions");
 		synchronized(bait) {
 			if(sPerms == null) {
 				sPerms = new ArrayList<String>(); 
 				for(org.onap.aaf.cadi.Permission p : pond) {
 					sPerms.add(p.getKey().replace("|",":"));
-					access.printf(Level.INFO,"the user has %s",p.getKey());
+					access.printf(Level.INFO,"%s has %s",bait.getName(),p.getKey());
 				}
 			}
 		}

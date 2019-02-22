@@ -27,13 +27,14 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.junit.Assert;
 import org.junit.Test;
 import org.onap.aaf.cadi.aaf.AAFPermission;
 import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.shiro.AAFRealm;
 import org.onap.aaf.cadi.shiro.AAFShiroPermission;
 
-import junit.framework.Assert;
+
 
 public class JU_AAFRealm {
 
@@ -58,6 +59,8 @@ public class JU_AAFRealm {
  		testAPerm(false,azi,"org.osaaf.nons","resources","something","get");
  //		testAPerm(true,azi,"name","org.access","something","*");
  //		testAPerm(false,azi,"org.accessX","something","*");
+ 		
+ 		Assert.assertEquals(true,ar.supports(upt));
  	} catch (Throwable t) {
  		t.printStackTrace();
  		Assert.fail();

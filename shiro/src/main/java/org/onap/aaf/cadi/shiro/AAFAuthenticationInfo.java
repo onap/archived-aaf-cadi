@@ -65,19 +65,20 @@ public class AAFAuthenticationInfo implements AuthenticationInfo {
 			UsernamePasswordToken upt = (UsernamePasswordToken)atoken;
 			if(apc.getPrimaryPrincipal().getName().equals(upt.getPrincipal())) {
 				byte[] newhash = getSaltedCred(new String(upt.getPassword()));
-				access.printf(Level.INFO,"Successful authentication attempt by %s",upt.getPrincipal());
 				if(newhash.length==hash.length) {
 					for(int i=0;i<hash.length;++i) {
 						if(hash[i]!=newhash[i]) {
 							return false;
 						}
 					}
+					access.printf(Level.DEBUG,"UserPassword Matches for %s",upt.getPrincipal());
 					return true;
 				}
 			}
 		} else {
 			access.printf(Level.ERROR, "AAFAuthenticationInfo received non-AAF token %s (%s)",atoken.getPrincipal(),atoken.getClass().getName());
 		}
+		access.log(Level.DEBUG,"UserPassword does NOT match");
 		return false;
 	}
 	
