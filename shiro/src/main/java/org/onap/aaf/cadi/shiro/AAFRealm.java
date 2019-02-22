@@ -23,12 +23,13 @@ package org.onap.aaf.cadi.shiro;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.TreeMap;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -83,7 +84,7 @@ public class AAFRealm extends AuthorizingRealm {
 						try {
 							mbc = new MapBathConverter(access, new CSV(csv));
 							access.log(Level.INFO, "MapBathConversion enabled with file ",csv);
-							idMap = new ConcurrentHashMap<String,String>();
+							idMap = Collections.synchronizedMap(new TreeMap<String,String>());
 							// Load 
 							for(Entry<String, String> es : mbc.map().entrySet()) {
 								String oldID = es.getKey();
@@ -115,7 +116,7 @@ public class AAFRealm extends AuthorizingRealm {
 					throw new RuntimeException(msg,e);
 				}
 			}
-			supports = new ConcurrentSkipListSet<>();
+			supports = Collections.synchronizedSet(new HashSet<>());
 			supports.add(UsernamePasswordToken.class);
 		}
 		
@@ -146,7 +147,7 @@ public class AAFRealm extends AuthorizingRealm {
 							logger.debug(str);
 							break;
 						case ERROR:
-							logger.warn(str);
+							logger.error(str);
 							break;
 						case INFO:
 						case INIT:
@@ -174,7 +175,7 @@ public class AAFRealm extends AuthorizingRealm {
 							logger.debug(str);
 							break;
 						case ERROR:
-							logger.warn(str);
+							logger.error(str);
 							break;
 						case INFO:
 						case INIT:
@@ -193,6 +194,7 @@ public class AAFRealm extends AuthorizingRealm {
 			public boolean willLog(Level level) {
 				if(super.willLog(level)) {
 					switch(level) {
+						case WARN:
 						case AUDIT:
 							return logger.isWarnEnabled();
 						case DEBUG:
@@ -206,9 +208,6 @@ public class AAFRealm extends AuthorizingRealm {
 							return false;
 						case TRACE:
 							return logger.isTraceEnabled();
-						case WARN:
-							return logger.isWarnEnabled();
-				
 					}
 				}
 				return false;
@@ -287,8 +286,8 @@ public class AAFRealm extends AuthorizingRealm {
 		Principal newBait = bait;
 		if(singleton.idMap!=null) {
 			final String newID = singleton.idMap.get(bait.getName());
-			singleton.access.printf(Level.INFO,"Successful authentication attempt by %s",bait.getName()); 
 			if(newID!=null) {
+				singleton.access.printf(Level.INFO,"Successful authentication Translation %s to %s",bait.getName(), newID); 
 				newBait = new Principal() {
 					@Override
 					public String getName() {
