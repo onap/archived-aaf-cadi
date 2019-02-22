@@ -214,6 +214,14 @@
 				<version>${cadi.version}</version>
 			</dependency>
 			
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>1.3.2</version>
+			</dependency>
+		
+			
+			
 			<!-- 
 
 			<dependency>

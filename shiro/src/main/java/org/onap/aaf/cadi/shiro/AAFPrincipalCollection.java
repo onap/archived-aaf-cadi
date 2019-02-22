@@ -27,15 +27,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.apache.shiro.subject.PrincipalCollection;
 
 public class AAFPrincipalCollection implements PrincipalCollection {
 	
 	private static final long serialVersionUID = 558246013419818831L;
-	private static final Logger logger =  LoggerFactory.getLogger(AAFPrincipalCollection.class);
 	private static final Set<String> realmSet;
 	private final Principal principal;
 	private List<Principal> list=null;
