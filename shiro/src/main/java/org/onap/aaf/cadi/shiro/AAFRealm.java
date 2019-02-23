@@ -24,11 +24,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -61,7 +59,7 @@ public class AAFRealm extends AuthorizingRealm {
 	private static class Singleton {
 		private AAFCon<?> acon;
 		private AAFAuthn<?> authn;
-		private Set<Class<? extends AuthenticationToken>> supports;
+//		private Set<Class<? extends AuthenticationToken>> supports;
 		private AAFLurPerm authz;
 		private MapBathConverter mbc;
 		private Map<String,String> idMap;
@@ -82,7 +80,7 @@ public class AAFRealm extends AuthorizingRealm {
 					final String csv = access.getProperty(Config.CADI_BATH_CONVERT);
 					if(csv!=null) {
 						try {
-							mbc = new MapBathConverter(access, new CSV(csv));
+							mbc = new MapBathConverter(access, new CSV(access,csv));
 							access.log(Level.INFO, "MapBathConversion enabled with file ",csv);
 							idMap = Collections.synchronizedMap(new TreeMap<String,String>());
 							// Load 
@@ -104,7 +102,6 @@ public class AAFRealm extends AuthorizingRealm {
 									}
 								}
 								idMap.put(oldID,newID);
-								
 							}
 						} catch (IOException e) {
 							access.log(e);
@@ -116,8 +113,10 @@ public class AAFRealm extends AuthorizingRealm {
 					throw new RuntimeException(msg,e);
 				}
 			}
-			supports = Collections.synchronizedSet(new HashSet<>());
-			supports.add(UsernamePasswordToken.class);
+			
+			// There is only one of these.  If there are more, put back 
+//			supports = Collections.synchronizedSet(new HashSet<>());
+//			supports.add(UsernamePasswordToken.class);
 		}
 		
 		public static synchronized Singleton singleton() {
@@ -265,20 +264,14 @@ public class AAFRealm extends AuthorizingRealm {
 
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken atoken, AuthenticationInfo ai)throws AuthenticationException {
-		
 		if(ai instanceof AAFAuthenticationInfo) {
 			if(!((AAFAuthenticationInfo)ai).matches(atoken)) {
 				throw new AuthenticationException("Credentials do not match");
 			}
-			
 		} else {
 			throw new AuthenticationException("AuthenticationInfo is not an AAFAuthenticationInfo");
-		
 		}
 	}
-
-
-
 
 	@Override
 	protected AAFAuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -303,7 +296,9 @@ public class AAFRealm extends AuthorizingRealm {
 
 	@Override
 	public boolean supports(AuthenticationToken token) {
-		return singleton.supports.contains(token.getClass());
+		// Only one was being loaded.  If more are needed uncomment the multi-class mode
+		return UsernamePasswordToken.class.equals(token);
+//		return singleton.supports.contains(token.getClass());
 	}
 
 	@Override
