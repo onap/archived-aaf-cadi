@@ -17,7 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.cadi.sidecar.rpoxy.logging;
+package org.onap.aaf.cadi.sidecar.rproxy.logging;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -17,29 +17,35 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaf.cadi.sidecar.rpoxy.logging;
+package org.onap.aaf.cadi.sidecar.rproxy.logging;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 @Aspect
-@Component
-public class ReverseProxyEntryExitLoggingAspect {
+@Configuration
+public class ReverseProxyMethodLogTime {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReverseProxyEntryExitLoggingAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReverseProxyMethodLogTime.class);
 
-    @Before("execution(* org.onap.platform.security.*.*(..))")
-    public void before(JoinPoint joinPoint) {
-        LOGGER.info("Entry of {}#{}", joinPoint.getTarget().getClass(), joinPoint.getSignature().getName());
+    @Around("@annotation(org.onap.aaf.cadi.sidecar.rproxy.logging.ReverseProxyMethodLogTimeAnnotation)")
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        long startTime = System.currentTimeMillis();
+
+        Object object = joinPoint.proceed();
+
+        long duration = System.currentTimeMillis() - startTime;
+
+        LOGGER.info("Time taken by {} is {} ms", joinPoint, duration);
+
+        return object;
     }
 
-    @After("execution(* org.onap.platform.security.*.*(..))")
-    public void after(JoinPoint joinPoint) {
-        LOGGER.info("Exit of {}#{}", joinPoint.getTarget().getClass(), joinPoint.getSignature().getName());
-    }
+
+
 }
