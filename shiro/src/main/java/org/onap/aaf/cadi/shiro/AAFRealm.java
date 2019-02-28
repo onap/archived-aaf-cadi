@@ -297,7 +297,7 @@ public class AAFRealm extends AuthorizingRealm {
 	@Override
 	public boolean supports(AuthenticationToken token) {
 		// Only one was being loaded.  If more are needed uncomment the multi-class mode
-		return UsernamePasswordToken.class.equals(token);
+		return token instanceof UsernamePasswordToken;
 //		return singleton.supports.contains(token.getClass());
 	}
 

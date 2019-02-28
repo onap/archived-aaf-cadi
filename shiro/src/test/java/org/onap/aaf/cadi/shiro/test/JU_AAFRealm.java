@@ -38,6 +38,7 @@ import org.onap.aaf.cadi.shiro.AAFShiroPermission;
 
 public class JU_AAFRealm {
 
+//@Test
  public void test() {
  	// NOTE This is a live test.  This JUnit needs to be built with "Mock" before it can be 
 	// an official JUNIT
