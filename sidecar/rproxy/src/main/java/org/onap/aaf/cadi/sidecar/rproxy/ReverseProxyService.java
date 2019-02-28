@@ -28,9 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.onap.aaf.cadi.sidecar.fproxy.data.CredentialCacheData;
 import org.onap.aaf.cadi.sidecar.fproxy.data.CredentialCacheData.CredentialType;
-import org.onap.aaf.cadi.sidecar.rpoxy.logging.ReverseProxyMethodLogTimeAnnotation;
 import org.onap.aaf.cadi.sidecar.rproxy.config.ForwardProxyProperties;
 import org.onap.aaf.cadi.sidecar.rproxy.config.PrimaryServiceProperties;
+import org.onap.aaf.cadi.sidecar.rproxy.logging.ReverseProxyMethodLogTimeAnnotation;
 import org.onap.aaf.cadi.sidecar.rproxy.utils.ReverseProxyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
