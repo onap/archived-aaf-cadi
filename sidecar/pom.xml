@@ -132,6 +132,10 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.web.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
