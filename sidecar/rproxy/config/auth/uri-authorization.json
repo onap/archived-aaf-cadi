@@ -7,6 +7,14 @@
     },
     {
       "uri": "\/single\/permission\/required$",
+      "method": "GET",
+      "permissions": [
+        "test.single.access\\|single\\|permission"
+       ]
+    },    
+    {
+      "uri": "\/single\/permission\/required$",
+      "method": "PUT|POST",
       "permissions": [
         "test.single.access\\|single\\|permission"
        ]
@@ -92,6 +100,7 @@
     },
     {
       "uri": "\/aai\/v13\/cloud-infrastructure\/cloud-regions\/cloud-region\/[^\/]+[\/][^\/]+$*",
+      "method": "GET",
       "permissions": [
         "test.auth.access\\|clouds\\|read",
         "test.auth.access\\|tenants\\|read"
