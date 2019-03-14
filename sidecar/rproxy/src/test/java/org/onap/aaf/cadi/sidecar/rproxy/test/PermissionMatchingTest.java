@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.annotation.Resource;
+
 import org.eclipse.jetty.util.security.Password;
 import org.junit.Before;
 import org.junit.Test;
@@ -139,6 +140,47 @@ public class PermissionMatchingTest {
         mockServer.verify();        
         
 	}
+	
+	@Test
+	public void testURIPUTMatchSinglePermissionMatch() throws Exception {
+		
+        String transactionId = "63f88b50-6345-4a61-bc59-3a48cabb60a4";
+        String testUrl = "/single/permission/required";
+        String testResponse = "Response from MockRestService";
+
+        mockServer
+        	.expect(requestTo(primaryServiceBaseUrl + testUrl))
+        	.andExpect(method(HttpMethod.PUT))
+        	.andExpect(header(transactionIdHeaderName, transactionId))
+        	.andRespond(withSuccess(testResponse, MediaType.APPLICATION_JSON));
+        
+        // Send request to mock server with transaction Id
+        mockMvc
+        	.perform(MockMvcRequestBuilders.put(testUrl).accept(MediaType.APPLICATION_JSON).header(transactionIdHeaderName, transactionId))
+        	.andExpect(status().isOk())
+            .andExpect(content().string(equalTo(testResponse)));
+
+        mockServer.verify();        
+        
+	}
+	
+	
+	@Test
+	public void testURIPATCHMatchSinglePermissionMatch() throws Exception {
+		
+        String transactionId = "63f88b50-6345-4a61-bc59-3a48cabb60a4";
+        String testUrl = "/single/permission/required";
+        String testResponse = "Sorry, the request is not allowed";
+        
+        // Send request to mock server with transaction Id
+        mockMvc
+        	.perform(MockMvcRequestBuilders.patch(testUrl).accept(MediaType.APPLICATION_JSON).header(transactionIdHeaderName, transactionId))
+        	.andExpect(status().isForbidden())
+        	.andExpect(status().reason(testResponse));        
+
+        mockServer.verify();        
+        
+	}	
 	
 	@Test
 	public void testURIMatchMultiplePermissionMatch() throws Exception {

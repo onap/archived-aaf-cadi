@@ -98,13 +98,15 @@ public class ReverseProxyAuthorizationFilter implements Filter {
         }
 
         String requestPath;
+        String requestMethod;
         try {
             requestPath = new URI(((HttpServletRequest) servletRequest).getRequestURI()).getPath();
+            requestMethod = ((HttpServletRequest)servletRequest).getMethod();
         } catch (URISyntaxException e) {
             throw new ServletException("Request URI not valid", e);
         }
 
-        if (authorizeRequest(grantedPermissions, requestPath)) {
+        if (authorizeRequest(grantedPermissions, requestPath, requestMethod)) {
             LOGGER.info("Authorized");
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
@@ -121,12 +123,14 @@ public class ReverseProxyAuthorizationFilter implements Filter {
      * 
      * @param grantedPermissions The granted permissions for the request path
      * @param requestPath The request path
+     * @param requestMethod The request method i.e. HTTP verb e.g. GET, PUT, POST etc
      * @return true if permissions match
      */
-    private boolean authorizeRequest(List<Permission> grantedPermissions, String requestPath) {
+    private boolean authorizeRequest(List<Permission> grantedPermissions, String requestPath, String requestMethod) {
         boolean authorized = false;
         for (ReverseProxyAuthorization reverseProxyAuthorization : reverseProxyAuthorizations) {
-            if (requestPath.matches(reverseProxyAuthorization.getUri())) {
+            if (requestPath.matches(reverseProxyAuthorization.getUri()) &&
+            	requestMethod.matches(reverseProxyAuthorization.getMethod())) {
                 LOGGER.debug("The URI:{}  matches:{}", requestPath, reverseProxyAuthorization.getUri());
                 if (checkPermissionsMatch(grantedPermissions, reverseProxyAuthorization)) {
                     authorized = true;

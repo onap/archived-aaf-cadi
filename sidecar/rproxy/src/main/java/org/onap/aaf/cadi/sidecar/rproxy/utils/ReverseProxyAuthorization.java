@@ -22,6 +22,7 @@ package org.onap.aaf.cadi.sidecar.rproxy.utils;
 public class ReverseProxyAuthorization {
 
     private String uri;
+    private String method;
     private String[] permissions;
 
     public String getUri() {
@@ -31,4 +32,8 @@ public class ReverseProxyAuthorization {
     public String[] getPermissions() {
         return permissions;
     }
+
+	public String getMethod() {
+		return method == null ? "GET" : method;
+	}
 }
