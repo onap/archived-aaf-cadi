@@ -65,12 +65,12 @@
 			<dependency>
 				<groupId>org.onap.aaf.cadi.sidecar</groupId>
 				<artifactId>fproxy</artifactId>
-				<version>${project.version}</version>
+				<version>2.1.13</version>
 			</dependency>
 			<dependency>
 				<groupId>org.onap.aaf.cadi.sidecar</groupId>
 				<artifactId>rproxy</artifactId>
-				<version>${project.version}</version>
+				<version>2.1.13</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
