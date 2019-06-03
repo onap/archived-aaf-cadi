@@ -34,7 +34,7 @@
 
 	<properties>
 		<!-- This version needs to be RELEASED version. Fails on SNAPSHOT -->
-		<cadi.version>2.1.10</cadi.version>
+		<cadi.version>2.1.13</cadi.version>
 		<!-- <sonar.skip>true</sonar.skip> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- project.jettyVersion>9.4.12.v20180830</project.jettyVersion -->
@@ -390,17 +390,6 @@
 								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.sonatype.plugins</groupId>
-					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>1.6.7</version>
-					<extensions>true</extensions>
-					<configuration>
-						<nexusUrl>${nexusproxy}</nexusUrl>
-						<stagingProfileId>176c31dfe190a</stagingProfileId>
-						<serverId>ecomp-staging</serverId>
 					</configuration>
 				</plugin>
 				<plugin>
