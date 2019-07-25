@@ -28,7 +28,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.Assert;
-import org.junit.Test;
 import org.onap.aaf.cadi.aaf.AAFPermission;
 import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.shiro.AAFRealm;

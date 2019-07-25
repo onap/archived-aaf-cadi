@@ -179,6 +179,11 @@ public class ReverseProxyMockCadiFilter implements Filter {
 			public RESP authenticate() throws IOException {
 				return null;
 			}
+
+            @Override
+            public String getTarget() {
+                return null;
+            }
 		};
 
 		CadiWrap cadiWrap = new CadiWrap((HttpServletRequest) servletRequest, tafResponseMock, fakeLur);
