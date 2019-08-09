@@ -21,6 +21,7 @@ package org.onap.aaf.cadi.sidecar.fproxy.service;
 
 import java.net.URI;
 import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +35,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,7 +61,7 @@ public class ForwardingProxyService {
     @Value("${credential.cache.timeout.ms:" + DEFAULT_CACHE_EXPIRY_MS + "}")
     long cacheExpiryMs;
 
-    @RequestMapping(value = "/credential-cache/{transactionId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/credential-cache/{transactionId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addCredentialToCache(@PathVariable("transactionId") String transactionId,
             @RequestBody CredentialCacheData credentialdata) {
         logger.info("Updating credential cache with transaction ID: {}", transactionId);

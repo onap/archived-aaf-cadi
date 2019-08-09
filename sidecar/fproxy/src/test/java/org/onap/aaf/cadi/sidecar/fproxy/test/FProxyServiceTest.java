@@ -26,7 +26,9 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import javax.servlet.http.Cookie;
+
 import org.eclipse.jetty.util.security.Password;
 import org.junit.Before;
 import org.junit.Test;
@@ -206,8 +208,8 @@ public class FProxyServiceTest {
                 + "\", \"credentialType\":\"" + credentialType + "\" }";
 
         // Populate the cache with credentials
-        mvc.perform(MockMvcRequestBuilders.post(cacheUrl).content(requestBody).contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mvc.perform(MockMvcRequestBuilders.post(cacheUrl).content(requestBody).accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
                 .andExpect(content().string(equalTo(transactionId)));
     }
 }
