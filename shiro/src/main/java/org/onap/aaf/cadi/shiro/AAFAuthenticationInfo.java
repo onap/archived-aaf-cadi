@@ -33,64 +33,64 @@ import org.onap.aaf.cadi.Access.Level;
 import org.onap.aaf.cadi.Hash;
 
 public class AAFAuthenticationInfo implements AuthenticationInfo {
-	private static final long serialVersionUID = -1502704556864321020L;
-	
-	// We assume that Shiro is doing Memory Only, and this salt is not needed cross process
-	private final static int salt = new SecureRandom().nextInt(); 
+    private static final long serialVersionUID = -1502704556864321020L;
+    
+    // We assume that Shiro is doing Memory Only, and this salt is not needed cross process
+    private final static int salt = new SecureRandom().nextInt(); 
 
-	private final AAFPrincipalCollection apc;
-	private final byte[] hash;
-	private Access access;
+    private final AAFPrincipalCollection apc;
+    private final byte[] hash;
+    private Access access;
 
-	public AAFAuthenticationInfo(Access access, String username, String password) {
-		this.access = access;
-		apc = new AAFPrincipalCollection(username);
-		hash = getSaltedCred(password);
-	}
-	
-	@Override
-	public byte[] getCredentials() {	
-		access.log(Level.DEBUG, "AAFAuthenticationInfo.getCredentials");
-		return hash;
-	}
+    public AAFAuthenticationInfo(Access access, String username, String password) {
+        this.access = access;
+        apc = new AAFPrincipalCollection(username);
+        hash = getSaltedCred(password);
+    }
+    
+    @Override
+    public byte[] getCredentials() {    
+        access.log(Level.DEBUG, "AAFAuthenticationInfo.getCredentials");
+        return hash;
+    }
 
-	@Override
-	public PrincipalCollection getPrincipals() {
-		access.log(Level.DEBUG, "AAFAuthenticationInfo.getPrincipals");
-		return apc;
-	}
+    @Override
+    public PrincipalCollection getPrincipals() {
+        access.log(Level.DEBUG, "AAFAuthenticationInfo.getPrincipals");
+        return apc;
+    }
 
-	public boolean matches(AuthenticationToken atoken) {
-		if(atoken instanceof UsernamePasswordToken) {
-			UsernamePasswordToken upt = (UsernamePasswordToken)atoken;
-			if(apc.getPrimaryPrincipal().getName().equals(upt.getPrincipal())) {
-				byte[] newhash = getSaltedCred(new String(upt.getPassword()));
-				if(newhash.length==hash.length) {
-					for(int i=0;i<hash.length;++i) {
-						if(hash[i]!=newhash[i]) {
-							return false;
-						}
-					}
-					access.printf(Level.DEBUG,"UserPassword Matches for %s",upt.getPrincipal());
-					return true;
-				}
-			}
-		} else {
-			access.printf(Level.ERROR, "AAFAuthenticationInfo received non-AAF token %s (%s)",atoken.getPrincipal(),atoken.getClass().getName());
-		}
-		access.log(Level.DEBUG,"UserPassword does NOT match");
-		return false;
-	}
-	
-	private byte[] getSaltedCred(String password) {
-		byte[] pbytes = password.getBytes();
-		ByteBuffer bb = ByteBuffer.allocate(pbytes.length+Integer.SIZE/8);
-		bb.asIntBuffer().put(salt);
-		bb.put(password.getBytes());
-		try {
-			return Hash.hashSHA256(bb.array());
-		} catch (NoSuchAlgorithmException e) {
-			return new byte[0]; // should never get here
-		}
-	}
+    public boolean matches(AuthenticationToken atoken) {
+        if(atoken instanceof UsernamePasswordToken) {
+            UsernamePasswordToken upt = (UsernamePasswordToken)atoken;
+            if(apc.getPrimaryPrincipal().getName().equals(upt.getPrincipal())) {
+                byte[] newhash = getSaltedCred(new String(upt.getPassword()));
+                if(newhash.length==hash.length) {
+                    for(int i=0;i<hash.length;++i) {
+                        if(hash[i]!=newhash[i]) {
+                            return false;
+                        }
+                    }
+                    access.printf(Level.DEBUG,"UserPassword Matches for %s",upt.getPrincipal());
+                    return true;
+                }
+            }
+        } else {
+            access.printf(Level.ERROR, "AAFAuthenticationInfo received non-AAF token %s (%s)",atoken.getPrincipal(),atoken.getClass().getName());
+        }
+        access.log(Level.DEBUG,"UserPassword does NOT match");
+        return false;
+    }
+    
+    private byte[] getSaltedCred(String password) {
+        byte[] pbytes = password.getBytes();
+        ByteBuffer bb = ByteBuffer.allocate(pbytes.length+Integer.SIZE/8);
+        bb.asIntBuffer().put(salt);
+        bb.put(password.getBytes());
+        try {
+            return Hash.hashSHA256(bb.array());
+        } catch (NoSuchAlgorithmException e) {
+            return new byte[0]; // should never get here
+        }
+    }
 }

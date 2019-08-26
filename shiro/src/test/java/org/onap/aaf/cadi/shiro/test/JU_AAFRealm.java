@@ -28,7 +28,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.Assert;
-import org.junit.Test;
 import org.onap.aaf.cadi.aaf.AAFPermission;
 import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.shiro.AAFRealm;
@@ -40,63 +39,63 @@ public class JU_AAFRealm {
 
 //@Test
  public void test() {
- 	// NOTE This is a live test.  This JUnit needs to be built with "Mock" before it can be 
-	// an official JUNIT
-	
- 	try {
- 		System.setProperty(Config.CADI_PROP_FILES, "/opt/app/osaaf/local/org.onap.aai.props");
- 		TestAAFRealm ar = new TestAAFRealm();
-		
- 		//UsernamePasswordToken upt = new UsernamePasswordToken("demo@people.osaaf.org", "demo123456!");
- 		/// UsernamePasswordToken upt = new UsernamePasswordToken("AAI", "AAI");
- 		UsernamePasswordToken upt = new UsernamePasswordToken("admin","Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U");
- 		
- 		AuthenticationInfo ani = ar.authn(upt);
-		
- 		AuthorizationInfo azi = ar.authz(ani.getPrincipals());
- 		// Change this to something YOU have, Sai...
-		
- 		testAPerm(true,azi,"org.onap.aai","resources","something","get");
- 		testAPerm(false,azi,"org.osaaf.nons","resources","something","get");
- //		testAPerm(true,azi,"name","org.access","something","*");
- //		testAPerm(false,azi,"org.accessX","something","*");
- 		
- 		Assert.assertEquals(true,ar.supports(upt));
- 	} catch (Throwable t) {
- 		t.printStackTrace();
- 		Assert.fail();
- 	}
+     // NOTE This is a live test.  This JUnit needs to be built with "Mock" before it can be 
+    // an official JUNIT
+    
+     try {
+         System.setProperty(Config.CADI_PROP_FILES, "/opt/app/osaaf/local/org.onap.aai.props");
+         TestAAFRealm ar = new TestAAFRealm();
+        
+         //UsernamePasswordToken upt = new UsernamePasswordToken("demo@people.osaaf.org", "demo123456!");
+         /// UsernamePasswordToken upt = new UsernamePasswordToken("AAI", "AAI");
+         UsernamePasswordToken upt = new UsernamePasswordToken("admin","Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U");
+         
+         AuthenticationInfo ani = ar.authn(upt);
+        
+         AuthorizationInfo azi = ar.authz(ani.getPrincipals());
+         // Change this to something YOU have, Sai...
+        
+         testAPerm(true,azi,"org.onap.aai","resources","something","get");
+         testAPerm(false,azi,"org.osaaf.nons","resources","something","get");
+ //        testAPerm(true,azi,"name","org.access","something","*");
+ //        testAPerm(false,azi,"org.accessX","something","*");
+         
+         Assert.assertEquals(true,ar.supports(upt));
+     } catch (Throwable t) {
+         t.printStackTrace();
+         Assert.fail();
+     }
  }
 
-	private void testAPerm(boolean expect, AuthorizationInfo azi, String ns, String type, String instance, String action) {
-		
-		AAFShiroPermission testPerm = new AAFShiroPermission(new AAFPermission(ns,type,instance,action,new ArrayList<String>()));
+    private void testAPerm(boolean expect, AuthorizationInfo azi, String ns, String type, String instance, String action) {
+        
+        AAFShiroPermission testPerm = new AAFShiroPermission(new AAFPermission(ns,type,instance,action,new ArrayList<String>()));
 
-		boolean any = false;
-		for(Permission p : azi.getObjectPermissions()) {
-			if(p.implies(testPerm)) {
-				any = true;
-			}
-		}
-		if(expect) {
-			Assert.assertTrue(any);
-		} else {
-			Assert.assertFalse(any);
-		}
+        boolean any = false;
+        for(Permission p : azi.getObjectPermissions()) {
+            if(p.implies(testPerm)) {
+                any = true;
+            }
+        }
+        if(expect) {
+            Assert.assertTrue(any);
+        } else {
+            Assert.assertFalse(any);
+        }
 
-		
-	}
+        
+    }
 
-	/**
-	 * Note, have to create a derived class, because "doGet"... are protected
-	 */
-	private class TestAAFRealm extends AAFRealm {
-		public AuthenticationInfo authn(UsernamePasswordToken upt) {
-			return doGetAuthenticationInfo(upt);
-		}
-		public AuthorizationInfo authz(PrincipalCollection pc) {
-			return doGetAuthorizationInfo(pc);
-		}
-		
-	}
+    /**
+     * Note, have to create a derived class, because "doGet"... are protected
+     */
+    private class TestAAFRealm extends AAFRealm {
+        public AuthenticationInfo authn(UsernamePasswordToken upt) {
+            return doGetAuthenticationInfo(upt);
+        }
+        public AuthorizationInfo authz(PrincipalCollection pc) {
+            return doGetAuthorizationInfo(pc);
+        }
+        
+    }
 }

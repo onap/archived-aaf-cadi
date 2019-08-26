@@ -23,23 +23,23 @@ package org.onap.aaf.cadi.shiro;
 import org.apache.shiro.authz.Permission;
 
 public class AAFShiroPermission implements Permission {
-	private org.onap.aaf.cadi.Permission perm;
-	public AAFShiroPermission(org.onap.aaf.cadi.Permission perm) {
-		this.perm = perm;
-	}
-	@Override
-	public boolean implies(Permission sp) {
-		if(sp instanceof AAFShiroPermission) {
-			if(perm.match(((AAFShiroPermission)sp).perm)){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	@Override
-	public String toString() {
-		return perm.toString();
-	}
+    private org.onap.aaf.cadi.Permission perm;
+    public AAFShiroPermission(org.onap.aaf.cadi.Permission perm) {
+        this.perm = perm;
+    }
+    @Override
+    public boolean implies(Permission sp) {
+        if(sp instanceof AAFShiroPermission) {
+            if(perm.match(((AAFShiroPermission)sp).perm)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        return perm.toString();
+    }
 
 }

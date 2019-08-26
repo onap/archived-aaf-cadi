@@ -24,7 +24,7 @@
 	<parent>
 		<groupId>org.onap.aaf.cadi.sidecar</groupId>
 		<artifactId>sidecar</artifactId>
-		<version>2.1.14-SNAPSHOT</version>
+		<version>2.1.15-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>fproxy</artifactId>
@@ -82,10 +82,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
 	</dependencies>
 
 	<build>

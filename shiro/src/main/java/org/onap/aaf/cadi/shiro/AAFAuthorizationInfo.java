@@ -37,60 +37,60 @@ import org.onap.aaf.cadi.Access.Level;
  *
  */
 public class AAFAuthorizationInfo implements AuthorizationInfo {
-	private static final long serialVersionUID = -4805388954462426018L;
-	
-	private Access access;
-	private Principal bait;
-	private List<org.onap.aaf.cadi.Permission> pond;
-	private ArrayList<String> sPerms;
-	private ArrayList<Permission> oPerms;
+    private static final long serialVersionUID = -4805388954462426018L;
+    
+    private Access access;
+    private Principal bait;
+    private List<org.onap.aaf.cadi.Permission> pond;
+    private ArrayList<String> sPerms;
+    private ArrayList<Permission> oPerms;
 
-	public AAFAuthorizationInfo(Access access, Principal bait, List<org.onap.aaf.cadi.Permission> pond) {
-		this.access = access;
-		this.bait = bait;
-		this.pond = pond;
-		sPerms=null;
-		oPerms=null;
-	}
-	
-	public Principal principal() {
-		return bait;
-	}
-	
-	@Override
-	public Collection<Permission> getObjectPermissions() {
-		access.log(Level.DEBUG, "AAFAuthorizationInfo.getObjectPermissions");
-		synchronized(bait) {
-			if(oPerms == null) {
-				oPerms = new ArrayList<Permission>(); 
-				for(final org.onap.aaf.cadi.Permission p : pond) {
-					oPerms.add(new AAFShiroPermission(p));
-				}
-			}
-		}
-		return oPerms;
-	}
+    public AAFAuthorizationInfo(Access access, Principal bait, List<org.onap.aaf.cadi.Permission> pond) {
+        this.access = access;
+        this.bait = bait;
+        this.pond = pond;
+        sPerms=null;
+        oPerms=null;
+    }
+    
+    public Principal principal() {
+        return bait;
+    }
+    
+    @Override
+    public Collection<Permission> getObjectPermissions() {
+        access.log(Level.DEBUG, "AAFAuthorizationInfo.getObjectPermissions");
+        synchronized(bait) {
+            if(oPerms == null) {
+                oPerms = new ArrayList<Permission>(); 
+                for(final org.onap.aaf.cadi.Permission p : pond) {
+                    oPerms.add(new AAFShiroPermission(p));
+                }
+            }
+        }
+        return oPerms;
+    }
 
-	@Override
-	public Collection<String> getRoles() {
-		access.log(Level.DEBUG,"AAFAuthorizationInfo.getRoles");
-		// Until we decide to make Roles available, tie into String based permissions.
-		return getStringPermissions();
-	}
+    @Override
+    public Collection<String> getRoles() {
+        access.log(Level.DEBUG,"AAFAuthorizationInfo.getRoles");
+        // Until we decide to make Roles available, tie into String based permissions.
+        return getStringPermissions();
+    }
 
-	@Override
-	public Collection<String> getStringPermissions() {
-		access.log(Level.DEBUG,"AAFAuthorizationInfo.getStringPermissions");
-		synchronized(bait) {
-			if(sPerms == null) {
-				sPerms = new ArrayList<String>(); 
-				for(org.onap.aaf.cadi.Permission p : pond) {
-					sPerms.add(p.getKey().replace("|",":"));
-					access.printf(Level.INFO,"%s has %s",bait.getName(),p.getKey());
-				}
-			}
-		}
-		return sPerms;
-	}
+    @Override
+    public Collection<String> getStringPermissions() {
+        access.log(Level.DEBUG,"AAFAuthorizationInfo.getStringPermissions");
+        synchronized(bait) {
+            if(sPerms == null) {
+                sPerms = new ArrayList<String>(); 
+                for(org.onap.aaf.cadi.Permission p : pond) {
+                    sPerms.add(p.getKey().replace("|",":"));
+                    access.printf(Level.INFO,"%s has %s",bait.getName(),p.getKey());
+                }
+            }
+        }
+        return sPerms;
+    }
 
 }

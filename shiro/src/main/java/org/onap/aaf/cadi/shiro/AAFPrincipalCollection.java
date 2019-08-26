@@ -31,97 +31,97 @@ import java.util.Set;
 import org.apache.shiro.subject.PrincipalCollection;
 
 public class AAFPrincipalCollection implements PrincipalCollection {
-	
-	private static final long serialVersionUID = 558246013419818831L;
-	private static final Set<String> realmSet;
-	private final Principal principal;
-	private List<Principal> list=null;
-	private Set<Principal> set=null;
+    
+    private static final long serialVersionUID = 558246013419818831L;
+    private static final Set<String> realmSet;
+    private final Principal principal;
+    private List<Principal> list=null;
+    private Set<Principal> set=null;
 
-	static {
-		realmSet = new HashSet<String>();
-		realmSet.add(AAFRealm.AAF_REALM);
-	}
-	
-	public AAFPrincipalCollection(Principal p) {
-		principal = p;
+    static {
+        realmSet = new HashSet<String>();
+        realmSet.add(AAFRealm.AAF_REALM);
+    }
+    
+    public AAFPrincipalCollection(Principal p) {
+        principal = p;
 
-	}
+    }
 
-	public AAFPrincipalCollection(final String principalName) {
-		principal = 	new Principal() {
-			private final String name = principalName;
-			@Override
-			public String getName() {
-				return name;
-			}
-		};
-	}
+    public AAFPrincipalCollection(final String principalName) {
+        principal =     new Principal() {
+            private final String name = principalName;
+            @Override
+            public String getName() {
+                return name;
+            }
+        };
+    }
 
-	@Override
-	public Iterator<Principal> iterator() {
-		return null;
-	}
+    @Override
+    public Iterator<Principal> iterator() {
+        return null;
+    }
 
-	@Override
-	public List<Principal> asList() {
-		if(list==null) {
-			list = new ArrayList<Principal>();
-		}
-		list.add(principal);
-		return list;
-	}
+    @Override
+    public List<Principal> asList() {
+        if(list==null) {
+            list = new ArrayList<Principal>();
+        }
+        list.add(principal);
+        return list;
+    }
 
-	@Override
-	public Set<Principal> asSet() {
-		if(set==null) {
-			set = new HashSet<Principal>();
-		}
-		set.add(principal);
-		return set;
-	}
+    @Override
+    public Set<Principal> asSet() {
+        if(set==null) {
+            set = new HashSet<Principal>();
+        }
+        set.add(principal);
+        return set;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> Collection<T> byType(Class<T> cls) {
-		Collection<T> coll = new ArrayList<T>();
-		if(cls.isAssignableFrom(Principal.class)) {
-			coll.add((T)principal);
-		}
-		return coll;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> Collection<T> byType(Class<T> cls) {
+        Collection<T> coll = new ArrayList<T>();
+        if(cls.isAssignableFrom(Principal.class)) {
+            coll.add((T)principal);
+        }
+        return coll;
+    }
 
-	@Override
-	public Collection<Principal> fromRealm(String realm) {
-		if(AAFRealm.AAF_REALM.equals(realm)) {
-			return asList();
-		} else {
-			return new ArrayList<Principal>();
-		}
-	}
+    @Override
+    public Collection<Principal> fromRealm(String realm) {
+        if(AAFRealm.AAF_REALM.equals(realm)) {
+            return asList();
+        } else {
+            return new ArrayList<Principal>();
+        }
+    }
 
-	@Override
-	public Principal getPrimaryPrincipal() {
-		return principal;
-	}
+    @Override
+    public Principal getPrimaryPrincipal() {
+        return principal;
+    }
 
-	@Override
-	public Set<String> getRealmNames() {
-		return realmSet;
-	}
+    @Override
+    public Set<String> getRealmNames() {
+        return realmSet;
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return principal==null;
-	}
+    @Override
+    public boolean isEmpty() {
+        return principal==null;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T oneByType(Class<T> cls) {
-		if(cls.isAssignableFrom(Principal.class)) {
-			return (T)principal;
-		}
-		return null;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T oneByType(Class<T> cls) {
+        if(cls.isAssignableFrom(Principal.class)) {
+            return (T)principal;
+        }
+        return null;
+    }
 
 }
