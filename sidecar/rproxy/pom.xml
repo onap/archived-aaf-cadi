@@ -27,6 +27,10 @@
 		<version>2.1.14-SNAPSHOT</version>
 	</parent>
 
+	<properties>
+		<fproxy.build.dir>${project.build.directory}/${project.artifactId}-build/</fproxy.build.dir>
+	</properties>
+
 	<artifactId>rproxy</artifactId>
 	<packaging>jar</packaging>
 
@@ -128,50 +132,80 @@
 				<configuration>
 					<reuseForks>false</reuseForks>
 					<forkCount>1</forkCount>
+					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/descriptor.xml</descriptor>
+					</descriptors>
+				</configuration>
 				<executions>
 					<execution>
-						<id>copy-docker-file</id>
+						<id>make-assembly</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy-resources</goal>
+							<goal>single</goal>
 						</goals>
-						<configuration>
-							<outputDirectory>target</outputDirectory>
-							<overwrite>true</overwrite>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/docker</directory>
-									<filtering>true</filtering>
-								</resource>
-								<resource>
-									<directory>${basedir}/src/main/bin/</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.spotify</groupId>
+				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.11</version>
+				<version>0.28.0</version>
 				<configuration>
 					<verbose>true</verbose>
+					<apiVersion>${docker.apiVersion}</apiVersion>
+					<pullRegistry>${docker.pull.registry}</pullRegistry>
+					<pushRegistry>${docker.push.registry}</pushRegistry>
 					<serverId>docker-hub</serverId>
-					<imageName>${docker.push.registry}/onap/${project.artifactId}</imageName>
 					<dockerDirectory>${docker.location}</dockerDirectory>
 					<imageTags>
 						<imageTag>latest</imageTag>
 					</imageTags>
 					<forceTags>true</forceTags>
+					<images>
+						<image>
+							<name>${docker.push.registry}/onap/${project.artifactId}</name>
+							<build>
+								<cleanup>try</cleanup>
+								<dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+								<tags>
+									<tag>latest</tag>
+								</tags>
+								<assembly>
+									<inline>
+										<fileSets>
+											<fileSet>
+												<directory>${fproxy.build.dir}</directory>
+												<outputDirectory>/${project.artifactId}</outputDirectory>
+											</fileSet>
+										</fileSets>
+									</inline>
+								</assembly>
+							</build>
+						</image>
+					</images>
 				</configuration>
+				<executions>
+					<execution>
+						<id>generate-images</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>push-images</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
