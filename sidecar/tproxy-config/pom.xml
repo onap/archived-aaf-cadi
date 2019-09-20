@@ -37,7 +37,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.io.fabric8.fabric8-maven-plugin>3.5.32</version.io.fabric8.fabric8-maven-plugin>
-		<docker.location>${basedir}/target</docker.location>
+		<docker.location>${project.basedir}/target/${project.artifactId}-${project.version}-build</docker.location>
 		<!-- <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo> -->
 	</properties>
 
@@ -65,50 +65,73 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+                		<artifactId>maven-assembly-plugin</artifactId>
+                		<configuration>
+                    			<descriptors>
+                        			<descriptor>src/main/assembly/descriptor.xml</descriptor>
+                    			</descriptors>
+                		</configuration>
+                		<executions>
+                    			<execution>
+                        			<id>make-assembly</id>
+                        			<phase>package</phase>
+                        			<goals>
+                            				<goal>single</goal>
+                        			</goals>
+                    			</execution>
+                		</executions>
+            		</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
+                               	<groupId>io.fabric8</groupId>
+                        	<artifactId>docker-maven-plugin</artifactId>
+                        	<version>0.28.0</version>
+                       		<configuration>
+                            		<verbose>true</verbose>
+                            		<apiVersion>${docker.apiVersion}</apiVersion>
+		                 	<pullRegistry>${docker.pull.registry}</pullRegistry>
+                            		<pushRegistry>${docker.push.registry}</pushRegistry>
+                                	<images>
+                                		<image>
+                                    			<name>${docker.push.registry}/onap/${project.artifactId}</name>
+                                    			<build>
+                                        			<cleanup>try</cleanup>
+                                       				<dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+                                        			<tags>
+                                            				<tag>latest</tag>
+                                        			</tags>
+                                       				<assembly>
+                                            				<inline>
+                                                				<fileSets>
+                                                    					<fileSet>
+                                                        					<directory>${docker.location}</directory>
+                                                        					<outputDirectory>/${project.artifactId}</outputDirectory>
+                                                    					</fileSet>
+                                                				</fileSets>
+                                            				</inline>
+                                        			</assembly>
+                                    			</build>
+                                		</image>
+                            		</images>
+                        	</configuration>
 				<executions>
-					<execution>
-						<id>copy-docker-file</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target</outputDirectory>
-							<overwrite>true</overwrite>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/docker</directory>
-									<filtering>true</filtering>
-								</resource>
-								<resource>
-									<directory>${basedir}/src/main/bin/</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
+                             		<execution>
+                                 		<id>generate-images</id>
+						<phase>install</phase>
+						<!--unbind default goal for this phase-->
+                             		</execution>
+                             		<execution>
+                                 		<id>push-images</id>
+                                 		<phase>deploy</phase>
+                                 		<goals>
+                                     			<goal>push</goal>
+                                 		</goals>
+                             		</execution>
+		     		</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.11</version>
-				<configuration>
-					<verbose>true</verbose>
-					<serverId>docker-hub</serverId>
-					<imageName>${docker.push.registry}/onap/${project.artifactId}</imageName>
-					<dockerDirectory>${docker.location}</dockerDirectory>
-					<imageTags>
-						<imageTag>latest</imageTag>
-					</imageTags>
-					<forceTags>true</forceTags>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
