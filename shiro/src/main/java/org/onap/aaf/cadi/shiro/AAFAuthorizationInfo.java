@@ -29,6 +29,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.onap.aaf.cadi.Access;
 import org.onap.aaf.cadi.Access.Level;
+import org.onap.aaf.cadi.aaf.AAFPermission;
 
 /**
  * We treat "roles" and "permissions" in a similar way for first pass.
@@ -41,16 +42,17 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 	
 	private Access access;
 	private Principal bait;
-	private List<org.onap.aaf.cadi.Permission> pond;
-	private ArrayList<String> sPerms;
-	private ArrayList<Permission> oPerms;
+	// Use these to save conversions
+	private List<org.onap.aaf.cadi.Permission> cPerms;
+	private List<Permission> oPerms;
+	private List<String> sPerms;
 
-	public AAFAuthorizationInfo(Access access, Principal bait, List<org.onap.aaf.cadi.Permission> pond) {
+	public AAFAuthorizationInfo(Access access, Principal bait) {
 		this.access = access;
 		this.bait = bait;
-		this.pond = pond;
-		sPerms=null;
+		cPerms=null;
 		oPerms=null;
+		sPerms=null;
 	}
 	
 	public Principal principal() {
@@ -62,8 +64,12 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 		access.log(Level.DEBUG, "AAFAuthorizationInfo.getObjectPermissions");
 		synchronized(bait) {
 			if(oPerms == null) {
-				oPerms = new ArrayList<Permission>(); 
-				for(final org.onap.aaf.cadi.Permission p : pond) {
+				oPerms = new ArrayList<>();
+				if(cPerms==null) {
+					cPerms = new ArrayList<>();
+					AAFRealm.singleton.authz.fishAll(bait, cPerms);
+				}
+				for(final org.onap.aaf.cadi.Permission p : cPerms) {
 					oPerms.add(new AAFShiroPermission(p));
 				}
 			}
@@ -83,10 +89,13 @@ public class AAFAuthorizationInfo implements AuthorizationInfo {
 		access.log(Level.DEBUG,"AAFAuthorizationInfo.getStringPermissions");
 		synchronized(bait) {
 			if(sPerms == null) {
-				sPerms = new ArrayList<String>(); 
-				for(org.onap.aaf.cadi.Permission p : pond) {
-					sPerms.add(p.getKey().replace("|",":"));
-					access.printf(Level.INFO,"%s has %s",bait.getName(),p.getKey());
+				sPerms = new ArrayList<>();
+				if(cPerms==null) {
+					cPerms = new ArrayList<>();
+					AAFRealm.singleton.authz.fishAll(bait,cPerms);
+				}
+				for(final org.onap.aaf.cadi.Permission p : cPerms) {
+					sPerms.add(p.getKey());
 				}
 			}
 		}

@@ -22,7 +22,6 @@ package org.onap.aaf.cadi.shiro;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -33,37 +32,48 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.onap.aaf.cadi.Access.Level;
 import org.onap.aaf.cadi.CadiException;
 import org.onap.aaf.cadi.LocatorException;
-import org.onap.aaf.cadi.Permission;
 import org.onap.aaf.cadi.PropAccess;
 import org.onap.aaf.cadi.Symm;
+import org.onap.aaf.cadi.aaf.AAFPermission;
 import org.onap.aaf.cadi.aaf.v2_0.AAFAuthn;
 import org.onap.aaf.cadi.aaf.v2_0.AAFCon;
 import org.onap.aaf.cadi.aaf.v2_0.AAFLurPerm;
 import org.onap.aaf.cadi.config.Config;
 import org.onap.aaf.cadi.filter.MapBathConverter;
 import org.onap.aaf.cadi.util.CSV;
+import org.onap.aaf.cadi.util.Split;
 import org.onap.aaf.misc.env.APIException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*
+ * Note: Shiro Realm document
+ * https://shiro.apache.org/realm.html
+ */
+
 public class AAFRealm extends AuthorizingRealm {
 	public static final String AAF_REALM = "AAFRealm";
 	private static final Logger logger =  LoggerFactory.getLogger(AAFRealm.class);
-	private static Singleton singleton = Singleton.singleton();
 	
-	private static class Singleton {
-		private AAFCon<?> acon;
-		private AAFAuthn<?> authn;
+	// Package on purpose
+	static Singleton singleton = Singleton.singleton();
+	
+	public static class Singleton {
+		public AAFCon<?> acon;
+		public AAFAuthn<?> authn;
+		public AAFLurPerm authz;
 //		private Set<Class<? extends AuthenticationToken>> supports;
-		private AAFLurPerm authz;
+		
 		private MapBathConverter mbc;
 		private Map<String,String> idMap;
 		private Singleton() {
+			logger.info("Creating AAFRealm.Singleton");
 			mbc = null;
 			idMap = null;
 			String cadi_prop_files = access.getProperty(Config.CADI_PROP_FILES);
@@ -222,6 +232,7 @@ public class AAFRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		logger.debug("AAFRealm.doGetAuthenticationInfo");
 		final UsernamePasswordToken upt = (UsernamePasswordToken)token;
 		final String user = upt.getUsername();
 		String authUser = user; 
@@ -264,6 +275,7 @@ public class AAFRealm extends AuthorizingRealm {
 
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken atoken, AuthenticationInfo ai)throws AuthenticationException {
+		logger.debug("AAFRealm.assertCredentialsMatch");
 		if(ai instanceof AAFAuthenticationInfo) {
 			if(!((AAFAuthenticationInfo)ai).matches(atoken)) {
 				throw new AuthenticationException("Credentials do not match");
@@ -275,6 +287,7 @@ public class AAFRealm extends AuthorizingRealm {
 
 	@Override
 	protected AAFAuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+		logger.debug("AAFRealm.doGetAuthorizationInfo");
 		Principal bait = (Principal)principals.getPrimaryPrincipal();
 		Principal newBait = bait;
 		if(singleton.idMap!=null) {
@@ -289,9 +302,7 @@ public class AAFRealm extends AuthorizingRealm {
 				};
 			}
 		}
-		List<Permission> pond = new ArrayList<>();
-		singleton.authz.fishAll(newBait,pond);
-		return new AAFAuthorizationInfo(singleton.access,bait,pond);
+		return new AAFAuthorizationInfo(singleton.access,newBait);
 	}
 
 	@Override
@@ -304,6 +315,60 @@ public class AAFRealm extends AuthorizingRealm {
 	@Override
 	public String getName() {
 		return AAF_REALM;
+	}
+
+	private AAFPermission aafPerm(String permission) {
+		String[] pa = Split.splitTrim('|', permission);
+		switch(pa.length) {
+			case 3:
+				return new AAFPermission(null,pa[0],pa[1],pa[2]);
+			case 4:
+				return new AAFPermission(pa[0],pa[1],pa[2],pa[3]);
+			default:
+				return null;
+		}
+	}
+
+	@Override
+    public boolean isPermitted(PrincipalCollection principals, String permission) {
+		logger.debug("AAFRealm.isPermitted(principals,permission<String>)");
+		AAFPermission ap = aafPerm(permission);
+		if(ap!=null) {
+			return singleton.authz.fish((Principal)principals.getPrimaryPrincipal(), ap);
+		}
+		return false;
+    }
+	
+	@Override
+	protected boolean isPermitted(org.apache.shiro.authz.Permission permission, AuthorizationInfo info) {
+		logger.debug("AAFRealm.isPermitted(shiro.Permission,AuthorizationInfo)");
+		if(info instanceof AAFAuthorizationInfo) {
+			AAFPermission ap = aafPerm(permission.toString());
+			if(ap!=null) {
+				return singleton.authz.fish(((AAFAuthorizationInfo)info).principal(), ap);
+			}
+			return false;
+		}
+		return super.isPermitted(permission, info);
+	}
+
+	@Override
+	protected boolean[] isPermitted(List<org.apache.shiro.authz.Permission> permissions, AuthorizationInfo info) {
+		logger.debug("AAFRealm.isPermitted(List<shiro.Permission>,AuthorizationInfo)");
+		if(info instanceof AAFAuthorizationInfo) {
+			boolean rv[] = new boolean[permissions.size()];
+			int i=0;
+			for(org.apache.shiro.authz.Permission sp : permissions) {
+				AAFPermission ap = aafPerm(sp.toString());
+				if(ap!=null) {
+					rv[i++]=singleton.authz.fish(((AAFAuthorizationInfo)info).principal(), ap);
+				} else {
+					rv[i++]=false;
+				}
+			}
+			return rv;
+		} 
+		return super.isPermitted(permissions, info);
 	}
 
 }
