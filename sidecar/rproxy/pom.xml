@@ -152,7 +152,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.28.0</version>
@@ -194,7 +194,6 @@
 					<execution>
 						<id>generate-images</id>
 						<phase>install</phase>
-						<!--unbind default goal for this phase-->
 					</execution>
 					<execution>
 						<id>push-images</id>
@@ -211,7 +210,7 @@
 				<configuration>
 					<skip>true</skip>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 </project>
