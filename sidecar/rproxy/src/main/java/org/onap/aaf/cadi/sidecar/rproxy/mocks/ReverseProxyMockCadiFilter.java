@@ -176,6 +176,11 @@ public class ReverseProxyMockCadiFilter implements Filter {
 			}
 
 			@Override
+			public String getTarget() {
+				return null;
+			}
+
+			@Override
 			public RESP authenticate() throws IOException {
 				return null;
 			}
