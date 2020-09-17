@@ -22,6 +22,7 @@ package org.onap.aaf.cadi.shiro;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.onap.aaf.cadi.Access.Level;
 import org.onap.aaf.cadi.CadiException;
 import org.onap.aaf.cadi.LocatorException;
+import org.onap.aaf.cadi.Permission;
 import org.onap.aaf.cadi.PropAccess;
 import org.onap.aaf.cadi.Symm;
 import org.onap.aaf.cadi.aaf.AAFPermission;
@@ -252,7 +254,7 @@ public class AAFRealm extends AuthorizingRealm {
 				}
 			} catch (IOException e) {
 				singleton.access.log(e);
-			} 
+			}
 		}
 		String err;
 		try {
@@ -302,7 +304,9 @@ public class AAFRealm extends AuthorizingRealm {
 				};
 			}
 		}
-		return new AAFAuthorizationInfo(singleton.access,newBait);
+		List<Permission> pond = new ArrayList<>();
+		singleton.authz.fishAll(newBait,pond);
+		return new AAFAuthorizationInfo(singleton.access,bait,pond);
 	}
 
 	@Override
@@ -328,7 +332,7 @@ public class AAFRealm extends AuthorizingRealm {
 				return null;
 		}
 	}
-
+/*
 	@Override
     public boolean isPermitted(PrincipalCollection principals, String permission) {
 		logger.debug("AAFRealm.isPermitted(principals,permission<String>)");
@@ -370,5 +374,5 @@ public class AAFRealm extends AuthorizingRealm {
 		} 
 		return super.isPermitted(permissions, info);
 	}
-
+*/
 }
