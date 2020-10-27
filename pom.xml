@@ -22,7 +22,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.onap.aaf.cadi</groupId>
 	<artifactId>parent</artifactId>
-	<version>2.1.18-SNAPSHOT</version>
+	<version>2.1.19-SNAPSHOT</version>
 	<name>CADI Plugins Parent</name>
 	<packaging>pom</packaging>
 
@@ -34,7 +34,7 @@
 
 	<properties>
 		<!-- This version needs to be RELEASED version. Fails on SNAPSHOT -->
-		<cadi.version>2.7.2</cadi.version>
+		<cadi.version>2.7.4</cadi.version>
 		<!-- <sonar.skip>true</sonar.skip> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- project.jettyVersion>9.4.12.v20180830</project.jettyVersion -->
