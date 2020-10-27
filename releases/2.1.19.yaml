@@ -1,0 +1,4 @@
+distribution_type: 'maven'
+version: '2.1.19'
+project: 'aaf-cadi'
+log_dir: 'aaf-cadi-maven-stage-master/515/'
