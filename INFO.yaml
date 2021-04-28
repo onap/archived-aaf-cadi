@@ -2,7 +2,7 @@
 project: 'aaf-cadi'
 project_creation_date: '2017-07-12'
 project_category: ''
-lifecycle_state: 'Incubation'
+lifecycle_state: 'Unmaintained'
 project_lead: &onap_aaf_ptl
     name: 'Jonathan Gathman'
     email: 'jonathan.gathman@us.att.com'
@@ -20,13 +20,13 @@ mailing_list:
     tag: '<[sub-project_name]>'
 realtime_discussion: ''
 meetings:
-    - type: 'zoom'
-      agenda: 'https://wiki.onap.org/display/DW/AAF+Meeting+Minutes'
-      url: 'https://wiki.onap.org/pages/viewpage.action?pageId=15302787'
+    - type: 'n/a'
+      agenda: 'n/a'
+      url: 'n/a'
       server: 'n/a'
       channel: 'n/a'
-      repeats: 'weekly'
-      time: '14:00 UTC'
+      repeats: 'n/a'
+      time: 'n/a'
 repositories:
     - 'aaf/cadi'
 committers:
