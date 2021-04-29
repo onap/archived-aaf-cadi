@@ -16,6 +16,24 @@
       "revId": "ecbbbdcfdcaae089e875c264afbfcd117fc2450d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbccde63_8ba792a6",
+        "filename": "INFO.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2021-04-29T15:40:56Z",
+      "side": 1,
+      "message": "Checking with Kenny if we should change this to \"Archived\" or if we should allow global-jjb to use \"Unmaintained\" in case for ONAP it\u0027s more meaningful.",
+      "parentUuid": "96f1d76a_fce8efe6",
+      "revId": "ecbbbdcfdcaae089e875c264afbfcd117fc2450d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
